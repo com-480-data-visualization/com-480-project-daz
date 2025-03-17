@@ -4,7 +4,7 @@
 | -------------- | ------ |
 | | |
 | | |
-| | |
+| Zeynep Tandogan | 368526 |
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
@@ -29,6 +29,28 @@ Please, fill the following sections about your project.
 > - What am I trying to show with my visualization?
 > - Think of an overview for the project, your motivation, and the target audience.
 
+#### Project Overview
+
+The project aims to combine happiness and quality of life data with mental health statistics to create a comprehensive perspective on global well-being. By merging these datasets, we aim to identify and understand the fundamental dynamics influencing well-being globally and investigate the connections among important determinants. Through visualizations, we aim to highlight trends, disparities, and correlations, providing valuable insights into global well-being.
+
+#### Motivation & Target Audience
+
+Our motivation is that global well-being is a critical issue that directly affects the quality of life of individuals and the sustainable development of societies. Today, economic fluctuations, social inequalities, and increasing mental health problems affect well-being levels in different ways around the world. Therefore, understanding the fundamental dynamics that determine well-being is not only beneficial but crucial for:
+
+- **Policymakers:** To create evidence-based policies that improve people's quality of life.
+- **Civil Society Organizations & NGOs:** To recognize and resolve disparities in well-being.
+- **Researchers & Academics:** To have a better understanding of the factors affecting global well-being for further studies.
+- **Individuals & General Public:** To raise awareness and encourage informed discussions on well-being.
+
+#### Our Goals with Visualizations
+
+- Ranking countries on indicators of happiness, quality of life, and mental health.
+- Comparing correlations between happiness scores and specific quality of life metrics.
+- Assessing the alignment between mental health metrics and overall happiness scores.
+- Analyzing improvements or declines in well-being indicators across regions over time.
+- Identifying patterns of countries that consistently perform well or poorly on various measures of well-being.
+- Detecting countries that deviate significantly from typical relationships observed in the dataset (e.g., high mental health problems despite high happiness scores).
+  
 ### Exploratory Data Analysis
 
 > Pre-processing of the data set you chose
