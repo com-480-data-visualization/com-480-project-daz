@@ -2,7 +2,7 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| | |
+| Andrea Miele | 302925 |
 | | |
 | Zeynep Tandogan | 368526 |
 
