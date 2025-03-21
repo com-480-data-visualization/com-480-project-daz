@@ -73,7 +73,7 @@ Some research has attempted to compare multiple indices, often using correlation
 Our approach differs by fully integrating these four dimensions into a single dataset. Rather than explaining one measure with others, it treats all indicators as complementary components of a
 2 broader well-being profile. This allows for multidimensional analysis, such as identifying clusters of countries with mismatched well-being indicators. Including mental health as a standalone facet is particularly innovative, addressing a key gap noted by the UNDP ([Nations, 2017]).
 
-# References
+### References
 [contributors, 2025] contributors, W. (2025). Quality of life.
 
 [Jannani et al., ] Jannani, A., Sael, N., and Benabbou, F. Machine learning for the analysis of quality
