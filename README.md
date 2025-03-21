@@ -3,7 +3,7 @@
 | Student's name | SCIPER |
 | -------------- | ------ |
 | Andrea Miele | 302925 |
-| | |
+| David Revaz | 315773 |
 | Zeynep Tandogan | 368526 |
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
