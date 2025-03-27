@@ -1,0 +1,36 @@
+name: Deploy to GitHub Pages (docs folder)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Copy files from src to docs
+        run: |
+          rm -rf docs
+          cp -R src docs
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs
+          # Only commit if there are changes
+          if ! git diff --cached --quiet; then
+            git commit -m "Update GitHub Pages site"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
