@@ -1,13 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+  <meta charset="UTF-8" />
+  <title>Data Visualizations in Snap Slides</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <link rel="stylesheet" href="css/snap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/styles.css">
+    
 </head>
 <body>
-    <h1>Hello</h1>
-    this is the DAZ website for com 480. David, Andrea, Zeynep.
+  <div class="snap-container">
+    <!-- Slide 0: Welcome -->
+    <section class="snap-section">
+      <h1>Welcome to the DAZ website!</h1>
+      <p>Explore various data visualizations about quality of life ...</p>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
     
+    <!-- Slide 1: Radar Chart -->
+    <section class="snap-section">
+      <h1>Radar Chart (Compare up to Two Countries in 2022)</h1>
+      <div class="controls">
+        <!-- Container for Country 1 -->
+        <div class="country-box" id="country1-box">
+          <span class="country-label">Country 1</span>
+          <span class="color-dot"></span>
+          <select id="countrySelect1">
+            <option value="">-- Select Country --</option>
+          </select>
+        </div>
+        <!-- Container for Country 2 -->
+        <div class="country-box" id="country2-box">
+          <span class="country-label">Country 2</span>
+          <span class="color-dot"></span>
+          <select id="countrySelect2">
+            <option value="">-- Select Country --</option>
+          </select>
+        </div>
+      </div>
+      <div id="chart"></div>
+      <div class="tooltip" id="tooltip" style="opacity:0;"></div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+    
+    <!-- Slide 2: Top 10 Bar Chart -->
+    <section class="snap-section">
+      <h1>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h2>
+      <div class="controls">
+        <div class="country-box" id="year-box">
+          <label class="country-label" for="yearSelect">Year:</label>
+          <select id="yearSelect">
+          </select>
+        </div>
+        <div class="country-box" id="index-box">
+          <label class="country-label" for="indexSelect">Index:</label>
+          <select id="indexSelect">
+          </select>
+        </div>
+      </div>
+      <div id="top10chart"></div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+
+    </section>
+  </div>
+
+  <!-- Scripts -->
+  <script src="radar.js"></script>
+  <script src="top10script.js"></script>
 </body>
 </html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-Directional Slide Website</title>
+  <style>
+    /* Basic reset and smooth scrolling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden; /* We handle scrolling in our container */
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+    /* Vertical container for most sections */
+    .vertical-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+    }
+    .vertical-section {
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #fff;
+    }
+    /* Example vertical sections */
+    .section1 { background: #1abc9c; }
+    .section2 { background: #3498db; }
+    .section3 { background: #9b59b6; }
+    .section4 { background: #e74c3c; }
+    .section8 { background: #34495e; }
+    .section9 { background: #16a085; }
+    .section10 { background: #f39c12; }
+
+    /* Horizontal container wrapper is a full-screen section */
+    .horizontal-container-wrapper {
+      position: relative;
+      height: 100vh;
+      scroll-snap-align: start;
+    }
+    /* The inner horizontal container scrolls sideways */
+    .horizontal-container {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+    }
+    .horizontal-section {
+      flex: 0 0 100vw;
+      height: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #fff;
+    }
+    /* Example horizontal sections */
+    .section5 { background: #2ecc71; }
+    .section6 { background: #e67e22; }
+    .section7 { background: #8e44ad; }
+  </style>
+</head>
+<body>
+  <!-- Vertical container: each direct child takes full viewport height -->
+  <div class="vertical-container" id="vertical-container">
+    <section class="vertical-section section1">Section 1</section>
+    <section class="vertical-section section2">Section 2</section>
+    <section class="vertical-section section3">Section 3</section>
+    <section class="vertical-section section4">Section 4</section>
+    
+    <!-- Horizontal container wrapper for sections 5–7 -->
+    <div class="horizontal-container-wrapper" id="horizontal-wrapper">
+      <div class="horizontal-container" id="horizontal-container">
+        <section class="horizontal-section section5">Section 5</section>
+        <section class="horizontal-section section6">Section 6</section>
+        <section class="horizontal-section section7">Section 7</section>
+      </div>
+    </div>
+    
+    <section class="vertical-section section8">Section 8</section>
+    <section class="vertical-section section9">Section 9</section>
+    <section class="vertical-section section10">Section 10</section>
+  </div>
+
+  <script>
+    // Grab our containers
+    const verticalContainer = document.getElementById('vertical-container');
+    const horizontalWrapper = document.getElementById('horizontal-wrapper');
+    const horizontalContainer = document.getElementById('horizontal-container');
+
+    // Intercept wheel events on the vertical container.
+    // When the vertical scroll is within the horizontal section,
+    // use the wheel delta to scroll horizontally instead.
+    verticalContainer.addEventListener('wheel', function(e) {
+      // Determine the vertical container’s scroll position
+      const scrollTop = verticalContainer.scrollTop;
+      // Get the vertical position of the horizontal wrapper
+      const wrapperTop = horizontalWrapper.offsetTop;
+      const wrapperBottom = wrapperTop + horizontalWrapper.offsetHeight;
+
+      // Check if we are in the horizontal container region.
+      // (Since scroll snapping makes each section full-screen,
+      //  scrollTop should equal wrapperTop when the horizontal container is in view.)
+      if (scrollTop >= wrapperTop && scrollTop < wrapperBottom) {
+        // If the horizontal container is not fully scrolled to one end,
+        // prevent vertical scrolling and scroll horizontally instead.
+        if ((e.deltaY > 0 && horizontalContainer.scrollLeft < horizontalContainer.scrollWidth - horizontalContainer.clientWidth) ||
+            (e.deltaY < 0 && horizontalContainer.scrollLeft > 0)) {
+          e.preventDefault();
+          horizontalContainer.scrollLeft += e.deltaY;
+        }
+      }
+    
+    }, { passive: false });
+  </script>
+</body>
+</html>
