@@ -73,12 +73,46 @@
         <div id="tooltip2" style="opacity:0;"></div>
         <i class="scroll-arrow fas fa-angle-double-down"></i>
   
-      </section>
-  </div>
+      </section> 
+      <section class="snap-section">
+        <h1>World <span id="selectedMetricLabel">HDI</span> Map</h1>
 
-  <!-- Scripts -->
-  <script src="radar.js"></script>
-  <script src="top10script.js"></script>
-  <script src="line.js"></script>
+        <div class="controls">
+          <div class="country-box">
+            <span class="country-label">Global Index:</span>
+            <select id="index-select">
+              <option value="hdi" selected>HDI</option>
+              <!-- Future indices will be added here -->
+              <option value="x">X</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="controls">
+          <label for="start-year">Start Year:</label>
+          <select id="start-year"></select>
+          <label for="end-year">End Year:</label>
+          <select id="end-year"></select>
+        </div>
+        
+        <div id="map-container">
+          <svg id="my_dataviz" width="800" height="500"></svg>
+          <div id="zoom-controls">
+            <button id="zoom-in">+</button>
+            <button id="zoom-out">-</button>
+          </div>
+          <div id="legend"></div>
+        </div>
+        
+        <div id="map-tooltip"></div>
+      </section>
+  </section>
+
+   <!-- Scripts -->
+   <script src="radar.js"></script>
+   <script src="top10script.js"></script>
+   <script src="line.js"></script>
+   <script src="worldmap.js"></script>
+
 </body>
 </html>
