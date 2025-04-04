@@ -71,6 +71,10 @@
     max-width: 600px;
     text-align: center;
   }
+
+  #top10chart{
+    max-width: 800px;
+  }
   
   svg {
     background: #fafafa;
