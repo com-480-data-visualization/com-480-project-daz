@@ -46,7 +46,7 @@
     
     <!-- Slide 2: Top 10 Bar Chart -->
     <section class="snap-section">
-      <h1>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h2>
+      <h1>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h1>
       <div class="controls">
         <div class="country-box" id="year-box">
           <label class="country-label" for="yearSelect">Year:</label>
@@ -63,10 +63,22 @@
       <i class="scroll-arrow fas fa-angle-double-down"></i>
 
     </section>
+
+    <!-- Slide 2: Top 10 Bar Chart -->
+    <section class="snap-section">
+        <h1>boop</h1>
+        <button id="reset-animation">Reset Animation</button>
+
+        <div id="chart-line"></div>
+        <div id="tooltip2" style="opacity:0;"></div>
+        <i class="scroll-arrow fas fa-angle-double-down"></i>
+  
+      </section>
   </div>
 
   <!-- Scripts -->
   <script src="radar.js"></script>
   <script src="top10script.js"></script>
+  <script src="line.js"></script>
 </body>
 </html>
