@@ -1,7 +1,7 @@
 (function() {
     const margin = { top: 40, right: 100, bottom: 40, left: 60 },
           width = 1200 - margin.left - margin.right,
-          height = 800 - margin.top - margin.bottom;
+          height = 600 - margin.top - margin.bottom;
   
     const svg = d3.select("#chart-line")
       .append("svg")
