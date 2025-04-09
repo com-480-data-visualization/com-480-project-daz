@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Global Journey of Well-Being</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <link rel="stylesheet" href="css/snap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/buttons.css">
+</head>
+<body>
+  <div class="snap-container">
+
+    <section class="snap-section" id="prologue">
+      <h1>The Global Journey of Well-Being</h1>
+      <p>
+        Welcome! In this interactive narrative, we merge HDI, Happiness, and Quality of Life (QOL) data to provide a comprehensive view of global well-being. Our timeline spans from 1990 to 2022 for most metrics, with QOL available from 2015 to 2022. Scroll down to begin your journey.
+      </p>
+      <div id="animated-map-teaser">[Animated Global Map Teaser Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="chapter1">
+      <h1>Chapter 1: The World in Transition</h1>
+      <p>
+        Witness the transformation of our world over time as nations progress and face setbacks. Observe historical trends and major shifts in global well-being.
+      </p>
+      <div id="choropleth-chart">[Time-Lapse Choropleth Map Placeholder]</div>
+      <div id="bar-chart-race">[Bar Chart Race Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="chapter2">
+      <h1>Chapter 2: Unveiling the Factors</h1>
+      <p>
+        Dive deeper into the intricate connections among socio-economic indicators. Explore the interplay between metrics that shape well-being.
+      </p>
+      <div id="radar-chart">
+        <h2>Radar Chart: Compare Up to Two Countries (2022)</h2>
+        <div class="controls">
+          <div class="country-box" id="country1-box">
+            <span class="country-label">Country 1</span>
+            <span class="color-dot"></span>
+            <select id="countrySelect1">
+              <option value="">-- Select Country --</option>
+            </select>
+          </div>
+          <div class="country-box" id="country2-box">
+            <span class="country-label">Country 2</span>
+            <span class="color-dot"></span>
+            <select id="countrySelect2">
+              <option value="">-- Select Country --</option>
+            </select>
+          </div>
+        </div>
+        <div id="chart"></div>
+        <div class="tooltip" id="tooltip" style="opacity:0;"></div>
+      </div>
+      <div id="scatter-matrix">[Scatter Plot Matrix Placeholder]</div>
+      <div id="parallel-coordinates">[Parallel Coordinates Plot Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="chapter3">
+      <h1>Chapter 3: The Shifting Landscape</h1>
+      <p>
+        As time marches on, explore trends, turning points, and regional dynamics. Delve into time series and compare changes between decades.
+      </p>
+      <div id="small-multiples">[Small Multiples Line Charts Placeholder]</div>
+      <div id="slope-chart">[Slope Charts / Connected Dot Plots Placeholder]</div>
+      <div id="annotated-timeline">[Annotated Timeline Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="chapter4">
+      <h1>Chapter 4: Regional Voices and Outliers</h1>
+      <p>
+        Every region tells its own story—a blend of triumphs, challenges, and distinct trajectories. Zoom in to discover disparities and outlier narratives.
+      </p>
+      <div id="box-plots">[Box/Violin Plots by Region Placeholder]</div>
+      <div id="mds-pca">[MDS/PCA Projections Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="chapter5">
+      <h1>Chapter 5: Weaving the Threads – Insights and Future Paths</h1>
+      <p>
+        In our final chapter, diverse strands of data converge to reveal cause-and-effect relationships and outline potential futures. Explore the drivers of well-being and engage with interactive simulations.
+      </p>
+      <div id="sankey-diagram">[Cause-and-Effect Sankey Diagram Placeholder]</div>
+      <div id="ranking-annotations">[Interactive Ranking & Annotations Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="epilogue">
+      <h1>Epilogue: Reflection and Further Exploration</h1>
+      <p>
+        Recap the insights uncovered on our journey. Discover key patterns, revisit surprising trends, and learn how these insights inform our view of global well-being.
+      </p>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    </section>
+
+    <section class="snap-section" id="annexes">
+      <h1>Annexes: A Comprehensive Data Playground</h1>
+      <p>
+        For those eager to dig deeper, explore detailed visualizations and data tables.
+      </p>
+    </section>
+    <section class="snap-section">
+      <div id="annex-radar">
+        <h2>Detailed Radar Chart</h2>
+        <div id="chart"></div>
+      </div>
+      <div id="annex-top10">
+        <h2>Top 10 Countries by Selected Metric</h2>
+        <div class="controls">
+          <div class="country-box" id="year-box">
+            <label class="country-label" for="yearSelect">Year:</label>
+            <select id="yearSelect"></select>
+          </div>
+          <div class="country-box" id="index-box">
+            <label class="country-label" for="indexSelect">Index:</label>
+            <select id="indexSelect"></select>
+          </div>
+        </div>
+        <div id="top10chart"></div>
+      </div>
+    </section>
+    <section class="snap-section">
+      <div id="annex-linerace">
+        <h2>Animated Line Race Chart</h2>
+        <div class="controls">
+          <div class="country-box">
+            <span class="country-label">Global Index:</span>
+            <select id="columnSelect">
+              <option value="hdi" selected>HDI</option>
+              <option value="le">Life Expectancy</option>
+            </select>
+          </div>
+        </div>
+        <button class="button-4" id="reset-animation">Reset Animation</button>
+        <div id="chart-line"></div>
+      </div>
+    </section>
+    <section class="snap-section">
+      <div id="annex-worldmap">
+        <h2>World Map</h2>
+        <div class="controls">
+          <div class="country-box">
+            <span class="country-label">Global Index:</span>
+            <select id="index-select">
+              <option value="hdi" selected>HDI</option>
+              <option value="x">X</option>
+            </select>
+          </div>
+        </div>
+        <div class="controls">
+          <label for="start-year">Start Year:</label>
+          <select id="start-year"></select>
+          <label for="end-year">End Year:</label>
+          <select id="end-year"></select>
+        </div>
+        <div id="map-container">
+          <svg id="my_dataviz" width="800" height="500"></svg>
+          <div id="zoom-controls">
+            <button id="zoom-in">+</button>
+            <button id="zoom-out">-</button>
+          </div>
+          <div id="legend"></div>
+        </div>
+        <div id="map-tooltip"></div>
+      </div>
+    </section>
+    
+  </div>
+
+  <script src="radar.js"></script>
+  <script src="top10script.js"></script>
+  <script src="line.js"></script>
+  <script src="worldmap.js"></script>
+  <script src="distributions.js"></script>
+</body>
+</html>
