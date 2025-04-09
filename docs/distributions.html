@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Visualizations</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <link rel="stylesheet" href="css/snap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <link rel="stylesheet" href="css/distributions.css">
+    
+</head>
+<body>
+  
+  <div id="top-section">
+    
+    <div id="year-controls">
+      <div class="titleDistribution">HUMAN DEVELOPMENT INDEX</div>
+      <div class="bottom-row">
+        <div id="slider-block">
+          <div id="yearBig">2020</div>
+          <input type="range" id="yearSlider">
+        </div>
+        <div class="info-text">
+          This dashboard shows the evolution of countries’ development indicators over time.
+        </div>
+      </div>
+    </div>
+    <div class="distributions-wrapper">
+      <div class="distributions-header">Country details and different metrics</div>
+      <div id="distributions"></div>
+    </div>
+  </div>
+  
+  <div id="countries-grid"></div>
+  <div id="tooltip" style="position: absolute; opacity: 0; background: #fff; padding: 5px; border: 1px solid #ccc; pointer-events: none;"></div>
+
+  <script src="distributions.js"></script>
+
+</body>
+</html>

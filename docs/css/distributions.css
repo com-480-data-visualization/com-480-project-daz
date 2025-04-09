@@ -1,0 +1,100 @@
+#top-section {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+
+  }
+
+  #year-controls {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 30%;
+
+  }
+  /* Title on top */
+  .titleDistribution {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+    margin: 0;
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  #slider-block {
+    width: 50%;
+    text-align: center;
+  }
+  #yearBig {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  #yearSlider {
+    width: 80%;  
+  }
+
+  .info-text {
+    width: 50%;
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+    padding: 0 10px;
+  }
+  #yearBig {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    color: #6c757d
+  }
+
+
+  #distributions {
+    flex-basis: 65%; 
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: bottom;
+
+    min-height: 250px;
+  }
+
+
+  #countries-grid {
+    display: grid;
+  grid-template-columns: repeat(8, 1fr); 
+  gap: 10px; 
+  margin-top: 20px;
+  }
+
+  .country {
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+
+  }
+
+  .distributions-wrapper {
+    flex-basis: 65%;          
+    display: flex;
+    flex-direction: column;   
+  }
+  .titleDistribution {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .distributions-header {
+    font-size: 25px;         
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;         
+    color: #333;
+  }
