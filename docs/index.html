@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Data Visualizations in Snap Slides</title>
+  <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <link rel="stylesheet" href="css/snap.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -122,15 +123,24 @@
 
       </section>
 
-    
-  </section>
+      <!-- Slide 5: Sankey Diagram -->
+      <section class="snap-section">
+        <h1>Factors Behind Happiness and QoL</h1>
+        <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate factors to affect outcomes such as Happiness and Quality of Life.</p>
+        <div id="sankeyChart"></div>
+        <div id="sankey-tooltip", style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);"></div> 
+        <i class="scroll-arrow fas fa-angle-double-down"></i>
+      </section>
+      
+    </div>
 
-   <!-- Scripts -->
-   <script src="radar.js"></script>
-   <script src="top10script.js"></script>
-   <script src="line.js"></script>
-   <script src="worldmap.js"></script>
-  <script src="distributions.js"></script>
+    <!-- Scripts -->
+    <script src="radar.js"></script>
+    <script src="top10script.js"></script>
+    <script src="line.js"></script>
+    <script src="worldmap.js"></script>
+    <script src="distributions.js"></script>
+    <script src="sankey.js"></script>
 
 </body>
 </html>

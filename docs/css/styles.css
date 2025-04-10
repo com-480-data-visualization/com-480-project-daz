@@ -273,3 +273,30 @@
     border: 1px solid #ccc;
     border-radius: 3px;
   }
+  
+  
+  
+  text.node-value.highlight {
+    fill: orange !important;
+    font-weight: bold !important;
+  }
+  
+  #sankey-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0, 0, 255, 0.2);
+    border: 2px solid blue;
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    font-size: 14px;
+    z-index: 99999;
+    opacity: 0;
+  }
+  
+  
+
+  
+  
+  
+  
