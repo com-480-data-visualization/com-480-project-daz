@@ -132,7 +132,7 @@ const AVAILABLE_FEATURES = [
       // Remove any previous SVG.
       d3.select("#lineChartRegion").select("svg").remove();
 
-      const margin = { top: 50, right: 150, bottom: 50, left: 60 },
+      const margin = { top: 50, right: 250, bottom: 50, left: 60 },
             width = 800 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
