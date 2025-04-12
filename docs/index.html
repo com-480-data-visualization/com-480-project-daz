@@ -132,6 +132,34 @@
         <i class="scroll-arrow fas fa-angle-double-down"></i>
       </section>
       
+
+      <!-- Slide 6: Line Chart by Region Diagram -->
+      <section class="snap-section">
+        <h1>Line Chart by Region</h1>
+        <div class="controls">
+          <div class="country-box" id="feature-box">
+            <label class="country-label" for="featureSelect">Feature:</label>
+            <select id="featureSelect"></select>
+          </div>
+          <div class="country-box" id="start-year-box">
+            <label class="country-label" for="startYearSelect">Start Year:</label>
+            <select id="startYearSelect"></select>
+          </div>
+          <div class="country-box" id="end-year-box">
+            <label class="country-label" for="endYearSelect">End Year:</label>
+            <select id="endYearSelect"></select>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="button-4" id="update-chart">Update Chart</button>
+          <button class="button-4" id="reset-animation2">Reset Animation</button>
+        </div>
+        <div id="lineChartRegion"></div>
+        <div class="lineChart-tooltip" id="lineChartRegionTooltip" style="opacity:0;"></div>
+        <i class="scroll-arrow fas fa-angle-double-down"></i>
+      </section>
+
+      
     </div>
 
     <!-- Scripts -->
@@ -141,6 +169,8 @@
     <script src="worldmap.js"></script>
     <script src="distributions.js"></script>
     <script src="sankey.js"></script>
+    <script src="lineChartRegion.js"></script>
+
 
 </body>
 </html>
