@@ -1,0 +1,45 @@
+/* Main container uses flex layout to display columns side-by-side */
+#chartContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* Each country's column */
+  .country-column {
+    flex: 1;
+    max-width: 300px;
+  }
+  
+  /* Country title */
+  .country-column h2 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+  }
+  
+  /* Each small chart panel */
+  .small-chart {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  /* Axis styles */
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  
+  .axis text {
+    font-size: 10px;
+  }
+  
+  /* Chart title (metric name) */
+  .chart-title {
+    font-size: 12px;
+    font-weight: bold;
+    text-anchor: middle;
+    fill: #333;
+  }
