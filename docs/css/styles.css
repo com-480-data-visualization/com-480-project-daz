@@ -311,5 +311,16 @@
   }
   
   
-  
-  
+.tooltipbubble{ 
+  position: absolute;    
+  z-index: 1000;         
+  pointer-events: none;   
+  padding: 8px;
+  font: 12px sans-serif;
+  background: rgba(6, 12, 17, 0.9); 
+  color: #fff;  
+  border-radius: 4px;
+  visibility: visible;
+  transition: opacity 0.2s ease;
+  opacity: 0;   
+}

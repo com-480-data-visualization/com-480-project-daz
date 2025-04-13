@@ -224,6 +224,39 @@
         style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
       </div>
       <i class="scroll-arrow"></i>
+      </section>
+      <section class="snap-section">
+        <h1>Interactive Bubble Chart for HDI Metrics</h1>
+        <!-- Controls: Dropdowns for axes and bubble size plus a year slider -->
+        <div class="controls">
+          <label for="xSelect">X Axis: 
+            <select id="xSelect">
+              <!-- Options will be populated by D3 -->
+            </select>
+          </label>
+          <label for="ySelect">Y Axis: 
+            <select id="ySelect">
+              <!-- Options will be populated by D3 -->
+            </select>
+          </label>
+          <label for="rSelect">Bubble Size: 
+            <select id="rSelect">
+              <!-- Options will be populated by D3 -->
+            </select>
+          </label>
+          <label for="yearSlider">
+            Year:
+            <!-- The slider attributes (min, max, value) will be updated by the script -->
+            <input type="range" id="yearSlider" value="0">
+            <span id="yearLabel"></span>
+          </label>
+        </div>
+        <!-- Container for the bubble chart -->
+        <div id="bubbleChart"></div>
+        <!-- Tooltip -->
+        <div id="tooltipbubble" class="tooltipbubble"></div>
+        <i class="scroll-arrow"></i>
+      </section>
     </section>
 
 
@@ -238,7 +271,7 @@
   <script src="distributions.js"></script>
   <script src="sankey.js"></script>
   <script src="lineChartRegion.js"></script>
-
+  <script src="interactivebubble.js"></script>
 
 </body>
 
