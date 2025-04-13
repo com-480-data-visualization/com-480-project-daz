@@ -37,7 +37,6 @@
   
     // Load the CSV file.
     d3.csv("HDIdataset.csv").then(data => {
-      console.log("CSV data loaded:", data);
   
       // Parse numeric fields.
       data.forEach(d => {
