@@ -1,25 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Data Visualizations in Snap Slides</title>
   <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <link rel="stylesheet" href="css/snap.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/buttons.css">
-    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <!-- Vanta.js (for animated background) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+
+  <!-- Typed.js (for typewriter effect) -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <!-- Font Awesome Icons (optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
+
 <body>
   <div class="snap-container">
     <!-- Slide 0: Welcome -->
-    <section class="snap-section">
-      <h1>Welcome to the DAZ website!</h1>
-      <p>Explore various data visualizations about quality of life ...</p>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    <!-- Slide 0: Welcome -->
+    <section class="snap-section hero-section" id="welcome-slide">
+      <!-- Container for Vanta background -->
+      <div id="vanta-bg"></div>
+
+      <!-- Main Content -->
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome to the DAZ Website!</h1>
+
+        <!-- Typed Text Subheading -->
+        <h2 class="hero-subtitle">
+          <span id="typed-subtitle"></span>
+        </h2>
+
+        <p class="hero-description">
+          This project presents a comprehensive perspective on global well-being by integrating data on happiness,
+          quality of life, and human development.
+          Explore dynamic visualizations that reveal trends, disparities, and insights shaping the state of nations
+          worldwide.
+        </p>
+
+        <!-- Icon Row (optional) -->
+        <div class="icon-row">
+          <div class="icon-item">
+            <i class="fas fa-smile"></i>
+            <p>Happiness</p>
+          </div>
+          <div class="icon-item">
+            <i class="fas fa-chart-line"></i>
+            <p>Development</p>
+          </div>
+          <div class="icon-item">
+            <i class="fas fa-home"></i>
+            <p>Quality of Life</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shape Divider -->
+      <div class="custom-shape-divider-bottom-1683146972">
+        <svg class="waves" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+          preserveAspectRatio="none">
+          <path d="M321.39,56.85C244.6,74.26,...(truncated for brevity)..." class="shape-fill"></path>
+        </svg>
+      </div>
+
+      <!-- Scroll Arrow -->
+      <i class="scroll-arrow"></i>
     </section>
-    
+
     <!-- Slide 1: Radar Chart -->
     <section class="snap-section">
       <h1>Radar Chart (Compare up to Two Countries in 2022)</h1>
@@ -43,12 +104,13 @@
       </div>
       <div id="chart"></div>
       <div class="tooltip" id="tooltip" style="opacity:0;"></div>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
+      <i class="scroll-arrow"></i>
     </section>
-    
+
     <!-- Slide 2: Top 10 Bar Chart -->
     <section class="snap-section">
-      <h1>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h1>
+      <h1>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span>
+      </h1>
       <div class="controls">
         <div class="country-box" id="year-box">
           <label class="country-label" for="yearSelect">Year:</label>
@@ -62,115 +124,122 @@
         </div>
       </div>
       <div id="top10chart"></div>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
+      <i class="scroll-arrow"></i>
 
     </section>
 
     <!-- Slide 3: Line Animation -->
     <section class="snap-section">
-        <h1>boop</h1>
-        <div class="controls">
-          <div class="country-box">
-            <span class="country-label">Global Index:</span>
-            <select id="columnSelect">
-              <option value="hdi" selected>HDI</option>
-              <option value="le">Life Expectancy</option>
-              <!-- Add more options as needed -->
-            </select>
-          </div>
+      <h1>boop</h1>
+      <div class="controls">
+        <div class="country-box">
+          <span class="country-label">Global Index:</span>
+          <select id="columnSelect">
+            <option value="hdi" selected>HDI</option>
+            <option value="le">Life Expectancy</option>
+            <!-- Add more options as needed -->
+          </select>
         </div>
-        <button class="button-4" id="reset-animation">Reset Animation</button>
+      </div>
+      <button class="button-4" id="reset-animation">Reset Animation</button>
 
-        <div id="chart-line"></div>
-        <div id="tooltip2" style="opacity:0;"></div>
-        <i class="scroll-arrow fas fa-angle-double-down"></i>
-  
-      </section> 
+      <div id="chart-line"></div>
+      <div id="tooltip2" style="opacity:0;"></div>
+      <i class="scroll-arrow"></i>
 
-     <!-- Slide 4: Map -->
-      <section class="snap-section">
-        <h1>World <span id="selectedMetricLabel">HDI</span> Map</h1>
+    </section>
 
-        <div class="controls">
-          <div class="country-box">
-            <span class="country-label">Global Index:</span>
-            <select id="index-select">
-              <option value="hdi" selected>HDI</option>
-              <!-- Future indices will be added here -->
-              <option value="x">X</option>
-            </select>
-          </div>
+    <!-- Slide 4: Map -->
+    <section class="snap-section">
+      <h1>World <span id="selectedMetricLabel">HDI</span> Map</h1>
+
+      <div class="controls">
+        <div class="country-box">
+          <span class="country-label">Global Index:</span>
+          <select id="index-select">
+            <option value="hdi" selected>HDI</option>
+            <!-- Future indices will be added here -->
+            <option value="x">X</option>
+          </select>
         </div>
-        
-        <div class="controls">
-          <label for="start-year">Start Year:</label>
-          <select id="start-year"></select>
-          <label for="end-year">End Year:</label>
-          <select id="end-year"></select>
+      </div>
+
+      <div class="controls">
+        <label for="start-year">Start Year:</label>
+        <select id="start-year"></select>
+        <label for="end-year">End Year:</label>
+        <select id="end-year"></select>
+      </div>
+
+      <div id="map-container">
+        <svg id="my_dataviz" width="800" height="500"></svg>
+        <div id="zoom-controls">
+          <button id="zoom-in">+</button>
+          <button id="zoom-out">-</button>
         </div>
-        
-        <div id="map-container">
-          <svg id="my_dataviz" width="800" height="500"></svg>
-          <div id="zoom-controls">
-            <button id="zoom-in">+</button>
-            <button id="zoom-out">-</button>
-          </div>
-          <div id="legend"></div>
+        <div id="legend"></div>
+      </div>
+
+      <div id="map-tooltip"></div>
+      <i class="scroll-arrow"></i>
+
+    </section>
+
+    <!-- Slide 5: Sankey Diagram -->
+    <section class="snap-section">
+      <h1>Factors Behind Happiness and QoL</h1>
+      <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate
+        factors to affect outcomes such as Happiness and Quality of Life.</p>
+      <div id="sankeyChart"></div>
+      <div id="sankey-tooltip" ,
+        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
+      </div>
+      <i class="scroll-arrow"></i>
+    </section>
+
+
+    <!-- Slide 6: Line Chart by Region Diagram -->
+    <section class="snap-section">
+      <h1>Line Chart by Region</h1>
+      <div class="controls">
+        <div class="country-box" id="feature-box">
+          <label class="country-label" for="featureSelect">Feature:</label>
+          <select id="featureSelect"></select>
         </div>
-        
-        <div id="map-tooltip"></div>
-        <i class="scroll-arrow fas fa-angle-double-down"></i>
-
-      </section>
-
-      <!-- Slide 5: Sankey Diagram -->
-      <section class="snap-section">
-        <h1>Factors Behind Happiness and QoL</h1>
-        <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate factors to affect outcomes such as Happiness and Quality of Life.</p>
-        <div id="sankeyChart"></div>
-        <div id="sankey-tooltip", style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);"></div> 
-        <i class="scroll-arrow fas fa-angle-double-down"></i>
-      </section>
-      
-
-      <!-- Slide 6: Line Chart by Region Diagram -->
-      <section class="snap-section">
-        <h1>Line Chart by Region</h1>
-        <div class="controls">
-          <div class="country-box" id="feature-box">
-            <label class="country-label" for="featureSelect">Feature:</label>
-            <select id="featureSelect"></select>
-          </div>
-          <div class="country-box" id="start-year-box">
-            <label class="country-label" for="startYearSelect">Start Year:</label>
-            <select id="startYearSelect"></select>
-          </div>
-          <div class="country-box" id="end-year-box">
-            <label class="country-label" for="endYearSelect">End Year:</label>
-            <select id="endYearSelect"></select>
-          </div>
+        <div class="country-box" id="start-year-box">
+          <label class="country-label" for="startYearSelect">Start Year:</label>
+          <select id="startYearSelect"></select>
         </div>
-        <div class="controls">
-          <button class="button-4" id="update-chart">Update Chart</button>
-          <button class="button-4" id="reset-animation2">Reset Animation</button>
+        <div class="country-box" id="end-year-box">
+          <label class="country-label" for="endYearSelect">End Year:</label>
+          <select id="endYearSelect"></select>
         </div>
-        <div id="lineChartRegion"></div>
-        <div class="lineChart-tooltip" id="lineChartRegionTooltip" style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);"></div>
-        <i class="scroll-arrow fas fa-angle-double-down"></i>
-      </section>
+      </div>
+      <div class="controls">
+        <button class="button-4" id="update-chart">Update Chart</button>
+        <button class="button-4" id="reset-animation2">Reset Animation</button>
+      </div>
+      <div id="lineChartRegion"></div>
+      <div class="lineChart-tooltip" id="lineChartRegionTooltip"
+        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
+      </div>
+      <i class="scroll-arrow"></i>
+    </section>
 
-      
-    </div>
 
-    <!-- Scripts -->
-    <script src="radar.js"></script>
-    <script src="top10script.js"></script>
-    <script src="line.js"></script>
-    <script src="worldmap.js"></script>
-    <script src="distributions.js"></script>
-    <script src="sankey.js"></script>
-    <script src="lineChartRegion.js"></script>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vanta.js"></script>
+  <script src="radar.js"></script>
+  <script src="top10script.js"></script>
+  <script src="line.js"></script>
+  <script src="worldmap.js"></script>
+  <script src="distributions.js"></script>
+  <script src="sankey.js"></script>
+  <script src="lineChartRegion.js"></script>
 
 
 </body>
+
 </html>

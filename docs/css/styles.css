@@ -42,7 +42,7 @@
   body {
     font-family: 'Geist Sans Variable', sans-serif;
     font-weight: 400;
-    margin:20px;
+    margin:0;
     color: #565656
   }
   
@@ -158,28 +158,30 @@
   
   .scroll-arrow {
     position: absolute;
-    bottom: 20px;        /* Adjust the vertical position */
+    bottom: 20px;         /* Adjust vertical position */
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;         /* Adjust the arrow size as needed */
-    height: 50px;
-    opacity: 0.7;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 16l-6-6h12z' fill='%23333'/></svg>");
+    width: 40px;          /* Adjust width/height to your needs */
+    height: 40px;
+    opacity: 0.7;         /* Adjust transparency if needed */
+    z-index: 99;          /* Ensure arrow is above other elements */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 16l-6-6h12zM12 8l-6-6h12z' fill='%23333'/%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
-    pointer-events: none;
+    pointer-events: none; /* So clicks pass through to elements beneath */
     animation: bounce 2s infinite;
   }
   
+  /* Simple bounce animation */
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
-      transform: translateX(-50%) translateY(0);
+      transform: translate(-50%, 0);
     }
     40% {
-      transform: translateX(-50%) translateY(-10px);
+      transform: translate(-50%, -10px);
     }
     60% {
-      transform: translateX(-50%) translateY(-5px);
+      transform: translate(-50%, -5px);
     }
   }
   
