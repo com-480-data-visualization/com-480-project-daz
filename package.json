@@ -1,0 +1,28 @@
+{
+  "name": "com-480-project-daz",
+  "version": "1.0.0",
+  "description": "| Student's name | SCIPER | | -------------- | ------ | | Andrea Miele | 302925 | | David Revaz | 315773 | | Zeynep Tandogan | 368526 |",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "babel-loader": "^10.0.0",
+    "webpack": "^5.99.5",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "ml-kmeans": "^6.0.0",
+    "ml-pca": "^4.1.1"
+  }
+}
