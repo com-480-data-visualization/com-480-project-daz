@@ -324,3 +324,13 @@
   transition: opacity 0.2s ease;
   opacity: 0;   
 }
+
+/* Legend styling */
+.legend rect {
+  width: 15px;
+  height: 15px;
+}
+.legend text {
+  font-size: 12px;
+  alignment-baseline: middle;
+}

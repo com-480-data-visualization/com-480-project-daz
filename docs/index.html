@@ -239,27 +239,35 @@
         </p>
         <!-- Controls: Dropdowns for axes and bubble size plus a year slider -->
         <div class="controls">
+          <div class="country-box" >
           <label for="xSelect">X Axis: 
             <select id="xSelect">
-              <!-- Options will be populated by D3 -->
+              <!-- Options will be populated by  D3 -->
             </select>
           </label>
+          </div>
+          <div class="country-box" >
           <label for="ySelect">Y Axis: 
             <select id="ySelect">
               <!-- Options will be populated by D3 -->
             </select>
           </label>
+          </div>
+          <div class="country-box" >
           <label for="rSelect">Bubble Size: 
             <select id="rSelect">
               <!-- Options will be populated by D3 -->
             </select>
           </label>
+          </div>
+          <div class="country-box" >
           <label for="yearSlider">
             Year:
             <!-- The slider attributes (min, max, value) will be updated by the script -->
             <input type="range" id="yearSlider" value="0">
             <span id="yearLabel"></span>
           </label>
+          </div>
         </div>
         <!-- Container for the bubble chart -->
         <div id="bubbleChart"></div>
@@ -267,6 +275,37 @@
         <div id="tooltipbubble" class="tooltipbubble"></div>
         <i class="scroll-arrow"></i>
       </section>
+
+
+
+      <section class="snap-section">
+        <h1>HDI Metrics Over Time (Normalized)</h1>
+        <div class="controls">
+          <div class="country-box" >
+            <label>Country 1: 
+              <select id="countrySelectLines1">
+                <option value="">--Select Country--</option>
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label>Country 2: 
+              <select id="countrySelectLines2">
+                <option value="">--Select Country--</option>
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label>Country 3: 
+              <select id="countrySelectLines3">
+                <option value="">--Select Country (optional)--</option>
+              </select>
+            </label>
+          </div>  
+        </div>
+        <div id="lineChart"></div>
+
+        <i class="scroll-arrow"></i>
     </section>
 
 
@@ -282,6 +321,7 @@
   <script src="sankey.js"></script>
   <script src="lineChartRegion.js"></script>
   <script src="interactivebubble.js"></script>
+  <script src="parallel.js"></script>
 
 </body>
 
