@@ -23,7 +23,7 @@
   const container = d3.select("#chartContainer");
 
   // Load your CSV data. Adjust the filename/path as needed.
-  d3.csv("HDIDataset.csv").then(data => {
+  d3.csv("HDIdataset.csv").then(data => {
     // Parse numeric fields.
     data.forEach(d => {
       d.Year = +d.Year;

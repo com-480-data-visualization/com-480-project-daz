@@ -36,7 +36,7 @@
     svg.append("g").attr("class", "y-axis");
   
     // Load the CSV file.
-    d3.csv("HDIDataset.csv").then(data => {
+    d3.csv("HDIdataset.csv").then(data => {
       console.log("CSV data loaded:", data);
   
       // Parse numeric fields.
