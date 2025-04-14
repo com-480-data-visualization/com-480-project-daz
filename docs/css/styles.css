@@ -353,3 +353,6 @@
   overflow-y: auto;  /* If the content is too tall, it will scroll inside */
   padding: 20px;     /* Add padding as needed */
 }
+.label {
+  pointer-events: none;
+}
