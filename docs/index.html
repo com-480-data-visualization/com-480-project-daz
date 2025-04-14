@@ -76,6 +76,77 @@
           preserveAspectRatio="none">
           <path d="M321.39,56.85C244.6,74.26,...(truncated for brevity)..." class="shape-fill"></path>
         </svg>
+        document.addEventListener("DOMContentLoaded", function () {
+            const svgWidth = 800, svgHeight = 500, margin = { top: 20, right: 20, bottom: 50, left: 70 };
+            const width = svgWidth - margin.left - margin.right;
+            const height = svgHeight - margin.top - margin.bottom;
+          
+            const svg = d3.select("#scatterplot")
+              .append("svg")
+              .attr("width", svgWidth)
+              .attr("height", svgHeight)
+              .append("g")
+              .attr("transform", `translate(${margin.left},${margin.top})`);
+          
+            const tooltip = d3.select("#tooltipscatter");
+          
+            let data;
+          
+            d3.csv("merged_dataset.csv").then(rawData => {
+              data = rawData;
+              const years = [...new Set(data.map(d => d.Year))].sort();
+              years.forEach(year => {
+                d3.select("#yearSelectScatter").append("option").text(year).attr("value", year);
+              });
+          
+              const numericKeys = Object.keys(data[0]).filter(k => !isNaN(parseFloat(data[0][k])) && k !== "Year");
+              numericKeys.forEach(key => {
+                d3.select("#xSelectScatter").append("option").text(key).attr("value", key);
+                d3.select("#ySelectScatter").append("option").text(key).attr("value", key);
+              });
+          
+              d3.selectAll("#xSelectScatter, #ySelectScatter, #yearSelectScatter").on("change", updateChart);
+          
+              updateChart();
+            });
+          
+            function updateChart() {
+              const xKey = d3.select("#xSelectScatter").node().value;
+              const yKey = d3.select("#ySelectScatter").node().value;
+              const year = d3.select("#yearSelectScatter").node().value;
+          
+              const yearData = data.filter(d => d.Year === year && d[xKey] && d[yKey]);
+          
+              const x = d3.scaleLinear()
+                .domain(d3.extent(yearData, d => +d[xKey])).nice()
+                .range([0, width]);
+          
+              const y = d3.scaleLinear()
+                .domain(d3.extent(yearData, d => +d[yKey])).nice()
+                .range([height, 0]);
+          
+              svg.selectAll("*").remove();
+          
+              svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
+              svg.append("g").call(d3.axisLeft(y));
+          
+              svg.selectAll("circle")
+                .data(yearData)
+                .enter()
+                .append("circle")
+                .attr("cx", d => x(+d[xKey]))
+                .attr("cy", d => y(+d[yKey]))
+                .attr("r", 5)
+                .attr("fill", "steelblue")
+                .on("mouseover", (event, d) => {
+                  tooltip.style("opacity", 1)
+                    .html('<strong>\${d.country}</strong><br>\${xKey}: \${d[xKey]}<br>\${yKey}: \${d[yKey]}\`')
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => tooltip.style("opacity", 0));
+            }
+          });
       </div>
 
       <!-- Scroll Arrow -->
@@ -283,6 +354,64 @@
         <i class="scroll-arrow"></i>
       </section>
 
+      <section class="snap-section">
+        <h1>Scatter plot</h1>
+        <p>Explore the relationship between two HDI metrics using a scatter plot.</p>
+        <div class="controls">
+          <div class="country-box" >
+            <label for="xSelectScatter">X Axis: 
+              <select id="xSelectScatter">
+                <!-- Options will be populated by D3 -->
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label for="ySelectScatter">Y Axis: 
+              <select id="ySelectScatter">
+                <!-- Options will be populated by D3 -->
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label for="yearSelectScatter">Year: 
+              <select id="yearSelectScatter">
+                <!-- Options will be populated by D3 -->
+              </select>
+            </label>
+          </div>
+        </div>
+        <div id="scatterplot"></div>
+        <div id="tooltipscatter" class="tooltipscatter"></div>
+        <i class="scroll-arrow"></i>
+      </section>
+
+      <section class="snap-section">
+        <h1>Time series</h1>
+        <div class="controls">
+          <div class="country-box">
+            <label for="featureSelectTimeSeries">Feature:</label>
+            <select id="featureSelectTimeSeries">
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+          <div class="country-box">
+            <label for="countriesSelectTimeSeries">Countries:</label>
+            <select id="countriesSelectTimeSeries" multiple>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+            <div class="country-box">
+            <label for="timeRangePicker">Time Range:</label>
+            <input type="range" id="timeRangePickerMin" min="2000" max="2022" step="1" value="2000">
+            <span id="timeRangeMinLabel">2000</span>
+            <input type="range" id="timeRangePickerMax" min="2000" max="2022" step="1" value="2022">
+            <span id="timeRangeMaxLabel">2022</span>
+            </div>
+        </div>
+        <div id="timeSeriesChart"></div>
+        <div id="timeSeriesLegend"></div>
+      </section>
+
 
 
       <section class="snap-section">
@@ -348,6 +477,8 @@
   <script src="parallel.js"></script>
   <script src="threecolumns.js"></script>
   <script src="bundle.js"></script>
+  <script src="scatter.js"></script>
+  <script src="timeseries.js"></script>
 </body>
 
 </html>
