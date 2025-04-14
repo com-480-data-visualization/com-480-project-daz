@@ -42,15 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
         d3.select("#timeRangeMinLabel").text(minYear);
         d3.select("#timeRangeMaxLabel").text(maxYear);
       
-        console.log("Selected countries:", selectedCountries);
-        console.log("Selected year range:", minYear, "-", maxYear);
+        // console.log("Selected countries:", selectedCountries);
+        // console.log("Selected year range:", minYear, "-", maxYear);
       
         const countryFilteredData = data.filter(d =>
           +d.Year >= minYear && +d.Year <= maxYear &&
           selectedCountries.includes(d.country)
         );
       
-        console.log("Filtered data (by country + year):", countryFilteredData);
+        // console.log("Filtered data (by country + year):", countryFilteredData);
       
         const numericKeys = Object.keys(data[0]).filter(k => !isNaN(parseFloat(data[0][k])) && k !== "Year");
       
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
           countryFilteredData.some(d => d[key] !== "" && !isNaN(d[key]))
         );
       
-        console.log("Valid features for selected data:", validFeatures);
+        // console.log("Valid features for selected data:", validFeatures);
       
         const currentFeature = d3.select("#featureSelectTimeSeries").node().value;
       
@@ -76,19 +76,19 @@ document.addEventListener("DOMContentLoaded", function () {
       
         const feature = featureSelect.node().value;
         if (!feature) {
-          console.warn("No valid feature selected or available.");
+        //   console.warn("No valid feature selected or available.");
           return;
         }
       
         const filteredData = countryFilteredData.filter(d => d[feature] !== "" && !isNaN(d[feature]));
       
-        console.log("Final data for plotting (with feature):", filteredData);
+        // console.log("Final data for plotting (with feature):", filteredData);
       
         const grouped = d3.groups(filteredData, d => d.country);
-        console.log("Grouped data:", grouped);
+        // console.log("Grouped data:", grouped);
       
         if (filteredData.length === 0) {
-          console.warn("No data available to plot.");
+        //   console.warn("No data available to plot.");
           return;
         }
       
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .text(country);
         });
       
-        console.log("Chart successfully updated.");
+        // console.log("Chart successfully updated.");
       }
   });
   
