@@ -76,84 +76,13 @@
           preserveAspectRatio="none">
           <path d="M321.39,56.85C244.6,74.26,...(truncated for brevity)..." class="shape-fill"></path>
         </svg>
-        document.addEventListener("DOMContentLoaded", function () {
-            const svgWidth = 800, svgHeight = 500, margin = { top: 20, right: 20, bottom: 50, left: 70 };
-            const width = svgWidth - margin.left - margin.right;
-            const height = svgHeight - margin.top - margin.bottom;
-          
-            const svg = d3.select("#scatterplot")
-              .append("svg")
-              .attr("width", svgWidth)
-              .attr("height", svgHeight)
-              .append("g")
-              .attr("transform", `translate(${margin.left},${margin.top})`);
-          
-            const tooltip = d3.select("#tooltipscatter");
-          
-            let data;
-          
-            d3.csv("merged_dataset.csv").then(rawData => {
-              data = rawData;
-              const years = [...new Set(data.map(d => d.Year))].sort();
-              years.forEach(year => {
-                d3.select("#yearSelectScatter").append("option").text(year).attr("value", year);
-              });
-          
-              const numericKeys = Object.keys(data[0]).filter(k => !isNaN(parseFloat(data[0][k])) && k !== "Year");
-              numericKeys.forEach(key => {
-                d3.select("#xSelectScatter").append("option").text(key).attr("value", key);
-                d3.select("#ySelectScatter").append("option").text(key).attr("value", key);
-              });
-          
-              d3.selectAll("#xSelectScatter, #ySelectScatter, #yearSelectScatter").on("change", updateChart);
-          
-              updateChart();
-            });
-          
-            function updateChart() {
-              const xKey = d3.select("#xSelectScatter").node().value;
-              const yKey = d3.select("#ySelectScatter").node().value;
-              const year = d3.select("#yearSelectScatter").node().value;
-          
-              const yearData = data.filter(d => d.Year === year && d[xKey] && d[yKey]);
-          
-              const x = d3.scaleLinear()
-                .domain(d3.extent(yearData, d => +d[xKey])).nice()
-                .range([0, width]);
-          
-              const y = d3.scaleLinear()
-                .domain(d3.extent(yearData, d => +d[yKey])).nice()
-                .range([height, 0]);
-          
-              svg.selectAll("*").remove();
-          
-              svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
-              svg.append("g").call(d3.axisLeft(y));
-          
-              svg.selectAll("circle")
-                .data(yearData)
-                .enter()
-                .append("circle")
-                .attr("cx", d => x(+d[xKey]))
-                .attr("cy", d => y(+d[yKey]))
-                .attr("r", 5)
-                .attr("fill", "steelblue")
-                .on("mouseover", (event, d) => {
-                  tooltip.style("opacity", 1)
-                    .html('<strong>\${d.country}</strong><br>\${xKey}: \${d[xKey]}<br>\${yKey}: \${d[yKey]}\`')
-                    .style("left", (event.pageX + 5) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", () => tooltip.style("opacity", 0));
-            }
-          });
       </div>
 
       <!-- Scroll Arrow -->
-      <i class="scroll-arrow"></i>
-    </section>
 
-    <section class="snap-section" id="chapter1">
+    </section>
+  </div>
+    <section class="snapsection" id="chapter1">
       <div class="inner-content">
         <h1>Chapter 1: The World in Transition</h1>
         <p>
@@ -204,11 +133,10 @@
 
         <div id="chart-line"></div>
         <div id="tooltip2" style="opacity:0;"></div>
-        <i class="scroll-arrow fas fa-angle-double-down"></i>
       </div>
     </section>
 
-    <section class="snap-section" id="chapter2">
+    <section class="snapsection" id="chapter2">
       <div class="inner-content">
       <h1>Chapter 2: Unveiling the Factors</h1>
       <p>
@@ -294,11 +222,10 @@
           </div>  
         </div>
         <div id="lineChart"></div>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
     </div>
     </section>
 
-    <section class="snap-section" id="chapter3">
+    <section class="snapsection" id="chapter3">
       <div class="inner-content">
       <h1>Chapter 3: The Shifting Landscape</h1>
       <p>
@@ -331,12 +258,10 @@
 
         <h1>The Impact of Public War: the examples of Libya, Syria, and Yemen</h1>
         <div id="chartContainer"></div>
-      
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
     </div>
     </section>
 
-    <section class="snap-section" id="chapter4">
+    <section class="snapsection" id="chapter4">
       <div class="inner-content">
       <h1>Chapter 4: Regional Voices and Outliers</h1>
       <p>
@@ -413,12 +338,10 @@
       <div class="lineChart-tooltip" id="lineChartRegionTooltip"
         style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
       </div>
-
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
     </div>
     </section>
 
-    <section class="snap-section" id="chapter5">
+    <section class="snapsection" id="chapter5">
       <div class="inner-content">
       <h1>Chapter 5: Weaving the Threads – Insights and Future Paths</h1>
       <p>
@@ -447,19 +370,19 @@
         </div>
       </div>
       <div id="top10chart"></div>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
+
     </div>
     </section>
 
-    <section class="snap-section" id="epilogue">
+    <section class="snapsection" id="epilogue">
       <h1>Epilogue: Reflection and Further Exploration</h1>
       <p>
         Here we recap the insights uncovered on our journey. what we discover as key patterns, revisit surprising trends, and learn how these insights inform our view of global well-being.
       </p>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
+
     </section>
 
-    <section class="snap-section" id="annexes">
+    <section class="snapsection" id="annexes">
       <h1>Annexes: A Comprehensive Data Playground</h1>
       <p>
         For those eager to dig deeper, explore detailed visualizations and data tables.
@@ -468,7 +391,7 @@
     </section>
 
 
-  </div>
+  
 
   <!-- Scripts -->
   <script src="vanta.js"></script>
