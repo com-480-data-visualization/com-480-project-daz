@@ -1,7 +1,7 @@
 (function() {
   // Configuration and margins
   const margin = { top: 40, right: 150, bottom: 40, left: 60 },
-        width = 1200 - margin.left - margin.right,
+        width = 800 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom,
         flagSize = 20;
   

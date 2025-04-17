@@ -349,9 +349,14 @@
   stroke-width: 1px;
 }
 .inner-content {
+  display: flex;
+  flex-direction: column;  /* stack elements vertically */
+  align-items: center;     /* center everything horizontally */
+  text-align: center;      /* center inline text */
+  width: 100%;           /* full width */
   height: 100%;
-  overflow-y: auto;  /* If the content is too tall, it will scroll inside */
-  padding: 20px;     /* Add padding as needed */
+  overflow-y: auto;        /* your existing scroll behavior */
+  padding: 20px;           /* your existing padding */
 }
 .label {
   pointer-events: none;

@@ -1,3 +1,17 @@
+<!--
+File: index copy.html
+Created: Thursday, 17th April 2025 2:16:26 pm
+Author: Andrea Miele (andrea.miele.pro@gmail.com, https://www.andreamiele.fr)
+GitHub: https://www.github.com/andreamiele
+-----
+Last Modified: Thursday, 17th April 2025 2:16:34 pm
+Modified By: Andrea Miele (andrea.miele.pro@gmail.com)
+-----
+
+-----
+Copyright (c) 2025 Your Company
+
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -154,66 +168,19 @@
     </section>
 
     <section class="snap-section" id="chapter1">
-      <div class="inner-content">
-        <h1>Chapter 1: The World in Transition</h1>
-        <p>
-          Witness the transformation of our world over time as nations progress and face setbacks.
-        </p>
-        <p>A global visualization displaying <strong>HDI</strong> values by country. Hover over a country to see its line chart time series.
-        </p>
-        <div class="controls">
-          <div class="country-box">
-            <span class="country-label">Global Index:</span>
-            <select id="index-select">
-              <option value="hdi" selected>HDI</option>
-              <!-- Future indices will be added here -->
-              <option value="x">X</option>
-            </select>
-          </div>
-        </div>
+      <h1>Chapter 1: The World in Transition</h1>
+      <p>
+        Witness the transformation of our world over time as nations progress and face setbacks.
+      </p>
 
-        <div class="controls">
-          <label for="start-year">Start Year:</label>
-          <select id="start-year"></select>
-          <label for="end-year">End Year:</label>
-          <select id="end-year"></select>
-        </div>
-
-        <div id="map-container">
-          <svg id="my_dataviz" width="800" height="500"></svg>
-          <div id="zoom-controls">
-            <button id="zoom-in">+</button>
-            <button id="zoom-out">-</button>
-          </div>
-          <div id="legend"></div>
-        </div>
-        <div id="map-tooltip"></div>
-
-        <p> A dynamic animation representing <strong>HDI</strong> trends over time.</p>
-        <div class="controls">
-          <div class="country-box">
-            <span class="country-label">Global Index:</span>
-            <select id="columnSelect">
-              <option value="hdi" selected>HDI</option>
-              <option value="le">Life Expectancy</option>
-              <!-- Add more options as needed -->
-            </select>
-          </div>
-        </div>
-        <button class="button-4" id="reset-animation">Reset Animation</button>
-
-        <div id="chart-line"></div>
-        <div id="tooltip2" style="opacity:0;"></div>
-        <i class="scroll-arrow fas fa-angle-double-down"></i>
-      </div>
+      <div id="bar-chart-race">[Bar Chart Race Placeholder]</div>
+      <i class="scroll-arrow fas fa-angle-double-down"></i>
     </section>
 
-    <section class="snap-section" id="chapter2">
-      <div class="inner-content">
-      <h1>Chapter 2: Unveiling the Factors</h1>
-      <p>
-        Dive deeper into the intricate connections among socio-economic indicators. Explore the interplay between metrics that shape well-being.
-      </p>
+
+    <!-- Slide 1: Radar Chart -->
+    <section class="snap-section">
+      <h1>Radar Chart (Compare up to Two Countries in 2022)</h1>
       <p>A comparative radar chart visualizing key indicators for two selected countries in 2022.</p>
       <div class="controls">
         <!-- Container for Country 1 -->
@@ -242,196 +209,11 @@
       </div>
       <div id="chart"></div>
       <div class="tooltip" id="tooltip" style="opacity:0;"></div>
-
-      <p>Explore the relationship between two HDI metrics using a scatter plot.</p>
-        <div class="controls">
-          <div class="country-box" >
-            <label for="xSelectScatter">X Axis: 
-              <select id="xSelectScatter">
-                <!-- Options will be populated by D3 -->
-              </select>
-            </label>
-          </div>
-          <div class="country-box" >
-            <label for="ySelectScatter">Y Axis: 
-              <select id="ySelectScatter">
-                <!-- Options will be populated by D3 -->
-              </select>
-            </label>
-          </div>
-          <div class="country-box" >
-            <label for="yearSelectScatter">Year: 
-              <select id="yearSelectScatter">
-                <!-- Options will be populated by D3 -->
-              </select>
-            </label>
-          </div>
-        </div>
-        <div id="scatterplot"></div>
-        <div id="tooltipscatter" class="tooltipscatter"></div>
-
-        <div class="controls">
-          <div class="country-box" >
-            <label>Country 1: 
-              <select id="countrySelectLines1">
-                <option value="">--Select Country--</option>
-              </select>
-            </label>
-          </div>
-          <div class="country-box" >
-            <label>Country 2: 
-              <select id="countrySelectLines2">
-                <option value="">--Select Country--</option>
-              </select>
-            </label>
-          </div>
-          <div class="country-box" >
-            <label>Country 3: 
-              <select id="countrySelectLines3">
-                <option value="">--Select Country (optional)--</option>
-              </select>
-            </label>
-          </div>  
-        </div>
-        <div id="lineChart"></div>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
-    </div>
+      <i class="scroll-arrow"></i>
     </section>
 
-    <section class="snap-section" id="chapter3">
-      <div class="inner-content">
-      <h1>Chapter 3: The Shifting Landscape</h1>
-      <p>
-        As time marches on, explore trends, turning points, and regional dynamics. Delve into time series and compare changes between decades.
-      </p>
-      <div class="controls">
-        <div class="country-box">
-          <label for="featureSelectTimeSeries">Feature:</label>
-          <select id="featureSelectTimeSeries">
-            <!-- Options will be populated dynamically -->
-          </select>
-        </div>
-        <div class="country-box">
-          <label for="countriesSelectTimeSeries">Countries:</label>
-          <select id="countriesSelectTimeSeries" multiple>
-            <!-- Options will be populated dynamically -->
-          </select>
-        </div>
-          <div class="country-box">
-          <label for="timeRangePicker">Time Range:</label>
-          <input type="range" id="timeRangePickerMin" min="2000" max="2022" step="1" value="2000">
-          <span id="timeRangeMinLabel">2000</span>
-          <input type="range" id="timeRangePickerMax" min="2000" max="2022" step="1" value="2022">
-          <span id="timeRangeMaxLabel">2022</span>
-          </div>
-      </div>
-      <div id="timeSeriesChart"></div>
-      <div id="timeSeriesLegend"></div>
-
-
-        <h1>The Impact of Public War: the examples of Libya, Syria, and Yemen</h1>
-        <div id="chartContainer"></div>
-      
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
-    </div>
-    </section>
-
-    <section class="snap-section" id="chapter4">
-      <div class="inner-content">
-      <h1>Chapter 4: Regional Voices and Outliers</h1>
-      <p>
-        Every region tells its own story—a blend of triumphs, challenges, and distinct trajectories. Zoom in to discover disparities and outlier narratives.
-      </p>
-
-
-
-      <p>
-        Explore HDI metrics interactively by adjusting the axes, bubble size, and year.
-      </p>
-      <!-- Controls: Dropdowns for axes and bubble size plus a year slider -->
-      <div class="controls">
-        <div class="country-box" >
-        <label for="xSelect">X Axis: 
-          <select id="xSelect">
-            <!-- Options will be populated by  D3 -->
-          </select>
-        </label>
-        </div>
-        <div class="country-box" >
-        <label for="ySelect">Y Axis: 
-          <select id="ySelect">
-            <!-- Options will be populated by D3 -->
-          </select>
-        </label>
-        </div>
-        <div class="country-box" >
-        <label for="rSelect">Bubble Size: 
-          <select id="rSelect">
-            <!-- Options will be populated by D3 -->
-          </select>
-        </label>
-        </div>
-        <div class="country-box" >
-        <label for="yearSlider">
-          Year:
-          <!-- The slider attributes (min, max, value) will be updated by the script -->
-          <input type="range" id="yearSlider" value="0">
-          <span id="yearLabel"></span>
-        </label>
-        </div>
-      </div>
-      <!-- Container for the bubble chart -->
-      <div id="bubbleChart"></div>
-      <!-- Tooltip -->
-      <div id="tooltipbubble" class="tooltipbubble"></div>
-
-
-      <h1>PCA and Clustering on HDI Data (2022)</h1>
-      <div id="chartpca"></div>
-
-
-      <p>A visual representation of regional trends over selected time periods.</p>
-      <div class="controls">
-        <div class="country-box" id="feature-box">
-          <label class="country-label" for="featureSelect">Feature:</label>
-          <select id="featureSelect"></select>
-        </div>
-        <div class="country-box" id="start-year-box">
-          <label class="country-label" for="startYearSelect">Start Year:</label>
-          <select id="startYearSelect"></select>
-        </div>
-        <div class="country-box" id="end-year-box">
-          <label class="country-label" for="endYearSelect">End Year:</label>
-          <select id="endYearSelect"></select>
-        </div>
-      </div>
-      <div class="controls">
-        <button class="button-4" id="update-chart">Update Chart</button>
-        <button class="button-4" id="reset-animation2">Reset Animation</button>
-      </div>
-      <div id="lineChartRegion"></div>
-      <div class="lineChart-tooltip" id="lineChartRegionTooltip"
-        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
-      </div>
-
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
-    </div>
-    </section>
-
-    <section class="snap-section" id="chapter5">
-      <div class="inner-content">
-      <h1>Chapter 5: Weaving the Threads – Insights and Future Paths</h1>
-      <p>
-        In our final chapter, diverse strands of data converge to reveal cause-and-effect relationships and outline potential futures. Explore the drivers of well-being and engage with interactive simulations.
-      </p>
-      <h1>Factors Behind Happiness and QoL</h1>
-      <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate
-        factors to affect outcomes such as Happiness and Quality of Life.</p>
-      <div id="sankeyChart"></div>
-      <div id="sankey-tooltip" ,
-        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
-      </div>
-
+    <!-- Slide 2: Top 10 Bar Chart -->
+    <section class="snap-section">
       <h1>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h1>
       <p>A dynamic bar chart ranking the top 10 countries based on the selected index and year.</p>
       <div class="controls">
@@ -447,24 +229,79 @@
         </div>
       </div>
       <div id="top10chart"></div>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
-    </div>
+      <i class="scroll-arrow"></i>
+
     </section>
 
-    <section class="snap-section" id="epilogue">
-      <h1>Epilogue: Reflection and Further Exploration</h1>
-      <p>
-        Here we recap the insights uncovered on our journey. what we discover as key patterns, revisit surprising trends, and learn how these insights inform our view of global well-being.
-      </p>
-      <i class="scroll-arrow fas fa-angle-double-down"></i>
+    <!-- Slide 3: Line Animation -->
+    <section class="snap-section">
+      <h1>boop</h1>
+      <p> A dynamic animation representing <strong>HDI</strong> trends over time.</p>
+      <div class="controls">
+        <div class="country-box">
+          <span class="country-label">Global Index:</span>
+          <select id="columnSelect">
+            <option value="hdi" selected>HDI</option>
+            <option value="le">Life Expectancy</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+      </div>
+      <button class="button-4" id="reset-animation">Reset Animation</button>
+
+      <div id="chart-line"></div>
+      <div id="tooltip2" style="opacity:0;"></div>
+      <i class="scroll-arrow"></i>
+
     </section>
 
-    <section class="snap-section" id="annexes">
-      <h1>Annexes: A Comprehensive Data Playground</h1>
-      <p>
-        For those eager to dig deeper, explore detailed visualizations and data tables.
+    <!-- Slide 4: Map -->
+    <section class="snap-section">
+      <h1>World <span id="selectedMetricLabel">HDI</span> Map</h1>
+      <p>A global visualization displaying <strong>HDI</strong> values by country. Hover over a country to see its line chart time series.
       </p>
-      <p>Link to <a href="distributions.html">a full distributions'apge.</a></p>
+      <div class="controls">
+        <div class="country-box">
+          <span class="country-label">Global Index:</span>
+          <select id="index-select">
+            <option value="hdi" selected>HDI</option>
+            <!-- Future indices will be added here -->
+            <option value="x">X</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label for="start-year">Start Year:</label>
+        <select id="start-year"></select>
+        <label for="end-year">End Year:</label>
+        <select id="end-year"></select>
+      </div>
+
+      <div id="map-container">
+        <svg id="my_dataviz" width="800" height="500"></svg>
+        <div id="zoom-controls">
+          <button id="zoom-in">+</button>
+          <button id="zoom-out">-</button>
+        </div>
+        <div id="legend"></div>
+      </div>
+
+      <div id="map-tooltip"></div>
+      <i class="scroll-arrow"></i>
+
+    </section>
+
+    <!-- Slide 5: Sankey Diagram -->
+    <section class="snap-section">
+      <h1>Factors Behind Happiness and QoL</h1>
+      <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate
+        factors to affect outcomes such as Happiness and Quality of Life.</p>
+      <div id="sankeyChart"></div>
+      <div id="sankey-tooltip" ,
+        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
+      </div>
+      <i class="scroll-arrow"></i>
     </section>
 
 
@@ -497,8 +334,158 @@
       <i class="scroll-arrow"></i>
     </section>
 
- 
+     <!-- Slide 7: Interactive Bubble Chart  -->
+      <section class="snap-section">
+        <h1>Interactive Bubble Chart for HDI Metrics</h1>
+        <p>
+          Explore HDI metrics interactively by adjusting the axes, bubble size, and year.
+        </p>
+        <!-- Controls: Dropdowns for axes and bubble size plus a year slider -->
+        <div class="controls">
+          <div class="country-box" >
+          <label for="xSelect">X Axis: 
+            <select id="xSelect">
+              <!-- Options will be populated by  D3 -->
+            </select>
+          </label>
+          </div>
+          <div class="country-box" >
+          <label for="ySelect">Y Axis: 
+            <select id="ySelect">
+              <!-- Options will be populated by D3 -->
+            </select>
+          </label>
+          </div>
+          <div class="country-box" >
+          <label for="rSelect">Bubble Size: 
+            <select id="rSelect">
+              <!-- Options will be populated by D3 -->
+            </select>
+          </label>
+          </div>
+          <div class="country-box" >
+          <label for="yearSlider">
+            Year:
+            <!-- The slider attributes (min, max, value) will be updated by the script -->
+            <input type="range" id="yearSlider" value="0">
+            <span id="yearLabel"></span>
+          </label>
+          </div>
+        </div>
+        <!-- Container for the bubble chart -->
+        <div id="bubbleChart"></div>
+        <!-- Tooltip -->
+        <div id="tooltipbubble" class="tooltipbubble"></div>
+        <i class="scroll-arrow"></i>
+      </section>
 
+      <section class="snap-section">
+        <h1>Scatter plot</h1>
+        <p>Explore the relationship between two HDI metrics using a scatter plot.</p>
+        <div class="controls">
+          <div class="country-box" >
+            <label for="xSelectScatter">X Axis: 
+              <select id="xSelectScatter">
+                <!-- Options will be populated by D3 -->
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label for="ySelectScatter">Y Axis: 
+              <select id="ySelectScatter">
+                <!-- Options will be populated by D3 -->
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label for="yearSelectScatter">Year: 
+              <select id="yearSelectScatter">
+                <!-- Options will be populated by D3 -->
+              </select>
+            </label>
+          </div>
+        </div>
+        <div id="scatterplot"></div>
+        <div id="tooltipscatter" class="tooltipscatter"></div>
+        <i class="scroll-arrow"></i>
+      </section>
+
+      <section class="snap-section">
+        <h1>Time series</h1>
+        <div class="controls">
+          <div class="country-box">
+            <label for="featureSelectTimeSeries">Feature:</label>
+            <select id="featureSelectTimeSeries">
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+          <div class="country-box">
+            <label for="countriesSelectTimeSeries">Countries:</label>
+            <select id="countriesSelectTimeSeries" multiple>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+            <div class="country-box">
+            <label for="timeRangePicker">Time Range:</label>
+            <input type="range" id="timeRangePickerMin" min="2000" max="2022" step="1" value="2000">
+            <span id="timeRangeMinLabel">2000</span>
+            <input type="range" id="timeRangePickerMax" min="2000" max="2022" step="1" value="2022">
+            <span id="timeRangeMaxLabel">2022</span>
+            </div>
+        </div>
+        <div id="timeSeriesChart"></div>
+        <div id="timeSeriesLegend"></div>
+      </section>
+
+
+
+      <section class="snap-section">
+        <h1>HDI Metrics Over Time (Normalized)</h1>
+        <div class="controls">
+          <div class="country-box" >
+            <label>Country 1: 
+              <select id="countrySelectLines1">
+                <option value="">--Select Country--</option>
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label>Country 2: 
+              <select id="countrySelectLines2">
+                <option value="">--Select Country--</option>
+              </select>
+            </label>
+          </div>
+          <div class="country-box" >
+            <label>Country 3: 
+              <select id="countrySelectLines3">
+                <option value="">--Select Country (optional)--</option>
+              </select>
+            </label>
+          </div>  
+        </div>
+        <div id="lineChart"></div>
+
+        <i class="scroll-arrow"></i>
+    </section>
+
+
+    <section class="snap-section">
+      <div class="inner-content">
+      <h1>The Impact of Public War: the examples of Libya, Syria, and Yemen</h1>
+      <div id="chartContainer"></div>
+      
+      <i class="scroll-arrow"></i>
+    </div>
+    </section>
+
+
+    <section class="snap-section">
+      <h1>PCA and Clustering on HDI Data (2022)</h1>
+      <div id="chartpca"></div>
+  
+      <i class="scroll-arrow"></i>
+    </section>
 
   </div>
 
