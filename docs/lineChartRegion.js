@@ -94,8 +94,6 @@ const AVAILABLE_FEATURES = [
       });
 
       document.getElementById("reset-animation2").addEventListener("click", () => {
-        document.getElementById("featureSelect").value = defaultFeature;
-        populateYearsAndDefaults();
         updateChart();
       });
     }
