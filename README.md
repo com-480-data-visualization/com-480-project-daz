@@ -20,6 +20,10 @@ The exploratory data analysis can be found in the datavis.ipynb notebook located
 
 **10% of the final grade**
 
+You can find our Milestone 2 report [here](milestone2/DAZ_milestone2.pdf).
+
+**Minimum Viable Product (MVP)**: [View the MVP](https://com-480-data-visualization.github.io/com-480-project-daz/)
+
 
 ## Milestone 3 (30th May, 5pm)
 
