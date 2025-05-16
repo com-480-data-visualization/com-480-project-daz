@@ -1,355 +1,365 @@
-(function() {
+// worldmap.js  – fixed version
+document.addEventListener("DOMContentLoaded", function () {
+  // ── Configuration ──────────────────────────────────────────────────────────
+  const AVAILABLE_METRICS = [
+    { key: "hdi",                   label: "HDI",                   col: "hdi" },
+    { key: "happiness_score",       label: "Happiness Score",       col: "happiness_score" },
+    { key: "quality_of_life_index", label: "Quality of Life Index", col: "Quality of Life Index" }
+  ];
 
-  document.getElementById("index-select").addEventListener("change", function() {
-    // Get the text of the selected option (e.g., "HDI" or "X")
-    const selectedText = this.options[this.selectedIndex].text;
-    // Update the metric label in the title accordingly.
-    document.getElementById("selectedMetricLabel").textContent = selectedText;
-  });
-
-  // Mapping from CSV country names to GeoJSON country names
-  const mappingCSVtoGeo = {
-    "Bolivia (Plurinational State of)": "Bolivia",
-    "Brunei Darussalam": "Brunei",
-    "Côte d'Ivoire": "Ivory Coast",
-    "Congo (Democratic Republic of the)": "Democratic Republic of the Congo",
-    "Congo": "Republic of the Congo",
-    "Czechia": "Czech Republic",
-    "Iran (Islamic Republic of)": "Iran",
-    "Korea (Republic of)": "South Korea",
-    "Lao People's Democratic Republic": "Laos",
-    "Moldova (Republic of)": "Moldova",
-    "North Macedonia": "Macedonia",
-    "Russian Federation": "Russia",
-    "Türkiye": "Turkey",
-    "Tanzania (United Republic of)": "United Republic of Tanzania",
-    "Venezuela (Bolivarian Republic of)": "Venezuela",
-    "Viet Nam": "Vietnam",
-    "United States": "USA"
+  // a map from metricKey → D3 color interpolator
+  const METRIC_INTERPOLATORS = {
+    hdi:                   d3.interpolateGreens,
+    happiness_score:       d3.interpolateBlues,
+    quality_of_life_index: d3.interpolateOranges
   };
 
-  // metricsData will store the CSV data by country, then by year.
-  const metricsData = {};
+  // only the cases where CSV ≠ GeoJSON
+  const mappingCSVtoGeo = {
+    "Bolivia (Plurinational State of)":      "Bolivia",
+    "Brunei Darussalam":                      "Brunei",
+    "Congo":                                  "Republic of the Congo",
+    "Congo (Democratic Republic of the)":     "Democratic Republic of the Congo",
+    "Iran (Islamic Republic of)":             "Iran",
+    "Korea (Republic of)":                    "South Korea",
+    "Lao People's Democratic Republic":       "Laos",
+    "Micronesia (Federated States of)":       "Federated States of Micronesia",
+    "Moldova (Republic of)":                  "Moldova",
+    "Palestine, State of":                    "Palestine",
+    "Russian Federation":                     "Russia",
+    "Syrian Arab Republic":                   "Syria",
+    "Tanzania (United Republic of)":          "Tanzania",
+    "Türkiye":                                "Turkey",
+    "United States":                          "United States of America",
+    "Venezuela (Bolivarian Republic of)":     "Venezuela",
+    "Hong Kong":                              "Hong Kong S.A.R. of China",
+    "Hong Kong, China (SAR)":                 "Hong Kong S.A.R. of China",
 
-  // Default selected interval and metric (will be updated dynamically)
-  let selectedStartYear, selectedEndYear;
-  let selectedMetric = "hdi"; // default metric
+  };
 
-  // Declare colorScale and global min/max variables.
-  let colorScale;
-  let globalMin, globalMax;
+  // ── State ──────────────────────────────────────────────────────────────────
+  let dataGlobal,
+      metricsData     = {},
+      selectedMetric,
+      selectedStartYear,
+      selectedEndYear,
+      colorScale,
+      globalMin,
+      globalMax,
+      geoData;
 
-  const svg = d3.select("#my_dataviz"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
+  // ── D3 & SVG setup ─────────────────────────────────────────────────────────
+  const svg      = d3.select("#my_dataviz"),
+        width    = +svg.attr("width"),
+        height   = +svg.attr("height"),
+        mapGroup = svg.append("g"),
+        projection = d3.geoMercator()
+                       .scale(100)
+                       .center([0, 20])
+                       .translate([width / 2, height / 2]),
+        path      = d3.geoPath().projection(projection),
+        tooltip   = d3.select("#map-tooltip");
 
-  const mapGroup = svg.append("g");
+  // ── Load data & initial render ─────────────────────────────────────────────
+  Promise.all([
+    d3.csv("merged_dataset.csv", d3.autoType),
+    d3.json("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson")
+  ]).then(([csv, geo]) => {
+    dataGlobal = csv;
+    geoData    = geo;
+    buildMetricsData();
+    initMetricSelect();
+    populateYearsAndDefaults();
+    drawMap();
+    bindYearListeners();
+  });
 
-  const projection = d3.geoMercator()
-    .scale(100)
-    .center([0, 20])
-    .translate([width / 2, height / 2]);
-  const path = d3.geoPath().projection(projection);
+  // ── Build nested lookup: metricsData[country][year][metricKey] ─────────────
+  function buildMetricsData () {
+    dataGlobal.forEach(d => {
+      const country = mappingCSVtoGeo[d.country] || d.country;
+      metricsData[country]             = metricsData[country] || {};
+      metricsData[country][d.Year]     = metricsData[country][d.Year] || {};
 
-  const zoom = d3.zoom()
-    .scaleExtent([1, 8])
-    .on("zoom", (event) => {
-      mapGroup.attr("transform", event.transform);
+      AVAILABLE_METRICS.forEach(m => {
+        metricsData[country][d.Year][m.key] = d[m.col];
+      });
     });
-  svg.call(zoom);
+  }
 
-  d3.select("#zoom-in").on("click", function() {
-    svg.transition().call(zoom.scaleBy, 1.5);
-  });
-  d3.select("#zoom-out").on("click", function() {
-    svg.transition().call(zoom.scaleBy, 0.75);
-  });
+  // ── Get all years with valid data for a metric ─────────────────────────────
+  function getValidYearsForMetric(metricKey) {
+    const col = AVAILABLE_METRICS.find(m => m.key === metricKey).col;
+  
+    return d3.groups(dataGlobal, d => d.Year)
+      // only keep groups whose metric has at least one valid number
+      .filter(([, rows]) => rows.some(r => Number.isFinite(r[col])))
+      // extract the year key
+      .map(([yr]) => +yr)
+      // filter out NaN
+      .filter(yr => Number.isFinite(yr))
+      // sort ascending
+      .sort((a, b) => a - b);
+  }
 
-  const tooltip = d3.select("#map-tooltip");
+  // ── Populate metric selector, default to HDI ───────────────────────────────
+  function initMetricSelect () {
+    const sel = document.getElementById("index-select");
 
-  function renderMiniChart(dataPoints, container) {
-    // Clear any existing mini chart
+    // avoid duplicate <option>s if HTML already has them
+    sel.innerHTML = "";
+
+    AVAILABLE_METRICS.forEach(m => {
+      const opt  = document.createElement("option");
+      opt.value  = m.key;
+      opt.text   = m.label;
+      sel.appendChild(opt);
+    });
+
+    selectedMetric = "hdi";
+    sel.value      = selectedMetric;
+
+    sel.addEventListener("change", function () {
+      selectedMetric = this.value;
+      populateYearsAndDefaults();
+      drawMap();
+    });
+  }
+
+  // ── Populate start/end year selectors and set defaults ────────────────────
+  function populateYearsAndDefaults () {
+    const years   = getValidYearsForMetric(selectedMetric);
+    const startEl = document.getElementById("start-year");
+    const endEl   = document.getElementById("end-year");
+
+    startEl.innerHTML = "";
+    endEl.innerHTML   = "";
+
+    years.forEach(y => {
+      const o1 = document.createElement("option");
+      o1.value = o1.text = y;
+      startEl.appendChild(o1);
+
+      const o2 = document.createElement("option");
+      o2.value = o2.text = y;
+      endEl.appendChild(o2);
+    });
+
+    selectedStartYear = years.includes(2015) ? 2015 : years[0];
+    selectedEndYear   = years.includes(2020) ? 2020 : years[years.length - 1];
+
+    startEl.value = selectedStartYear;
+    updateEndYearOptions(selectedStartYear);
+    endEl.value   = selectedEndYear;
+  }
+
+  // include the start year *and* cope with single-year datasets
+  function updateEndYearOptions (startYear) {
+    const all  = getValidYearsForMetric(selectedMetric);
+    const yrs  = all.filter(y => y >= startYear); //  ← allow same year
+
+    const endEl = document.getElementById("end-year");
+    endEl.innerHTML = "";
+
+    yrs.forEach(y => {
+      const o   = document.createElement("option");
+      o.value   = o.text = y;
+      endEl.appendChild(o);
+    });
+
+    // guarantee we always have a numeric end year
+    selectedEndYear = yrs.includes(selectedEndYear)
+        ? selectedEndYear
+        : (yrs.length ? yrs[yrs.length - 1] : startYear);
+
+    endEl.value = selectedEndYear;
+  }
+
+  // ── Draw or redraw the map ────────────────────────────────────────────────
+  function drawMap () {
+    computeColorScale();
+
+    const paths = mapGroup.selectAll("path").data(geoData.features);
+
+    paths.enter().append("path")
+        .attr("class", "Country")
+        .style("stroke", "white")
+        .style("opacity", 0.8)
+      .merge(paths)
+        .attr("d", path)
+        .transition().duration(300)
+          .attr("fill", d => countryFill(d))
+      .selection()
+        .on("mouseover",  showTooltip)
+        .on("mousemove",  moveTooltip)
+        .on("mouseleave", hideTooltip);
+
+    paths.exit().remove();
+    updateLegend();
+  }
+
+  function computeColorScale () {
+    const metricObj = AVAILABLE_METRICS.find(m => m.key === selectedMetric);
+    const col        = metricObj.col;
+    const vals       = dataGlobal.map(d => d[col]).filter(Number.isFinite);
+  
+    globalMin = d3.min(vals);
+    globalMax = d3.max(vals);
+  
+    // pick the interpolator for the current metric (fallback to Greens)
+    const interp = METRIC_INTERPOLATORS[selectedMetric] || d3.interpolateGreens;
+  
+    colorScale = d3.scaleSequential()
+                   .domain([globalMin, globalMax])
+                   .interpolator(interp);
+  }
+
+  function countryFill (d) {
+    const data = metricsData[d.properties.name];
+    if (!data) return "#ccc";
+
+    let sum = 0, cnt = 0;
+    for (let y = selectedStartYear; y <= selectedEndYear; y++) {
+      const v = data[y] && data[y][selectedMetric];
+      if (Number.isFinite(v)) {
+        sum += v;
+        cnt++;
+      }
+    }
+    return cnt ? colorScale(sum / cnt) : "#ccc";
+  }
+
+  function updateLegend () {
+    const legend = d3.select("#legend").html("");
+    const w = 200, h = 10, gid = "lg";
+
+    const svgL = legend.append("svg").attr("width", w).attr("height", h);
+
+    const defs = svgL.append("defs");
+    const grad = defs.append("linearGradient").attr("id", gid)
+      .attr("x1", "0%").attr("y1", "0%")
+      .attr("x2", "100%").attr("y2", "0%");
+
+    grad.selectAll("stop")
+      .data(d3.range(0, 1.01, 0.1))
+      .enter().append("stop")
+        .attr("offset", d => d)
+        .attr("stop-color", d => colorScale(globalMin + d * (globalMax - globalMin)));
+
+    svgL.append("rect")
+        .attr("width", w).attr("height", h)
+        .style("fill", `url(#${gid})`);
+
+    legend.append("div")
+      .html(`<span>${globalMin.toFixed(2)}</span><span style="float:right">${globalMax.toFixed(2)}</span>`);
+  }
+
+  // ── Year selectors ─────────────────────────────────────────────────────────
+  function bindYearListeners () {
+    document.getElementById("start-year")
+      .addEventListener("change", function () {
+        selectedStartYear = +this.value;
+        updateEndYearOptions(selectedStartYear);
+        drawMap();
+      });
+
+    document.getElementById("end-year")
+      .addEventListener("change", function () {
+        selectedEndYear = +this.value;
+        drawMap();
+      });
+  }
+
+  // ── Tooltip helpers (unchanged) ────────────────────────────────────────────
+  function renderMiniChart (dataPts, container) {
     container.select("svg").remove();
-    const miniWidth = 200, miniHeight = 100;
-    const miniSvg = container.append("svg")
-        .attr("width", miniWidth)
-        .attr("height", miniHeight);
+    const mw = 200, mh = 100;
 
-    // Compute the minimum and maximum year from the data
-    const minYear = d3.min(dataPoints, d => d.year);
-    const maxYear = d3.max(dataPoints, d => d.year);
+    const miniSvg = container.append("svg").attr("width", mw).attr("height", mh);
 
     const xScale = d3.scaleLinear()
-        .domain([minYear, maxYear])
-        .range([30, miniWidth - 10]);
+      .domain(d3.extent(dataPts, d => d.year))
+      .range([30, mw - 10]);
 
     const yScale = d3.scaleLinear()
-        .domain(d3.extent(dataPoints, d => d.value))
-        .range([miniHeight - 20, 10]);
+      .domain(d3.extent(dataPts, d => d.value))
+      .range([mh - 20, 10]);
 
-    // Explicitly set tick values for each year in the data
     const xAxis = d3.axisBottom(xScale)
-        .tickValues(d3.range(minYear, maxYear + 1))
-        .tickFormat(d3.format("d"));
+      .tickValues(d3.range(dataPts[0].year, dataPts[dataPts.length - 1].year + 1))
+      .tickFormat(d3.format("d"));
 
     const yAxis = d3.axisLeft(yScale).ticks(3);
 
-    // Append x-axis with rotated tick labels
-    const xAxisGroup = miniSvg.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0, ${miniHeight - 20})`)
-        .call(xAxis)
-        .attr("font-size", "8px");
-        
-
-    xAxisGroup.selectAll("text")
+    miniSvg.append("g")
+      .attr("transform", `translate(0,${mh - 20})`)
+      .attr("font-size", "8px")
+      .call(xAxis)
+      .selectAll("text")
         .attr("transform", "rotate(45)")
         .attr("text-anchor", "start")
-        .attr("dx", "6")
-        .attr("dy", "6");
+        .attr("dx", "6").attr("dy", "6");
 
-    // Append y-axis
     miniSvg.append("g")
-        .attr("transform", `translate(30, 0)`)
-        .call(yAxis)
-        .attr("font-size", "8px");
+      .attr("transform", "translate(30,0)")
+      .attr("font-size", "8px")
+      .call(yAxis);
 
-    // Draw the line
     const line = d3.line()
-        .x(d => xScale(d.year))
-        .y(d => yScale(d.value));
+      .x(d => xScale(d.year))
+      .y(d => yScale(d.value));
 
     miniSvg.append("path")
-        .datum(dataPoints)
-        .attr("d", line)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 2);
+      .datum(dataPts)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2)
+      .attr("d", line);
   }
 
-  function showTooltip(event, d) {
+  function showTooltip (event, d) {
     tooltip.style("display", "block")
-        .style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px")
-        .html(`<strong>${d.properties.name}</strong><br/>`);
+           .style("left", (event.pageX + 10) + "px")
+           .style("top",  (event.pageY - 20) + "px")
+           .html(`<strong>${d.properties.name}</strong><br/>`);
 
-    // Use d.properties.name as the key to access metricsData
-    let countryData = metricsData[d.properties.name];
+    const countryData = metricsData[d.properties.name];
     if (countryData) {
-      let dataPoints = [];
-      let sum = 0, count = 0;
-      for (let yr = selectedStartYear; yr <= selectedEndYear; yr++){
-        if (countryData[yr] && countryData[yr][selectedMetric] != null) {
-          let value = countryData[yr][selectedMetric];
-          dataPoints.push({ year: yr, value: value });
-          sum += value;
+      const pts  = [];
+      let total  = 0, count = 0;
+
+      for (let y = selectedStartYear; y <= selectedEndYear; y++) {
+        const v = countryData[y] && countryData[y][selectedMetric];
+        if (Number.isFinite(v)) {
+          pts.push({ year: y, value: v });
+          total += v;
           count++;
         }
       }
+
       if (count) {
-        const avg = sum / count;
-        tooltip.append("div").text("Avg " + selectedMetric.toUpperCase() + ": " + avg.toFixed(3));
-      } else {
-        tooltip.append("div").text("No data");
+        tooltip.append("div")
+               .text(`Avg ${selectedMetric.replace(/_/g, " ")}: ${(total / count).toFixed(3)}`);
       }
 
-      // If only one year is selected, show a message instead of rendering the line chart.
       if (selectedStartYear === selectedEndYear) {
-          tooltip.append("div").text("Only one year selected: insufficient data for line chart");
-      } else if (dataPoints.length > 1) {
-          renderMiniChart(dataPoints, tooltip);
+        tooltip.append("div").text("Only one year selected – no mini-chart.");
+      } else if (pts.length > 1) {
+        renderMiniChart(pts, tooltip);
       } else {
-          tooltip.append("div").text("No data for selected interval");
+        tooltip.append("div").text("No data for selected interval");
       }
     } else {
       tooltip.append("div").text("No data available");
     }
-
-    // Dynamically adjust tooltip size:
-    if (tooltip.select("svg").empty()) {
-      tooltip.style("min-width", "auto").style("min-height", "auto");
-    } else {
-      tooltip.style("min-width", "220px").style("min-height", "120px");
-    }
   }
 
-  function hideTooltip() {
+  function moveTooltip (event) {
+    tooltip.style("left", (event.pageX + 10) + "px")
+           .style("top",  (event.pageY - 20) + "px");
+  }
+
+  function hideTooltip () {
     tooltip.style("display", "none").html("");
   }
-
-  function getColor(value) {
-    return value ? colorScale(value) : "#ccc";
-  }
-
-  function updateLegend() {
-    const legend = d3.select("#legend");
-    legend.html("");
-    const w = 150, h = 10;
-    const gradientId = "legend-gradient";
-
-    const defs = legend.append("svg")
-      .attr("width", w)
-      .attr("height", h)
-      .append("defs");
-
-    const gradient = defs.append("linearGradient")
-      .attr("id", gradientId)
-      .attr("x1", "0%").attr("y1", "0%")
-      .attr("x2", "100%").attr("y2", "0%");
-
-    gradient.selectAll("stop")
-      .data(d3.range(0, 1.01, 0.1))
-      .enter()
-      .append("stop")
-      .attr("offset", d => d)
-      .attr("stop-color", d => colorScale(globalMin + d * (globalMax - globalMin)));
-
-    const legendSvg = legend.append("svg")
-      .attr("width", w)
-      .attr("height", h);
-
-    legendSvg.append("rect")
-      .attr("width", w)
-      .attr("height", h)
-      .style("fill", `url(#${gradientId})`);
-
-    legend.append("div").html(`<span>${globalMin.toFixed(3)}</span><span style="float:right;">${globalMax.toFixed(3)}</span>`);
-  }
-
-  function updateMapColors() {
-    // Update selected years and metric from dropdowns
-    selectedStartYear = +document.getElementById("start-year").value;
-    selectedEndYear = +document.getElementById("end-year").value;
-    selectedMetric = document.getElementById("index-select").value;
-    
-    mapGroup.selectAll("path")
-      .transition()
-      .duration(300)
-      .attr("fill", function(d) {
-        const countryKey = d.properties.name;
-        const data = metricsData[countryKey];
-        if (data) {
-          let sum = 0, count = 0;
-          for (let yr = selectedStartYear; yr <= selectedEndYear; yr++) {
-            if (data[yr] && data[yr][selectedMetric] != null) {
-              sum += data[yr][selectedMetric];
-              count++;
-            }
-          }
-          const avg = count ? sum / count : null;
-          return getColor(avg);
-        }
-        return "#ccc";
-      });
-  }
-
-  // Listen for changes in the dropdowns
-  document.getElementById("start-year").addEventListener("change", updateMapColors);
-  document.getElementById("end-year").addEventListener("change", updateMapColors);
-  document.getElementById("index-select").addEventListener("change", updateMapColors);
-
-  // Load both the HDI CSV dataset and the GeoJSON.
-  Promise.all([
-    d3.csv("HDIdataset.csv"),
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-  ]).then(function([csvData, geoData]) {
-    // Process CSV: Convert numeric fields and apply mapping.
-    csvData.forEach(d => {
-      d.Year = +d.Year;
-      d.hdi = +d.hdi;
-      // Use mapping: if a mapping exists, convert the CSV country name
-      d.country = mappingCSVtoGeo[d.country] || d.country;
-    });
-
-    // Build metricsData from the CSV.
-    csvData.forEach(d => {
-      if (!metricsData[d.country]) {
-        metricsData[d.country] = {};
-      }
-      if (!metricsData[d.country][d.Year]) {
-        metricsData[d.country][d.Year] = {};
-      }
-      metricsData[d.country][d.Year]["hdi"] = d.hdi;
-    });
-
-    const years = csvData.map(d => d.Year);
-    const uniqueYears = Array.from(new Set(years)).sort((a, b) => a - b);
-    
-    // Set default sample interval.
-    if (uniqueYears.includes(2012) && uniqueYears.includes(2015)) {
-      selectedStartYear = 2012;
-      selectedEndYear = 2015;
-    } else {
-      selectedStartYear = uniqueYears[0];
-      selectedEndYear = uniqueYears[uniqueYears.length - 1];
-    }
-
-    // Populate the dropdowns for start and end year.
-    const startYearSelect = document.getElementById("start-year");
-    const endYearSelect = document.getElementById("end-year");
-    startYearSelect.innerHTML = "";
-    endYearSelect.innerHTML = "";
-    uniqueYears.forEach(yr => {
-      let option1 = document.createElement("option");
-      option1.value = yr;
-      option1.textContent = yr;
-      startYearSelect.appendChild(option1);
-
-      let option2 = document.createElement("option");
-      option2.value = yr;
-      option2.textContent = yr;
-      endYearSelect.appendChild(option2);
-    });
-    startYearSelect.value = selectedStartYear;
-    endYearSelect.value = selectedEndYear;
-
-    // Compute global min and max for the metric - for now hdi
-    const allHDI = csvData.map(d => d.hdi);
-    globalMin = d3.min(allHDI);
-    globalMax = d3.max(allHDI);
-    colorScale = d3.scaleSequential()
-      .domain([globalMin, globalMax])
-      .interpolator(d3.interpolateGreens);
-
-    // Draw the map using GeoJSON.
-    mapGroup.selectAll("path")
-      .data(geoData.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .attr("fill", d => {
-        const countryKey = d.properties.name;
-        const data = metricsData[countryKey];
-        if (data) {
-          let sum = 0, count = 0;
-          for (let yr = selectedStartYear; yr <= selectedEndYear; yr++) {
-            if (data[yr] && data[yr]["hdi"] != null) {
-              sum += data[yr]["hdi"];
-              count++;
-            }
-          }
-          const avg = count ? sum / count : null;
-          return getColor(avg);
-        }
-        return "#ccc";
-      })
-      .attr("class", "Country")
-      .style("stroke", "white")
-      .style("opacity", 0.8)
-      .on("mouseover", function(event, d) {
-        d3.selectAll(".Country").style("opacity", 0.5);
-        d3.select(this).style("opacity", 1).style("stroke", "black");
-        showTooltip(event, d);
-      })
-      .on("mousemove", function(event, d) {
-        tooltip.style("left", (event.pageX + 10) + "px")
-               .style("top", (event.pageY - 20) + "px");
-      })
-      .on("mouseleave", function(event, d) {
-        d3.selectAll(".Country").style("opacity", 0.8).style("stroke", "white");
-        hideTooltip();
-      });
-
-    updateLegend();
-  });
-})();
+});
