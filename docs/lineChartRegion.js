@@ -1,300 +1,278 @@
-const AVAILABLE_FEATURES = [
-    "happiness_score",
-    "gdp_per_capita",
-    "healthy_life_expectancy",
-    "social_support"
-  ];
+const REGION_FEATURES = [
+  "happiness_score",
+  "gdp_per_capita",
+  "healthy_life_expectancy",
+  "social_support",
+  "freedom_to_make_life_choices",
+  "generosity",
+  "perceptions_of_corruption",
+  "gnipc",
+  "coef_ineq",
+  "Purchasing Power Index",
+  "le",
+  "Health Care Index",
+  "Pollution Index",
+  "ineq_edu",
+  "ineq_inc",
+  "ineq_le",
+  "gii",
+  "gdi"
+];
 
-  document.addEventListener("DOMContentLoaded", function () {
-    let dataGlobal;
+const FEATURE_LABELS = {
+  happiness_score:             "Happiness Score",
+  gdp_per_capita:              "GDP per Capita",
+  healthy_life_expectancy:     "Healthy Life Expectancy",
+  social_support:              "Social Support",
+  freedom_to_make_life_choices:"Freedom to Make Life Choices",
+  generosity:                  "Generosity",
+  perceptions_of_corruption:   "Perceptions of Corruption",
+  gnipc:                       "GNI per Capita",
+  coef_ineq:                   "Income Inequality (Gini)",
+  "Purchasing Power Index":    "Purchasing Power Index",
+  le:                          "Life Expectancy",
+  "Health Care Index":         "Health Care Index",
+  "Pollution Index":           "Pollution Index",
+  ineq_edu:                    "Inequality: Education",
+  ineq_inc:                    "Inequality: Income",
+  ineq_le:                     "Inequality: Longevity",
+  gii:                         "Gender Inequality Index",
+  gdi:                         "Gender Development Index"
+};
 
-    const defaultFeature = "happiness_score";
-    const defaultStart = 2015;
-    const defaultEnd = 2020;
+document.addEventListener("DOMContentLoaded", function () {
+  let dataGlobal;
 
-    d3.csv("merged_dataset.csv", d3.autoType).then(data => {
-      dataGlobal = data;
-      initFeatureSelect();
-      populateYearsAndDefaults();
-      attachEventListeners();
-      updateChart(); // Initial render
+  const defaultFeature = "happiness_score";
+  const defaultStart   = 2015;  // clamp start‐year to ≥ 2015
+  const defaultEnd     = 2020;
+
+  // ── Load & initialize ─────────────────────────────────────────────────────
+  d3.csv("merged_dataset.csv", d3.autoType).then(data => {
+    dataGlobal = data.filter(d => Number.isFinite(d.Year));
+    initFeatureSelect();
+    populateYearsAndDefaults();
+    attachEventListeners();
+    updateChart(); // Initial render
+  });
+
+  // ── Build the feature dropdown ────────────────────────────────────────────
+  function initFeatureSelect() {
+    const sel = document.getElementById("featureSelect");
+    sel.innerHTML = "";
+    REGION_FEATURES.forEach(feat => {
+      const opt = document.createElement("option");
+      opt.value = feat;
+      opt.text  = FEATURE_LABELS[feat]
+                || feat.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+      sel.appendChild(opt);
     });
+    sel.value = defaultFeature;
+  }
 
-    function initFeatureSelect() {
-      const featureSelect = document.getElementById("featureSelect");
-      featureSelect.innerHTML = "";
-      AVAILABLE_FEATURES.forEach(feat => {
-        const opt = document.createElement("option");
-        opt.value = feat;
-        opt.text = feat;
-        featureSelect.appendChild(opt);
-      });
-      featureSelect.value = defaultFeature;
-    }
+  // ── Valid years for a feature ─────────────────────────────────────────────
+  function getValidYearsForFeature(feature) {
+    return d3.groups(dataGlobal, d => d.Year)
+      .filter(([, recs]) => recs.some(r => Number.isFinite(r[feature])))
+      .map(([yr]) => +yr)
+      .sort((a, b) => a - b);
+  }
 
-    function getValidYearsForFeature(feature) {
-      const grouped = d3.groups(dataGlobal, d => d.Year);
-      return grouped
-        .filter(([year, records]) =>
-          // Check if at least one record in this year has a valid (finite) number for the feature
-          records.some(r => Number.isFinite(r[feature]))
-        )
-        .map(([year]) => +year)
-        .sort((a, b) => a - b);
-    }
+  // ── Populate the start/end year selectors & set defaults ─────────────────
+  function populateYearsAndDefaults() {
+    const feat  = document.getElementById("featureSelect").value;
+    // only years ≥ 2015
+    const years = getValidYearsForFeature(feat)
+                    .filter(y => y >= defaultStart);
 
-    function populateYearsAndDefaults() {
-      const feature = document.getElementById("featureSelect").value;
-      const validYears = getValidYearsForFeature(feature);
-
-      const startYearSelect = d3.select("#startYearSelect");
-      startYearSelect.html("");
-      startYearSelect.selectAll("option")
-        .data(validYears)
-        .enter()
-        .append("option")
+    const startSel = d3.select("#startYearSelect");
+    startSel.html("");
+    startSel.selectAll("option")
+      .data(years)
+      .enter().append("option")
         .attr("value", d => d)
         .text(d => d);
 
-      const defaultStartYear = validYears.includes(defaultStart) ? defaultStart : validYears[0];
-      startYearSelect.property("value", defaultStartYear);
+    // default to 2015 if available, else the earliest ≥2015
+    const sy = years.includes(defaultStart) ? defaultStart : years[0];
+    startSel.property("value", sy);
 
-      updateEndYearOptions(feature, defaultStartYear);
-    }
+    updateEndYearOptions(feat, sy);
+  }
 
-    function updateEndYearOptions(feature, startYear) {
-      const validYears = getValidYearsForFeature(feature).filter(y => y > startYear);
-      const endYearSelect = d3.select("#endYearSelect");
-      endYearSelect.html("");
-      endYearSelect.selectAll("option")
-        .data(validYears)
-        .enter()
-        .append("option")
+  // ── Include the start‐year itself for end‐year list ───────────────────────
+  function updateEndYearOptions(feature, startYear) {
+    // allow same year
+    const years = getValidYearsForFeature(feature)
+                    .filter(y => y >= startYear);
+    const endSel = d3.select("#endYearSelect");
+    endSel.html("");
+    endSel.selectAll("option")
+      .data(years)
+      .enter().append("option")
         .attr("value", d => d)
         .text(d => d);
 
-      const defaultEndYear = validYears.includes(defaultEnd) ? defaultEnd : validYears[validYears.length - 1];
-      endYearSelect.property("value", defaultEndYear);
-    }
+    const ey = years.includes(defaultEnd) ? defaultEnd : years[years.length - 1];
+    endSel.property("value", ey);
+  }
 
-    function attachEventListeners() {
-      document.getElementById("featureSelect").addEventListener("change", () => {
+  // ── Hook up UI events ─────────────────────────────────────────────────────
+  function attachEventListeners() {
+    document.getElementById("featureSelect")
+      .addEventListener("change", () => {
         populateYearsAndDefaults();
         updateChart();
       });
 
-      document.getElementById("startYearSelect").addEventListener("change", () => {
-        const feature = document.getElementById("featureSelect").value;
-        const startYear = +document.getElementById("startYearSelect").value;
-        updateEndYearOptions(feature, startYear);
+    document.getElementById("startYearSelect")
+      .addEventListener("change", () => {
+        const feat = document.getElementById("featureSelect").value;
+        const sy   = +document.getElementById("startYearSelect").value;
+        updateEndYearOptions(feat, sy);
       });
 
-      document.getElementById("update-chart").addEventListener("click", () => {
-        updateChart();
-      });
+    document.getElementById("update-chart")
+      .addEventListener("click",  updateChart);
 
-      document.getElementById("reset-animation2").addEventListener("click", () => {
-        updateChart();
-      });
+    document.getElementById("reset-animation2")
+      .addEventListener("click",  updateChart);
+  }
+
+  // ── Render the region‐by‐time line chart ───────────────────────────────────
+  function updateChart() {
+    const feature   = document.getElementById("featureSelect").value;
+    const startYear = +document.getElementById("startYearSelect").value;
+    const endYear   = +document.getElementById("endYearSelect").value;
+
+    const filtered = dataGlobal.filter(d =>
+      d.Year >= startYear &&
+      d.Year <= endYear &&
+      Number.isFinite(d[feature])
+    );
+
+    // region → year → avg(feature)
+    const byRegion = d3.rollup(
+      filtered,
+      v => d3.mean(v, d => d[feature]),
+      d => d.region_happy,
+      d => d.Year
+    );
+
+    const regionsData = [];
+    for (const [region, mapYear] of byRegion) {
+      const vals = Array.from(mapYear, ([yr, avg]) => ({ Year:+yr, value:avg }))
+                        .sort((a,b)=>a.Year-b.Year);
+      regionsData.push({ region, values: vals });
     }
 
-    function updateChart() {
-      const selectedFeature = document.getElementById("featureSelect").value;
-      const startYear = +document.getElementById("startYearSelect").value;
-      const endYear = +document.getElementById("endYearSelect").value;
+    // clear past chart
+    d3.select("#lineChartRegion").select("svg").remove();
 
-      const filteredData = dataGlobal.filter(d =>
-        d.Year >= startYear &&
-        d.Year <= endYear &&
-        Number.isFinite(d[selectedFeature])
-      );
+    const margin = { top:50, right:250, bottom:50, left:60 },
+          width  = 800 - margin.left - margin.right,
+          height = 500 - margin.top  - margin.bottom;
 
-      // Group data by region and then by year, computing mean of the feature
-      const groupedData = d3.rollup(
-        filteredData,
-        v => d3.mean(v, d => d[selectedFeature]),
-        d => d.region_happy,
-        d => d.Year
-      );
-
-      const regionsData = [];
-      groupedData.forEach((byYear, region) => {
-        const values = [];
-        byYear.forEach((avg, year) => {
-          values.push({ Year: +year, value: avg });
-        });
-        values.sort((a, b) => a.Year - b.Year);
-        regionsData.push({ region: region, values: values });
-      });
-
-      // Remove any previous SVG.
-      d3.select("#lineChartRegion").select("svg").remove();
-
-      const margin = { top: 50, right: 250, bottom: 50, left: 60 },
-            width = 800 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
-
-      const svg = d3.select("#lineChartRegion")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+    const svg = d3.select("#lineChartRegion")
+      .append("svg")
+        .attr("width",  width  + margin.left + margin.right)
+        .attr("height", height + margin.top  + margin.bottom)
+      .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      // X scale: use whole-year tick values.
-      const x = d3.scaleLinear()
-        .domain([startYear, endYear])
-        .range([0, width]);
+    // X axis
+    const x = d3.scaleLinear()
+      .domain([startYear, endYear])
+      .range([0, width]);
+    svg.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x)
+        .tickValues(d3.range(startYear, endYear+1))
+        .tickFormat(d3.format("d")));
 
-      svg.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .call(
-          d3.axisBottom(x)
-            .tickValues(d3.range(startYear, endYear + 1))
-            .tickFormat(d3.format("d"))
-        );
+    // Y axis
+    let yMin = d3.min(regionsData, r => d3.min(r.values, d => d.value));
+    let yMax = d3.max(regionsData, r => d3.max(r.values, d => d.value));
+    if (yMin == null) yMin = 0; if (yMax == null) yMax = 1;
 
-      // Y scale
-      let yMin = d3.min(regionsData, r => d3.min(r.values, d => d.value));
-      let yMax = d3.max(regionsData, r => d3.max(r.values, d => d.value));
-      if (yMin === undefined) yMin = 0;
-      if (yMax === undefined) yMax = 1;
-      const y = d3.scaleLinear()
-        .domain([yMin - Math.abs(yMin * 0.1), yMax + Math.abs(yMax * 0.1)])
-        .range([height, 0]);
+    const y = d3.scaleLinear()
+      .domain([yMin - 0.1*Math.abs(yMin), yMax + 0.1*Math.abs(yMax)])
+      .range([height, 0]);
+    svg.append("g").call(d3.axisLeft(y));
 
-      svg.append("g")
-        .call(d3.axisLeft(y));
+    // labels
+    svg.append("text")
+      .attr("x",width/2).attr("y",height+margin.bottom-10)
+      .attr("text-anchor","middle").classed("axis-label",true)
+      .text("Year");
+    svg.append("text")
+      .attr("transform","rotate(-90)")
+      .attr("x",-height/2).attr("y",-margin.left+15)
+      .attr("text-anchor","middle").classed("axis-label",true)
+      .text(FEATURE_LABELS[feature]||feature);
 
-      // Axis labels
-      svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height + margin.bottom - 10)
-        .attr("text-anchor", "middle")
-        .attr("class", "axis-label")
-        .text("Year");
+    // line & color
+    const line  = d3.line().x(d=>x(d.Year)).y(d=>y(d.value));
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-      svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -height / 2)
-        .attr("y", -margin.left + 15)
-        .attr("text-anchor", "middle")
-        .attr("class", "axis-label")
-        .text(selectedFeature);
+    regionsData.forEach(regionData => {
+      const cls = regionData.region.replace(/\s+/g,"");
+      const path = svg.append("path")
+        .datum(regionData.values)
+        .attr("fill","none")
+        .attr("stroke",color(regionData.region))
+        .attr("stroke-width",2)
+        .attr("class","line line-"+cls)
+        .attr("d", line);
 
-      // Define the line generator.
-      const line = d3.line()
-        .x(d => x(d.Year))
-        .y(d => y(d.value));
+      // animate
+      const L = path.node().getTotalLength();
+      path.attr("stroke-dasharray",`${L} ${L}`)
+          .attr("stroke-dashoffset",L)
+        .transition().duration(2000).ease(d3.easeLinear)
+          .attr("stroke-dashoffset",0);
 
-      // Color scale.
-      const color = d3.scaleOrdinal(d3.schemeCategory10);
+      // hover highlight
+      path.on("mouseover",()=>{
+          path.transition().duration(200).attr("stroke-width",4);
+          svg.select(".region-label-"+cls)
+             .transition().duration(200)
+             .style("font-weight","bold").style("fill","red");
+        })
+        .on("mouseout",()=>{
+          path.transition().duration(200).attr("stroke-width",2);
+          svg.select(".region-label-"+cls)
+             .transition().duration(200)
+             .style("font-weight","normal")
+             .style("fill",color(regionData.region));
+        });
 
-      // For each region, draw the line, animate circles, and add region labels.
-      regionsData.forEach(regionData => {
-        // Create a sanitized class name for this region (remove whitespace).
-        const regionClass = regionData.region.replace(/\s+/g, "");
+      // dots
+      svg.selectAll(".dot-"+cls)
+        .data(regionData.values)
+        .enter().append("circle")
+          .attr("class","dot-"+cls)
+          .attr("cx",d=>x(d.Year))
+          .attr("cy",d=>y(d.value))
+          .attr("r",0)
+          .attr("fill",color(regionData.region))
+        .transition().delay((d,i)=>i*100).duration(500)
+          .attr("r",3);
 
-        // Append the line path.
-        const path = svg.append("path")
-          .datum(regionData.values)
-          .attr("fill", "none")
-          .attr("stroke", color(regionData.region))
-          .attr("stroke-width", 2)
-          .attr("class", "line line-" + regionClass)
-          .attr("d", line);
-
-        // Animate the line drawing.
-        const totalLength = path.node().getTotalLength();
-        path
-          .attr("stroke-dasharray", totalLength + " " + totalLength)
-          .attr("stroke-dashoffset", totalLength)
-          .transition()
-            .duration(2000)
-            .ease(d3.easeLinear)
-            .attr("stroke-dashoffset", 0);
-
-        // Add mouse events on the line to highlight it and the corresponding label.
-        path.on("mouseover", function () {
-            // Increase stroke width.
-            d3.select(this).transition().duration(200).attr("stroke-width", 4);
-            // Highlight the region label.
-            svg.select(".region-label-" + regionClass)
-              .transition().duration(200)
-              .style("font-weight", "bold")
-              .style("fill", "red");
-          })
-          .on("mouseout", function () {
-            d3.select(this).transition().duration(200).attr("stroke-width", 2);
-            svg.select(".region-label-" + regionClass)
-              .transition().duration(200)
-              .style("font-weight", "normal")
-              .style("fill", color(regionData.region));
-          });
-
-        // Append dots with pop-in animation.
-        svg.selectAll(".dot-" + regionClass)
-          .data(regionData.values)
-          .enter()
-          .append("circle")
-          .attr("class", "dot-" + regionClass)
-          .attr("cx", d => x(d.Year))
-          .attr("cy", d => y(d.value))
-          .attr("r", 0)
-          .attr("fill", color(regionData.region))
-          .on("mouseover", function (event, d) {
-            d3.select("#lineChartRegionTooltip")
-              .transition().duration(200)
-              .style("opacity", 0.9);
-            d3.select("#lineChartRegionTooltip")
-              .html(`<strong>Region:</strong> ${regionData.region}<br>
-                     <strong>Year:</strong> ${d.Year}<br>
-                     <strong>${selectedFeature}:</strong> ${d.value.toFixed(2)}`)
-              .style("left", (event.pageX + 10) + "px")
-              .style("top", (event.pageY - 28) + "px");
-          })
-          .on("mouseout", function () {
-            d3.select("#lineChartRegionTooltip")
-              .transition().duration(500)
-              .style("opacity", 0);
-          })
-          .transition()
-            .delay((d, i) => i * 100)
-            .duration(500)
-            .attr("r", 3);
-
-        // Append a region label near the last point.
-        if (regionData.values.length > 0) {
-          const lastPoint = regionData.values[regionData.values.length - 1];
-          const label = svg.append("text")
-            .attr("x", x(lastPoint.Year) + 5)
-            .attr("y", y(lastPoint.value))
-            .attr("class", "region-label region-label-" + regionClass)
-            .style("fill", color(regionData.region))
-            .style("font-size", "12px")
-            .style("opacity", 0)
-            .text(regionData.region);
-
-          // Optionally adjust label position if it overflows (or simply fade it in).
-          label.transition()
-            .delay(2200)
-            .duration(500)
-            .style("opacity", 1);
-
-          // Add mouse events on the label too; when hovered, highlight the line.
-          label.on("mouseover", function () {
-              d3.select(this).transition().duration(200)
-                .style("font-weight", "bold")
-                .style("fill", "red");
-              path.transition().duration(200).attr("stroke-width", 4);
-            })
-            .on("mouseout", function () {
-              d3.select(this).transition().duration(200)
-                .style("font-weight", "normal")
-                .style("fill", color(regionData.region));
-              path.transition().duration(200).attr("stroke-width", 2);
-            });
-        }
-      });
-    }
-  });
+      // region label at end
+      if (regionData.values.length) {
+        const lp = regionData.values.slice(-1)[0];
+        svg.append("text")
+          .attr("x",x(lp.Year)+5)
+          .attr("y",y(lp.value))
+          .attr("class","region-label region-label-"+cls)
+          .style("fill",color(regionData.region))
+          .style("font-size","12px")
+          .style("opacity",0)
+          .text(regionData.region)
+          .transition().delay(2200).duration(500)
+          .style("opacity",1);
+      }
+    });
+  }
+});
