@@ -60,11 +60,11 @@ const yearSelect    = d3.select("#yearSelect");
 const featureLabel  = d3.select("#selectedIndexLabel");
 const yearLabel     = d3.select("#selectedYearLabel");
 
-let dataGlobal;  
+let dataGlobaltop10;  
 d3.csv("merged_dataset.csv", d3.autoType).then(data => {
   //console.log("Available features:", TOP10_FEATURES);       /
 
-  dataGlobal = data.filter(d => Number.isFinite(d.Year));
+  dataGlobaltop10 = data.filter(d => Number.isFinite(d.Year));
 
   initFeatureSelect();      // populate feature dropdown
   populateYearOptions();    // build year dropdown based on default feature
@@ -86,7 +86,7 @@ function getValidYearsForFeature(feature) {
   // group by Year, then only keep years where at least one record has a finite value
   return Array.from(
     d3.rollup(
-      dataGlobal,
+      dataGlobaltop10,
       v => v.some(r => Number.isFinite(r[feature])),
       d => d.Year
     )
@@ -128,7 +128,7 @@ function updateBarChart() {
   yearLabel.text(selectedYear);
 
   // filter, sort descending, take top 10
-  const filtered = dataGlobal.filter(d =>
+  const filtered = dataGlobaltop10.filter(d =>
     d.Year === selectedYear &&
     Number.isFinite(d[feature])
   );

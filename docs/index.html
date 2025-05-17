@@ -302,38 +302,47 @@
 
 
       <p>
-        Explore HDI metrics interactively by adjusting the axes, bubble size, and year.
+        <span id="bubbleTitle">
+        </span>
       </p>
       <!-- Controls: Dropdowns for axes and bubble size plus a year slider -->
       <div class="controls">
-        <div class="country-box" >
-        <label for="xSelect">X Axis: 
-          <select id="xSelect">
-            <!-- Options will be populated by  D3 -->
+        <!-- Group selector -->
+        <div class="country-box">
+          <select id="groupSelectBubble">
+            <option value="group1">HDI Metrics</option>
+            <option value="group2">Quality of Life Metrics</option>
+            <option value="group3">Happiness Metrics</option>
           </select>
-        </label>
         </div>
-        <div class="country-box" >
-        <label for="ySelect">Y Axis: 
-          <select id="ySelect">
-            <!-- Options will be populated by D3 -->
-          </select>
-        </label>
+      
+        <!-- X axis -->
+        <div class="country-box">
+          <label for="xSelect">X Axis:
+            <select id="xSelect"></select>
+          </label>
         </div>
-        <div class="country-box" >
-        <label for="rSelect">Bubble Size: 
-          <select id="rSelect">
-            <!-- Options will be populated by D3 -->
-          </select>
-        </label>
+      
+        <!-- Y axis -->
+        <div class="country-box">
+          <label for="ySelect">Y Axis:
+            <select id="ySelect"></select>
+          </label>
         </div>
-        <div class="country-box" >
-        <label for="yearSlider">
-          Year:
-          <!-- The slider attributes (min, max, value) will be updated by the script -->
-          <input type="range" id="yearSlider" value="0">
-          <span id="yearLabel"></span>
-        </label>
+      
+        <!-- Bubble size -->
+        <div class="country-box">
+          <label for="rSelect">Bubble Size:
+            <select id="rSelect"></select>
+          </label>
+        </div>
+      
+        <!-- Year slider -->
+        <div class="country-box">
+          <label for="yearSlider">Year:
+            <input type="range" id="yearSlider" value="0">
+            <span id="yearLabel"></span>
+          </label>
         </div>
       </div>
       <!-- Container for the bubble chart -->
