@@ -157,7 +157,7 @@
       <p>
         Dive deeper into the intricate connections among socio-economic indicators. Explore the interplay between metrics that shape well-being.
       </p>
-      <p>A comparative radar chart visualizing key indicators for two selected countries in 2022.</p>
+      <p>A comparative radar chart visualizing key indicators for two selected countries in the selected year.</p>
       <div class="chart">
         <div class="controls">
           <!-- Container for Country 1 -->
@@ -179,8 +179,14 @@
           <div class="country-box" id="group-box">
             <span class="country-label">Select Metrics Group</span>
             <select id="groupSelect">
-              <option value="group1">Group 1</option>
-              <option value="group2">Group 2</option>
+              <!-- options will be injected by Radar.js -->
+            </select>
+          </div>
+          <!-- Year for the selected group -->
+          <div class="country-box" id="year-box">
+            <label for="yearSelectRadar" class="country-label">Year</label>
+            <select id="yearSelectRadar">
+              <!-- populated dynamically -->
             </select>
           </div>
         </div>
