@@ -71,9 +71,9 @@ html, body{
 .panel .num{ font-size:6vw; line-height:1; }
 .panel .lbl{ margin-top:1rem; font-size:1.2vw; }
 .p1{ background:#f6d809; color:#000; }
-.p2{ background:#a4dad2; color:#FFF; }
-.p3{ background:#93c572; color:#FFF; }
-.p4{ background:#bce08a; color:#FFF; }
+.p2{ background:#a4dad2; color:#505050; }
+.p3{ background:#93c572; color:#373737; }
+.p4{ background:#bce08a; color:#373737; }
 .p5{ background:#569099; color:#000; }
 
 /* ——— FIXED MINI-HEADER ——— */
@@ -85,17 +85,17 @@ html, body{
 #mini-header > div{ display:flex; flex-direction:column; justify-content:center;
                     text-align:center; color:#FFF; font-size:.9rem; }
 #mini-header > div:nth-child(1){ background:#f6d809; color:#000; }
-#mini-header > div:nth-child(2){ background:#a4dad2; }
-#mini-header > div:nth-child(3){ background:#93c572; }
-#mini-header > div:nth-child(4){ background:#bce08a; }
+#mini-header > div:nth-child(2){background:#a4dad2; color:#505050; }
+#mini-header > div:nth-child(3){background:#93c572; color:#373737; }
+#mini-header > div:nth-child(4){background:#bce08a; color:#373737; }
 #mini-header > div:nth-child(5){ background:#569099; color:#000; }
 
 /* ——— CHAPTER PLACEHOLDERS ——— */
 .chap{ display:grid; place-items:start center; color:#FFF; padding-top:200px; }
 .c1{ background:#f6d809; color:#000; }
-.c2{ background:#a4dad2 }
-.c3{ background:#93c572; } 
-.c4{ background:#bce08a; }
+.c2{ background:#a4dad2; color:#505050; }
+.c3{ background:#93c572; color:#373737; } 
+.c4{background:#bce08a; color:#373737; }
 .c5{ background:#569099; color:#000; }
 .c6{ background:#515C6B; color:white; }
 .c7{ background:#2e343d; color:white; }
@@ -408,6 +408,7 @@ h1 {
     gap: 2rem;              /* space between the columns          */
     align-items: flex-start;
     width: 90%;
+    margin-bottom:100px;
   }
 .label {
   pointer-events: none;
