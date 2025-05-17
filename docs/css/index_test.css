@@ -1,3 +1,6 @@
+/* ——— SNAP BEHAVIOUR ——— */
+/*.snap-container{ height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; } */
+
 @font-face {
     font-family: 'Geist Sans Variable';
     src: url('../fonts/Geist[wght].ttf') format('truetype-variations');
@@ -5,63 +8,111 @@
     font-style: normal;
     font-display: swap;
   }
-  @font-face {
-    font-family: "EyesforSerifs";
-    src: url("fonts/EyesforSerifs/EyesforSerifs-Light.woff") format("woff");
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Light.woff") format("woff");
+font-weight: 300;
+font-style: normal;
+font-display: swap;
+}
+
+/* EyesforSerifs Regular */
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Regular.woff") format("woff");
+font-weight: 400;
+font-style: normal;
+font-display: swap;
+}
+
+/* EyesforSerifs Book */
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Book.woff") format("woff");
+font-weight: 500; /* Adjust as desired */
+font-style: normal;
+font-display: swap;
+}
+
+/* EyesforSerifs Bold */
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Bold.woff") format("woff");
+font-weight: 700;
+font-style: normal;
+font-display: swap;
+}  
+body {
+font-family: 'Geist Sans Variable', sans-serif;
+font-weight: 400;
+margin:0;
+color: #565656
+}
+
+
+html, body{
+    height: 100%;               /* good practice */
+    scroll-behavior: smooth;    /* optional */
+    scroll-snap-type: y mandatory;   /* page-level snapping */
   }
-  
-  /* EyesforSerifs Regular */
-  @font-face {
-    font-family: "EyesforSerifs";
-    src: url("fonts/EyesforSerifs/EyesforSerifs-Regular.woff") format("woff");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  /* EyesforSerifs Book */
-  @font-face {
-    font-family: "EyesforSerifs";
-    src: url("fonts/EyesforSerifs/EyesforSerifs-Book.woff") format("woff");
-    font-weight: 500; /* Adjust as desired */
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  /* EyesforSerifs Bold */
-  @font-face {
-    font-family: "EyesforSerifs";
-    src: url("fonts/EyesforSerifs/EyesforSerifs-Bold.woff") format("woff");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }  
-  body {
-    font-family: 'Geist Sans Variable', sans-serif;
-    font-weight: 400;
-    margin:0;
-    color: #565656
-  }
-  
-  h1 {
+
+.snap-section { scroll-snap-align:start; 
+     min-height:150vh;}
+
+/* ——— HERO ——— */
+.hero{ padding:6vw 4vw 20vh; background:#EEE; display:flex; flex-direction:column;
+       justify-content:flex-start; font-family:sans-serif; }
+
+/* ——— FULL FIVE-COLUMN PANEL ——— */
+.panel-slide{ display:flex; }
+.panel-slide .panel{ flex:1; display:flex; flex-direction:column;
+                     justify-content:center; align-items:center;
+                     font-family:sans-serif; }
+.panel .num{ font-size:6vw; line-height:1; }
+.panel .lbl{ margin-top:1rem; font-size:1.2vw; }
+.p1{ background:#f6d809; color:#000; }
+.p2{ background:#a4dad2; color:#FFF; }
+.p3{ background:#93c572; color:#FFF; }
+.p4{ background:#bce08a; color:#FFF; }
+.p5{ background:#569099; color:#000; }
+
+/* ——— FIXED MINI-HEADER ——— */
+#mini-header{ position:fixed; top:0; left:0; right:0; height:80px;
+              display:grid; grid-template-columns:repeat(5,1fr);
+              font-family:sans-serif; opacity:1; pointer-events:none;
+              transition:opacity .35s; z-index:100; }
+#mini-header.visible{ opacity:1; pointer-events:auto; }
+#mini-header > div{ display:flex; flex-direction:column; justify-content:center;
+                    text-align:center; color:#FFF; font-size:.9rem; }
+#mini-header > div:nth-child(1){ background:#f6d809; color:#000; }
+#mini-header > div:nth-child(2){ background:#a4dad2; }
+#mini-header > div:nth-child(3){ background:#93c572; }
+#mini-header > div:nth-child(4){ background:#bce08a; }
+#mini-header > div:nth-child(5){ background:#569099; color:#000; }
+
+/* ——— CHAPTER PLACEHOLDERS ——— */
+.chap{ display:grid; place-items:start center; color:#FFF; padding-top:200px; }
+.c1{ background:#f6d809; color:#000; }
+.c2{ background:#a4dad2 }
+.c3{ background:#93c572; } 
+.c4{ background:#bce08a; }
+.c5{ background:#569099; color:#000; }
+.c6{ background:#515C6B; color:white; }
+.c7{ background:#2e343d; color:white; }
+
+
+h1 {
     font-weight: 900;
-  }
-  p.light-text {
-    font-weight: 300;
-  }
-  
-  
-  
-  h1 {
     margin-bottom: 10px;
     margin-top:1em;
-    font-size: 3em;
+    font-size: 4em;
   }
-  
-  .controls {
+
+
+
+/* DATA SECTION */
+
+.controls {
     margin-bottom: 20px;
   }
   
@@ -234,7 +285,6 @@
   #map-container {
     position: relative;
     margin-top: 20px;
-    border: 1px solid #ccc;
     display: flex;
     justify-content: center;
   }
@@ -267,7 +317,6 @@
     padding: 5px 10px;
   }
   #legend {
-    position: absolute;
     bottom: 10px;
     right: 10px;
     background: rgba(255,255,255,0.8);
@@ -348,25 +397,53 @@
   stroke: #333;
   stroke-width: 1px;
 }
-.inner-content {
-  display: flex;
-  flex-direction: column;  /* stack elements vertically */
-  align-items: center;     /* center everything horizontally */
-  text-align: center;      /* center inline text */
-  width: 100%;           /* full width */
-  height: 100%;
-  overflow-y: auto;        /* your existing scroll behavior */
-  padding: 20px;           /* your existing padding */
-}
+.inner-content-vertical{
+    display: flex;
+    gap: 2rem;              /* space between the columns          */
+    flex-direction: column;
+    width: 90%;
+  }
+.inner-content{
+    display: flex;
+    gap: 2rem;              /* space between the columns          */
+    align-items: flex-start;
+    width: 90%;
+  }
 .label {
   pointer-events: none;
 }
 
-
-.inner-content {
-  /* instead of align-items:center… */
-  align-items: stretch;
+.chapter-left{
+    flex: 1 1 40rem;        /* grow | shrink | preferred width    */
+    max-width: 40rem;
+  }
+  
+/* right column takes the remaining space */
+.chapter-right{
+flex: 1 1 0;            /* take whatever is left              */
+min-width: 800px;       /* keep map usable on small laptops   */
 }
+
+/* make the SVG always fill its box */
+#map-container svg{
+width: 100%;
+height: auto;           /* keep aspect ratio                  */
+}
+
+/* -------- responsive break-point: stack on narrow screens ------- */
+@media (max-width: 1200px){
+.inner-content{
+    flex-direction: column;
+}
+.chapter-left,
+.chapter-right{
+    max-width: none;
+    width: 100%;
+}
+}
+
+
+
 
 .section-divider {
   display: flex;

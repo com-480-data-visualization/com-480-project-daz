@@ -1,7 +1,7 @@
 .hero-section {
-    background-color: #111; /* Fallback color (consider updating if you need a lighter backdrop) */
+
     position: relative;
-    color: #565656;
+    margin-top: 10vh;
   }
   
   /* Vanta background: covers entire hero section */
@@ -22,7 +22,7 @@
   }
   
   .hero-title {
-    font-size: 3rem;
+    font-size: 4rem;
     margin-bottom: 20px;
     font-weight: 700;
   }
@@ -34,7 +34,7 @@
   }
   
   .hero-description {
-    font-size: 1rem;
+    font-size: 1.25rem;
     margin-bottom: 30px;
     line-height: 1.5;
   }
@@ -78,3 +78,50 @@
   .shape-fill {
     fill: #565656;
   }
+
+
+#shape-1,
+#shape-2,
+#shape-3{
+  /* clamp(min px, preferred viewport %, max px)  */
+  --d: clamp(600px, 35vmin, 600px);   /* vmin ⇒ the smaller of vw or vh */
+  width:  var(--d);
+  height: var(--d);
+  aspect-ratio: 1/1;                 /* stays perfectly square           */
+  border-radius: 50%;                /* circle                           */
+
+  position: absolute;                /* you already have this            */
+  filter: blur(24px);
+  mix-blend-mode: multiply;
+}
+
+
+#shape-1{ left:  4vw; bottom: 50vh; background:#f6d809; opacity:.5; }
+#shape-2{ right: 2vw; bottom: 35vh; background:#93c572; opacity:.5; }
+#shape-3{ left: 22vw; bottom: 30vh; background:#569099; opacity:.5; }
+
+
+      .scale-up-center {
+        animation: scale-up-center 7s cubic-bezier(0.39, 0.575, 0.565, 1)
+          infinite both;
+      }
+      @keyframes scale-up-center {
+        0% {
+          transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+      .fade-delay-2000 {
+        animation-delay: 2s;
+      }
+      .fade-delay-4000 {
+        animation-delay: 4s;
+      }
