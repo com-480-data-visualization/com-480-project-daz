@@ -49,11 +49,15 @@ margin:0;
 color: #565656
 }
 
-
+html{
+  overflow-x: hidden;
+}
 html, body{
     height: 100%;               /* good practice */
     scroll-behavior: smooth;    /* optional */
     scroll-snap-type: y mandatory;   /* page-level snapping */
+    margin: 0;     /* reset any default page margins */
+    padding: 0;
   }
 
 .snap-section { scroll-snap-align:start; 
@@ -476,7 +480,9 @@ height: auto;           /* keep aspect ratio                  */
   background-color: #fff;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
-  width: 80vh;
+  width: 100%;
+  /* never be wider than the parent */
+  max-width: 100%;
   margin: auto;
 }
 
