@@ -1,157 +1,142 @@
 import { PCA } from 'ml-pca';
-import {kmeans} from 'ml-kmeans';
+import { kmeans } from 'ml-kmeans';
 
-(function() {
-    // Set up dimensions and margins.
-    const width = 800,
-          height = 600,
-          margin = { top: 40, right: 40, bottom: 50, left: 60 };
-  
-    // Create an SVG container.
-    const svg = d3.select("#chartpca")
-      .append("svg")
+document.addEventListener('DOMContentLoaded', () => {
+  const groups = {
+    group1: ["hdi","gnipc","le","eys","mys"],
+    group2: [
+      "Rank","Quality of Life Index","Purchasing Power Index","Safety Index",
+      "Health Care Index","Cost of Living Index","Property Price to Income Ratio",
+      "Traffic Commute Time Index","Pollution Index","Climate Index"
+    ],
+    group3: [
+      "happiness_score","gdp_per_capita","social_support",
+      "healthy_life_expectancy","freedom_to_make_life_choices",
+      "generosity","perceptions_of_corruption"
+    ]
+  };
+
+  const width      = 800,
+        height     = 600,
+        margin     = { top: 40, right: 40, bottom: 50, left: 60 },
+        plotW      = width - margin.left - margin.right,
+        plotH      = height - margin.top - margin.bottom;
+
+  // SVG container
+  const svg = d3.select("#chartpca")
+    .append("svg")
       .attr("width", width)
-      .attr("height", height);
-  
-    // Append a group for the main plot area.
-    const g = svg.append("g")
-      .attr("transform", `translate(${margin.left}, ${margin.top})`);
-  
-    const plotWidth = width - margin.left - margin.right;
-    const plotHeight = height - margin.top - margin.bottom;
-  
-    // Create a tooltip.
-    const tooltip = d3.select("body").append("div")
-      .attr("class", "tooltip");
-  
-    // The metrics to use for PCA.
-    const metrics = ["hdi", "le", "eys", "mys", "gnipc"];
-  
-    // Load the CSV file.
-    d3.csv("HDIdataset.csv").then(data => {
-      // Parse numeric fields.
-      data.forEach(d => {
-        d.Year = +d.Year;
-        d.hdi = +d.hdi;
-        d.le = +d.le;
-        d.eys = +d.eys;
-        d.mys = +d.mys;
-        d.gnipc = +d.gnipc;
-      });
-      
-      // Filter to year 2022.
-      const data2022 = data.filter(d => d.Year === 2022);
-      if(data2022.length === 0) {
-        console.error("No data for Year 2022");
-        return;
-      }
-  
-      // Build a data matrix (rows for countries) using the five metrics.
-      // Also record the country names.
-      const matrix = data2022.map(d => metrics.map(m => d[m]));
-      const countries = data2022.map(d => d.country);
-  
-      // Run PCA on the matrix.
-      // We use ml-pca, scaling and centering the data.
-      const pca = new PCA(matrix, { scale: true, center: true });
+      .attr("height", height)
+    .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      // Project the data onto the first two principal components.
-      const projected = pca.predict(matrix, { nComponents: 2 }).to2DArray();
-      
-      // Run k-means clustering (e.g., k=3).
-      const k = 3; 
-      const clustersResult = kmeans(projected, k);
-      const clusterAssignments = clustersResult.clusters;  
-  
-      // Create final data with PCA scores and cluster assignments.
-      const finalData = data2022.map((d, i) => ({
-        country: d.country,
-        PC1: projected[i][0],
-        PC2: projected[i][1],
-        cluster: clusterAssignments[i]
-      }));
-  
-      // Create scales for the PCA scatter plot.
-      const xExtent = d3.extent(finalData, d => d.PC1),
-            yExtent = d3.extent(finalData, d => d.PC2);
-      const xScale = d3.scaleLinear()
-        .domain([xExtent[0], xExtent[1]])
-        .nice()
-        .range([0, plotWidth]);
-      const yScale = d3.scaleLinear()
-        .domain([yExtent[0], yExtent[1]])
-        .nice()
-        .range([plotHeight, 0]);
-  
-      // Create a color scale for the clusters.
-      const color = d3.scaleOrdinal(d3.schemeCategory10)
-        .domain(d3.range(k));
-  
-      // Append axes.
-      const xAxis = d3.axisBottom(xScale);
-      const yAxis = d3.axisLeft(yScale);
-      g.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0, ${plotHeight})`)
-        .call(xAxis)
-        .append("text")
-        .attr("x", plotWidth)
-        .attr("y", -6)
-        .attr("fill", "#000")
-        .attr("text-anchor", "end")
-        .text("PC1");
-      g.append("g")
-        .attr("class", "y-axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", "-4em")
-        .attr("fill", "#000")
-        .attr("text-anchor", "end")
-        .text("PC2");
-  
-      // Plot the points.
-      g.selectAll(".point")
-        .data(finalData)
-        .enter()
-        .append("circle")
-        .attr("class", "point")
-        .attr("r", 5)
-        .attr("cx", d => xScale(d.PC1))
-        .attr("cy", d => yScale(d.PC2))
-        .attr("fill", d => color(d.cluster))
-        .on("mouseover", function(event, d) {
-          d3.select(this)
-            .attr("stroke", "black")
-            .attr("stroke-width", 2);
-          tooltip.transition().duration(200).style("opacity", 0.9);
-          tooltip.html("<strong>" + d.country + "</strong><br/>"
-                       + "PC1: " + d.PC1.toFixed(2) + "<br/>"
-                       + "PC2: " + d.PC2.toFixed(2) + "<br/>"
-                       + "Cluster: " + d.cluster)
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function() {
-          d3.select(this)
-            .attr("stroke", null);
-          tooltip.transition().duration(500).style("opacity", 0);
-        });
-  
-      // Optionally, add labels next to the points.
-      g.selectAll(".label")
-        .data(finalData)
-        .enter()
-        .append("text")
-        .attr("class", "label")
-        .attr("x", d => xScale(d.PC1) + 7)
-        .attr("y", d => yScale(d.PC2) + 4)
-        .text(d => d.country)
-        .style("font-size", "10px");
-      
-    }).catch(error => {
-      console.error("Error loading CSV:", error);
-    });
-  })();
-  
+  const x = d3.scaleLinear().range([0, plotW]);
+  const y = d3.scaleLinear().range([plotH, 0]);
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+  const tooltip = d3.select("body").append("div")
+    .attr("class","tooltip")
+    .style("position","absolute")
+    .style("pointer-events","none")
+    .style("opacity",0);
+
+  // populate selects
+  const groupSel = d3.select("#groupSelectPCA").html("");
+  Object.entries(groups).forEach(([k, lbls],i)=> {
+    groupSel.append("option")
+      .attr("value", k)
+      .property("selected", i===0)
+      .text(k.replace(/^group/,"Group "));
+  });
+
+  const yearSel = d3.select("#yearSelectPCA").html("");
+  d3.range(2015,2023).forEach(yr => {
+    yearSel.append("option")
+      .attr("value", yr)
+      .property("selected", yr===2022)
+      .text(yr);
+  });
+
+  let dataAll = [];
+  d3.csv("merged_dataset.csv", d3.autoType).then(raw => {
+    dataAll = raw.filter(d =>
+      Number.isFinite(d.Year) && d.Year>=2015 && d.Year<=2022
+    );
+    render();
+  });
+
+  groupSel.on("change", render);
+  yearSel .on("change", render);
+
+  function render() {
+    svg.selectAll("*").remove();
+
+    const grp = groupSel.property("value"),
+          metrics = groups[grp],
+          yr = +yearSel.property("value");
+
+    const data = dataAll
+      .filter(d => d.Year===yr)
+      .filter(d => metrics.every(m => Number.isFinite(d[m])));
+    if (!data.length) return;
+
+    const matrix = data.map(d => metrics.map(m => d[m])),
+          countries = data.map(d=>d.country);
+
+    const pca = new PCA(matrix,{center:true,scale:true}),
+          proj = pca.predict(matrix,{nComponents:2}).to2DArray();
+    const k = 3,
+          km = kmeans(proj,k),
+          clusters = km.clusters;
+
+    const finalData = proj.map((coords,i)=>({
+      country:  countries[i],
+      PC1: coords[0],
+      PC2: coords[1],
+      cluster: clusters[i]
+    }));
+
+    x.domain(d3.extent(finalData,d=>d.PC1)).nice();
+    y.domain(d3.extent(finalData,d=>d.PC2)).nice();
+    color.domain(d3.range(k));
+
+    svg.append("g")
+      .attr("transform",`translate(0,${plotH})`)
+      .call(d3.axisBottom(x))
+      .append("text")
+        .attr("x",plotW).attr("y",-6)
+        .attr("text-anchor","end").text("PC1");
+
+    svg.append("g")
+      .call(d3.axisLeft(y))
+      .append("text")
+        .attr("transform","rotate(-90)")
+        .attr("y",6).attr("dy","-4em")
+        .attr("text-anchor","end").text("PC2");
+
+    svg.selectAll("circle")
+      .data(finalData)
+      .enter().append("circle")
+        .attr("r",5)
+        .attr("cx",d=>x(d.PC1))
+        .attr("cy",d=>y(d.PC2))
+        .attr("fill",d=>color(d.cluster))
+      .on("mouseover",(e,d)=>{
+        d3.select(e.currentTarget).attr("stroke","black").attr("stroke-width",2);
+        tooltip.transition().duration(200).style("opacity",0.9)
+          .html(`📍 <strong>${d.country}</strong><br>PC1: ${d.PC1.toFixed(2)}<br>PC2: ${d.PC2.toFixed(2)}`)
+          .style("left", (e.pageX+10)+"px")
+          .style("top",  (e.pageY-28)+"px");
+      })
+      .on("mouseout",()=>tooltip.transition().duration(500).style("opacity",0));
+
+    svg.selectAll("text.label")
+      .data(finalData)
+      .enter().append("text")
+        .attr("class","label")
+        .attr("x",d=>x(d.PC1)+7)
+        .attr("y",d=>y(d.PC2)+4)
+        .text(d=>d.country)
+        .style("font-size","10px");
+  }
+})();
