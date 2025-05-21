@@ -362,4 +362,24 @@ document.addEventListener("DOMContentLoaded", function () {
   function hideTooltip () {
     tooltip.style("display", "none").html("");
   }
+    /* ── 1.  Create a zoom behaviour ────────────────────────────────────────── */
+  const zoom = d3.zoom()
+  .scaleExtent([1, 8])          // how far the user may zoom in/out
+  .on("zoom", (event) => {
+    // event.transform gives us the translate / scale matrix
+    mapGroup.attr("transform", event.transform);
+  });
+
+  /* ── 2.  Register it on the <svg> element ───────────────────────────────── */
+  svg.call(zoom);                 // now wheel-scroll + drag will work
+
+  /* ── 3.  Wire the two buttons to the same zoom behaviour ────────────────── */
+  const ZOOM_STEP = 1.3;          // factor for every click
+
+  d3.select("#zoom-in")
+  .on("click", () => svg.transition().call(zoom.scaleBy,  ZOOM_STEP));
+
+  d3.select("#zoom-out")
+  .on("click", () => svg.transition().call(zoom.scaleBy, 1/ZOOM_STEP));
+
 });

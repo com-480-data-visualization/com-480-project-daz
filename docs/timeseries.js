@@ -205,18 +205,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const color = d3.scaleOrdinal(d3.schemeCategory10)
         .domain([...new Set(filtered.map(d => d.country))]);
-
+    const lineColor = "#043700";
     const grouped = d3.group(filtered, d => d.country);
     grouped.forEach((values, country) => {
         svg.append("path")
             .datum(values)
             .attr("fill", "none")
-            .attr("stroke", color(country))
-            .attr("stroke-width", 2)
+            .attr("stroke", lineColor)
+            .attr("stroke-width", 3)
             .attr("d", line);
 
         legendContainer.append("div")
-            .style("color", color(country))
+            .style("color", lineColor)
             .text(country);
     });
 }

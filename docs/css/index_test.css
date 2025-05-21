@@ -311,7 +311,7 @@ h1 {
     overflow: visible;
   }
   #zoom-controls {
-    position: absolute;
+    position: relative;
     top: 10px;
     right: 10px;
   }

@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .attr("cx", d => x(+d[xKey]))
           .attr("cy", d => y(+d[yKey]))
           .attr("r", 5)
-          .attr("fill", "steelblue")
+          .attr("fill", "#854b75")
           .on("mouseover", (event, d) => {
               tooltip.style("opacity", 1)
                   .html(`<strong>${d.country}</strong><br>${xKey}: ${d[xKey]}<br>${yKey}: ${d[yKey]}`)
