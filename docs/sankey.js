@@ -174,7 +174,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const svg = d3.select("#sankeyChart").append("svg")
                   .attr("width",width).attr("height",height);
-    const color = d3.scaleOrdinal(d3.schemeSet3);
+    const numNodes = graph.nodes.length;
+
+    // 2) sample `numNodes` t’s from t=0.3→1.0 on the Blues ramp 
+    //    (so you avoid extremely pale almost-white)
+    const blues = d3.quantize(t => d3.interpolateBlues(0.3 + 0.7*t), numNodes);
+    
+    // 3) build an ordinal scale mapping node‐index → a blue tint
+    const color = d3.scaleOrdinal()
+        .domain(d3.range(numNodes))
+        .range(blues);
+                  
     const tooltip = d3.select("#sankey-tooltip");
 
     svg.append("g").selectAll("path")
@@ -186,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .attr("stroke-opacity",0.4)
         .on("mouseover",(e,d)=>{
           d3.select(e.currentTarget).transition().duration(200)
-            .attr("stroke-opacity",0.8).attr("stroke","orange");
+            .attr("stroke-opacity",0.8).attr("stroke","#2196f3");
           tooltip.style("opacity",1)
             .html(`<strong>${d.source.name} → ${d.target.name}</strong><br/>${d.value.toFixed(2)}`)
             .style("left", (e.pageX+10)+"px").style("top", (e.pageY-15)+"px");

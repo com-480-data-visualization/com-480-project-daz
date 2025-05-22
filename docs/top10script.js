@@ -53,7 +53,6 @@ const svgBar = d3.select("#top10chart")
 
 const xScaleBar     = d3.scaleLinear().range([0, widthBar]);
 const yScaleBar     = d3.scaleBand().range([0, heightBar]).padding(0.1);
-const colorScaleBar = d3.scaleOrdinal(d3.schemeSet2);
 
 const featureSelect = d3.select("#indexSelect");        
 const yearSelect    = d3.select("#yearSelect");
@@ -135,6 +134,17 @@ function updateBarChart() {
 
   filtered.sort((a,b) => d3.descending(a[feature], b[feature]));
   const top10 = filtered.slice(0,10);
+  const n = top10.length;
+  const blues = d3.quantize(
+    // skip the very light end by starting at t=0.3
+    t => d3.interpolatePuBu(0.5 + 0.7 * t),
+    n
+  );
+
+  // 2) make your ordinal scale map index → a blue tint
+  const colorScaleBar = d3.scaleOrdinal()
+    .domain(d3.range(n))  // [0,1,2…n-1]
+    .range(blues);
 
   // update scales
   xScaleBar.domain([0, d3.max(top10, d => d[feature]) || 0]);

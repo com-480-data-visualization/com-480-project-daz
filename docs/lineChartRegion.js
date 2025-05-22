@@ -241,7 +241,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // line & color
     const line  = d3.line().x(d=>x(d.Year)).y(d=>y(d.value));
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const regions = regionsData.map(r => r.region);
+    const n       = regions.length;
+    // pick a Greens scheme whose length matches the number of series:
+    const palette = d3.quantize(t => d3.interpolateYlGn(0.4 + 1 * t), n);
+
+    const color = d3.scaleOrdinal()
+      .domain(regions)
+      .range(palette);
 
     regionsData.forEach(regionData => {
       const cls = regionData.region.replace(/\s+/g,"");
@@ -249,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .datum(regionData.values)
         .attr("fill","none")
         .attr("stroke",color(regionData.region))
-        .attr("stroke-width",2)
+        .attr("stroke-width",4)
         .attr("class","line line-"+cls)
         .attr("d", line);
 

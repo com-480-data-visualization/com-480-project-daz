@@ -78,7 +78,7 @@ html, body{
 .p2{ background:#89c2d9; color:#505050; }
 .p3{ background:#93c572; color:#373737; }
 .p4{ background:#d8f3dc; color:#373737; }
-.p5{ background:#569099; color:#000; }
+.p5{ background:#bbdefb; color:#000; }
 
 /* ——— FIXED MINI-HEADER ——— */
 #mini-header{ position:fixed; top:0; left:0; right:0; height:80px;
@@ -92,7 +92,7 @@ html, body{
 #mini-header > div:nth-child(2){background:#89c2d9; color:#505050; }
 #mini-header > div:nth-child(3){background:#93c572; color:#373737; }
 #mini-header > div:nth-child(4){background:#d8f3dc; color:#373737; }
-#mini-header > div:nth-child(5){ background:#569099; color:#000; }
+#mini-header > div:nth-child(5){ background:#bbdefb; color:#000; }
 
 /* ——— CHAPTER PLACEHOLDERS ——— */
 .chap{ display:grid; place-items:start center; color:#FFF; padding-top:200px; }
@@ -100,7 +100,7 @@ html, body{
 .c2{ background:#89c2d9; color:#505050; }
 .c3{ background:#93c572; color:#373737; } 
 .c4{background:#d8f3dc; color:#373737; }
-.c5{ background:#569099; color:#000; }
+.c5{ background:#bbdefb; color:#000; }
 .c6{ background:#515C6B; color:white; }
 .c7{ background:#2e343d; color:white; }
 
@@ -561,3 +561,4 @@ height: auto;           /* keep aspect ratio                  */
   /* padding: 1rem; */
   /* border: 1px solid #ccc; */
 }
+

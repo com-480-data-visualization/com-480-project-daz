@@ -234,23 +234,64 @@ document.addEventListener("DOMContentLoaded", () => {
     svg.selectAll("*").remove();
 
     // X axis
-    svg.append("g")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(xScale))
-      .append("text")
-        .attr("class","axis-label")
-        .attr("x", width).attr("y",-10)
-        .attr("text-anchor","end")
-        .text(xM.toUpperCase());
+    const xAxisG = svg.append("g")
+    .attr("transform", `translate(0,${height})`)
+    .call(d3.axisBottom(xScale));
+
+    // Make the main axis line thicker
+    xAxisG.selectAll("path.domain")
+    .attr("stroke-width", 2);
+
+    // Make all tick-marks thicker (and you can lengthen them too if you like)
+    xAxisG.selectAll("line.tick")
+    .attr("stroke-width", 2)
+    .attr("y2", 6);
+
+    // Increase the tick-label font size and weight
+    xAxisG.selectAll("text")
+    .style("font-size", "14px")
+    .style("font-weight", "400");
+
+    // Now append your axis-label
+    xAxisG.append("text")
+    .attr("class", "axis-label")
+    .attr("x", width)
+    .attr("y", -10)
+    .attr("text-anchor", "end")
+    .style("font-size", "16px")    // label font size
+    .style("font-weight", "500")   // label font weight
+    .text(xM.toUpperCase());
+
 
     // Y axis
-    svg.append("g")
-      .call(d3.axisLeft(yScale))
-      .append("text")
-        .attr("class","axis-label")
-        .attr("x",0).attr("y",10).attr("dy","-1em")
-        .attr("text-anchor","start")
-        .text(yM.toUpperCase());
+    const yAxisG = svg.append("g")
+    .call(d3.axisLeft(yScale));
+
+    // Thicken the axis line
+    yAxisG.selectAll("path.domain")
+    .attr("stroke-width", 2);
+
+    // Thicken (and lengthen) ticks
+    yAxisG.selectAll("line.tick")
+    .attr("stroke-width", 2)
+    .attr("x2", -6);
+
+    // Increase tick-label font size / weight
+    yAxisG.selectAll("text")
+    .style("font-size", "14px")
+    .style("font-weight", "400");
+
+    // Append the Y-axis label
+    yAxisG.append("text")
+    .attr("class", "axis-label")
+    .attr("x", 0)
+    .attr("y", 10)
+    .attr("dy", "-1em")
+    .attr("text-anchor", "start")
+    .style("font-size", "16px")
+    .style("font-weight", "500")
+    .text(yM.toUpperCase());
+
 
     // Chart title
     svg.append("text")

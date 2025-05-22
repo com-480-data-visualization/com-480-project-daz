@@ -49,9 +49,22 @@ document.addEventListener("DOMContentLoaded", function () {
       geoData;
 
   // ── D3 & SVG setup ─────────────────────────────────────────────────────────
-  const svg      = d3.select("#my_dataviz"),
-        width    = +svg.attr("width"),
-        height   = +svg.attr("height"),
+  const svgContainer = d3.select("#my_dataviz");
+
+  // choose your “design” width & height (what you originally hard‐coded)
+  const designW = 800,
+        designH = 500;
+  
+  // make the SVG responsive
+  svgContainer
+    .attr("viewBox", `0 0 ${designW} ${designH}`)
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .attr("width", null)
+    .attr("height", null);
+  
+  const svg     = svgContainer,        // for clarity in the rest of your code
+        width   = designW,
+        height  = designH,
         mapGroup = svg.append("g"),
         projection = d3.geoMercator()
                        .scale(100)
