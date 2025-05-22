@@ -138,10 +138,32 @@
         });
   
         // Update axes.
-        svg.select(".x-axis")
+        const xAxisG = svg.select(".x-axis")
           .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
-        svg.select(".y-axis")
+        // make axis‐line & ticks thicker
+        xAxisG.selectAll("path.domain")
+        .attr("stroke-width", 2);
+        xAxisG.selectAll("line.tick")
+        .attr("stroke-width", 2);
+
+        // set label font‐size & weight
+        xAxisG.selectAll("text")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
+        
+          
+        const yAxisG = svg.select(".y-axis")
           .call(d3.axisLeft(yScale));
+        // thicker line & ticks
+        yAxisG.selectAll("path.domain")
+        .attr("stroke-width", 2);
+        yAxisG.selectAll("line.tick")
+        .attr("stroke-width", 2);
+
+        // labels at weight 400
+        yAxisG.selectAll("text")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
   
         // Optional legend.
         svg.selectAll(".legend").remove();

@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  
+  // print something to test
+  console.log("Radar chart loaded");
   // ── Configuration for metric groups ────────────────────────────────────────
   const groups = {
     group1: ["hdi", "gnipc", "le", "eys", "mys"],
@@ -24,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "perceptions_of_corruption"
     ]
   };
-
+  const colours = ["#2196f3", "#7371fc"];
   const width  = 600,
         height = 600,
         margin = { top: 100, right: 85, bottom: 85, left: 85 },
@@ -162,9 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
       g.append("circle")
         .attr("class", "gridCircle")
         .attr("r", radius * lvl / levels)
-        .style("fill", "#CDCDCD")
-        .style("stroke", "#CDCDCD")
-        .style("fill-opacity", 0.1)
+        .style("fill", "white")
+        .style("stroke", "white")
+        .style("fill-opacity", 0.3)
         .style("filter", "url(#glow)");
     }
 
@@ -197,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .curve(d3.curveCardinalClosed);
 
     selectedData.forEach((countryData, idx) => {
-      const color = d3.schemeCategory10[idx];
+      const color = colours[idx];
       const pts = allAxes.map((axis, i) => ({
         angle: angleSlice * i,
         value: countryData[axis]
@@ -210,11 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .style("fill", color)
         .style("fill-opacity", 0.35)
         .on("mouseover", function() {
-          d3.selectAll(".radarArea").style("fill-opacity", 0.1);
+          d3.selectAll(".radarArea").style("fill-opacity", 0.4);
           d3.select(this).style("fill-opacity", 0.7);
         })
         .on("mouseout", function() {
-          d3.selectAll(".radarArea").style("fill-opacity", 0.35);
+          d3.selectAll(".radarArea").style("fill-opacity", 0.3);
         });
 
       g.selectAll(`.radarCircle-${idx}`)

@@ -191,12 +191,32 @@ document.addEventListener("DOMContentLoaded", function () {
         .range([height, 0]);
 
     // Axes
-    svg.append("g")
+    const xAxisG =svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format("d")));
+    // make axis‐line & ticks thicker
+    xAxisG.selectAll("path.domain")
+    .attr("stroke-width", 2);
+    xAxisG.selectAll("line.tick")
+    .attr("stroke-width", 2);
 
-    svg.append("g")
+    // set label font‐size & weight
+    xAxisG.selectAll("text")
+    .style("font-size", "14px")
+    .style("font-weight", "400");
+
+    const yAxisG = svg.append("g")
         .call(d3.axisLeft(y));
+    // thicker line & ticks
+    yAxisG.selectAll("path.domain")
+    .attr("stroke-width", 2);
+    yAxisG.selectAll("line.tick")
+    .attr("stroke-width", 2);
+
+    // labels at weight 400
+    yAxisG.selectAll("text")
+    .style("font-size", "14px")
+    .style("font-weight", "400");    
 
     // Lines
     const line = d3.line()

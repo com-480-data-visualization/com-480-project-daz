@@ -184,11 +184,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const x = d3.scaleLinear()
       .domain([startYear, endYear])
       .range([0, width]);
-    svg.append("g")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x)
-        .tickValues(d3.range(startYear, endYear+1))
-        .tickFormat(d3.format("d")));
+    // X axis
+    const xAxisG = svg.append("g")
+    .attr("transform", `translate(0,${height})`)
+    .call(d3.axisBottom(x)
+      .tickValues(d3.range(startYear, endYear+1))
+      .tickFormat(d3.format("d")));
+
+    // make axis‐line & ticks thicker
+    xAxisG.selectAll("path.domain")
+    .attr("stroke-width", 2);
+    xAxisG.selectAll("line.tick")
+    .attr("stroke-width", 2);
+
+    // set label font‐size & weight
+    xAxisG.selectAll("text")
+    .style("font-size", "12px")
+    .style("font-weight", "400");
 
     // Y axis
     let yMin = d3.min(regionsData, r => d3.min(r.values, d => d.value));
@@ -198,7 +210,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const y = d3.scaleLinear()
       .domain([yMin - 0.1*Math.abs(yMin), yMax + 0.1*Math.abs(yMax)])
       .range([height, 0]);
-    svg.append("g").call(d3.axisLeft(y));
+    const yAxisG = svg.append("g")
+      .call(d3.axisLeft(y));
+    
+    // thicker line & ticks
+    yAxisG.selectAll("path.domain")
+      .attr("stroke-width", 2);
+    yAxisG.selectAll("line.tick")
+      .attr("stroke-width", 2);
+    
+    // labels at weight 400
+    yAxisG.selectAll("text")
+      .style("font-size", "12px")
+      .style("font-weight", "400");
 
     // labels
     svg.append("text")

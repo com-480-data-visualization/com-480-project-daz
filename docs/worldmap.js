@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // a map from metricKey → D3 color interpolator
   const METRIC_INTERPOLATORS = {
-    hdi:                   d3.interpolateGreens,
-    happiness_score:       d3.interpolateBlues,
-    quality_of_life_index: d3.interpolateOranges
+    hdi:                   d3.interpolateYlOrBr,
+    happiness_score:       d3.interpolateYlOrBr,
+    quality_of_life_index: d3.interpolateYlOrBr
   };
 
   // only the cases where CSV ≠ GeoJSON
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     paths.enter().append("path")
         .attr("class", "Country")
-        .style("stroke", "white")
+        .style("stroke", "#6c757d")
         .style("opacity", 0.8)
       .merge(paths)
         .attr("d", path)

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
   const tooltip = d3.select("#tooltipscatter");
-  const color = d3.scaleOrdinal(d3.schemeCategory10);
+  const color = "#0d47a1"
   let data;
 
   d3.csv("merged_dataset.csv").then(rawData => {
@@ -97,12 +97,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
       svg.selectAll("*").remove();
 
-      svg.append("g")
-          .attr("transform", `translate(0,${height})`)
-          .call(d3.axisBottom(x));
+      // X axis:
+        const xAxisG = svg.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x));
 
-      svg.append("g")
-          .call(d3.axisLeft(y));
+        xAxisG.selectAll("path.domain")
+        .attr("stroke-width", 2);
+
+        xAxisG.selectAll("line.tick")
+        .attr("stroke-width", 2);
+
+        xAxisG.selectAll("text")
+        .style("font-size", "14px")
+        .style("font-weight", "400");   
+
+        // Y axis:
+        const yAxisG = svg.append("g")
+        .call(d3.axisLeft(y));
+
+        yAxisG.selectAll("path.domain")
+        .attr("stroke-width", 2);
+
+        yAxisG.selectAll("line.tick")
+        .attr("stroke-width", 2);
+
+        yAxisG.selectAll("text")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
 
       svg.selectAll("circle")
           .data(yearData)
@@ -111,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .attr("cx", d => x(+d[xKey]))
           .attr("cy", d => y(+d[yKey]))
           .attr("r", 5)
-          .attr("fill", "#854b75")
+          .attr("fill", "#0d47a1")
           .on("mouseover", (event, d) => {
               tooltip.style("opacity", 1)
                   .html(`<strong>${d.country}</strong><br>${xKey}: ${d[xKey]}<br>${yKey}: ${d[yKey]}`)

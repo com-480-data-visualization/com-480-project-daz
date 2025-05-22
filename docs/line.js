@@ -105,12 +105,44 @@
     colorScale.domain(dataByCountry.map(d => d.country));
 
     // 7) draw axes
-    svg.append('g')
-      .attr('transform', `translate(0,${height})`)
-      .call(d3.axisBottom(x).ticks(8).tickFormat(d3.format('d')));
-    svg.append('g')
-      .attr('class','y-axis')
-      .call(d3.axisLeft(y));
+    // X axis:
+    const xAxisG = svg.append('g')
+    .attr('transform', `translate(0,${height})`)
+    .call(d3.axisBottom(x).ticks(8).tickFormat(d3.format('d')));
+
+    // make the axis line thicker:
+    xAxisG.selectAll('path.domain')
+      .attr('stroke-width', 2);    // or whatever px you like
+
+    // make the tick-lines thicker/longer:
+    xAxisG.selectAll('line.tick')
+      .attr('stroke-width', 2)
+      .attr('y2', 6);             // default inner tick length is 6px
+
+    // increase tick-label font-size and weight:
+    xAxisG.selectAll('text')
+      .style('font-size', '14px')
+      .style('font-weight', '400');
+
+
+    // Y axis:
+    const yAxisG = svg.append('g')
+    .attr('class','y-axis')
+    .call(d3.axisLeft(y));
+
+    // same pattern:
+    yAxisG.selectAll('path.domain')
+      .attr('stroke-width', 2);
+
+    yAxisG.selectAll('line.tick')
+      .attr('stroke-width', 2)
+      .attr('x2', -6);            // for left-facing ticks
+
+    yAxisG.selectAll('text')
+      .style('font-size', '14px')
+    .style('font-weight', '400');
+
+
 
     // 8) bind country groups
     const countryG = svg.selectAll('.country-group')

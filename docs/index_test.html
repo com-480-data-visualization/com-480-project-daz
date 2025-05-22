@@ -97,13 +97,17 @@
             <h1>Chapter 1: The World in Transition</h1>
             <hr class="divider-line">
           </div>
-        <div class="inner-content-vertical">
+
+
+        <div class="inner-content">
                 <!-- LEFT column --------------------------------------------------->
-            <div>
+            <div class="chapter-left">
                 <h2>Witness the transformation of our world over time …</h2>
-            </div>
-            <div>
                 <p>A global visualisation displaying <strong>HDI</strong> values …</p>
+                <p>We observe several regions .. </p>
+            </div>
+            <div class="chapter-right">
+                
                 <div class="controls">
                     <div class="country-box">
                         <span class="country-label">Global Index:</span>
@@ -121,20 +125,21 @@
                     <select id="end-year"></select>
                     </div>
                 <div class=chart>
-                    <div id="map-container">
-                </div>
-                <svg id="my_dataviz" width="800" height="500"></svg>
-        
-                <div id="zoom-controls">
-                    <button id="zoom-in">+</button>
-                    <button id="zoom-out">-</button>
-                </div>
-        
-                <div id="legend"></div>
+                  <div id="map-container">   
+                    <svg id="my_dataviz" width="800" height="500"></svg>
+                    <div id="zoom-controls">
+                        <button id="zoom-in">+</button>
+                        <button id="zoom-out">-</button>
+                    </div>
+                    <div id="legend"></div>
+                  </div>
                 </div>
                 <div id="map-tooltip"></div>
             </div>    
         </div>
+
+
+
         <div class="inner-content">
             <div class="chapter-left">
                 <p> A dynamic animation representing <strong>HDI</strong> trends over time.</p>
@@ -164,44 +169,61 @@
         <h1>>Chapter 2: Unveiling the Factors</h1>
         <hr class="divider-line">
       </div>
-    <div class="inner-content-vertical">
+    <div class="inner-content">
             <!-- LEFT column --------------------------------------------------->
-      <div>
+      <div class="chapter-left">
         <p>
           Dive deeper into the intricate connections among socio-economic indicators. Explore the interplay between metrics that shape well-being.
         </p>
         <p>A comparative radar chart visualizing key indicators for two selected countries in 2022.</p>
       </div>
-      <div class="chart">
-        <div class="controls">
-          <!-- Container for Country 1 -->
-          <div class="country-box" id="country1-box">
-            <span class="country-label">Country 1</span>
-            <span class="color-dot"></span>
-            <select id="countrySelect1">
-              <option value="">-- Select Country --</option>
-            </select>
+      <div class="chapter-right">
+
+      
+        <div class="chart">
+          <div class="controls">
+            <!-- Container for Country 1 -->
+            <div class="country-box" id="country1-box">
+              <span class="country-label">Country 1</span>
+              <span class="color-dot"></span>
+              <select id="countrySelect1">
+                <option value="">-- Select Country --</option>
+              </select>
+            </div>
+          
+            <!-- Container for Country 2 -->
+            <div class="country-box" id="country2-box">
+              <span class="country-label">Country 2</span>
+              <span class="color-dot"></span>
+              <select id="countrySelect2">
+                <option value="">-- Select Country --</option>
+              </select>
+            </div>
+          
+            <!-- Container for Metrics Group -->
+            <div class="country-box" id="group-box">
+              <span class="country-label">Select Metrics Group</span>
+              <select id="groupSelectRadar">
+                <option value="group1">Group 1</option>
+                <option value="group2">Group 2</option>
+                <option value="group3">Group 3</option>
+              </select>
+            </div>
+          
+            <!-- Container for Year -->
+            <div class="country-box" id="year-box">
+              <span class="country-label">Select Year</span>
+              <select id="yearSelectRadar">
+                <!-- options will be populated by initYearSelect() -->
+              </select>
+            </div>
           </div>
-          <!-- Container for Country 2 -->
-          <div class="country-box" id="country2-box">
-            <span class="country-label">Country 2</span>
-            <span class="color-dot"></span>
-            <select id="countrySelect2">
-              <option value="">-- Select Country --</option>
-            </select>
-          </div>
-          <div class="country-box" id="group-box">
-            <span class="country-label">Select Metrics Group</span>
-            <select id="groupSelect">
-              <option value="group1">Group 1</option>
-              <option value="group2">Group 2</option>
-            </select>
-          </div>
+          <div id="chart"></div>
         </div>
-        <div id="chart"></div>
+        <div class="tooltip" id="tooltip" style="opacity:0;"></div>  
       </div>
-      <div class="tooltip" id="tooltip" style="opacity:0;"></div>  
     </div>
+
     <div class="inner-content">
         <div class="chapter-left">
           <p>Explore the relationship between two HDI metrics using a scatter plot.</p>
@@ -309,7 +331,7 @@
           <h2>The Impact of Public War: the examples of Libya, Syria, and Yemen</h2>
         </div>
         <div class="chapter-right">
-          <div id="chartContainer"></div>
+          <div id="chartContainerWar"></div>
         </div>
       </div>
     </section>
@@ -330,36 +352,47 @@
         </div>
         <div class="chapter-right">
           <div class="controls">
-            <div class="country-box" >
-            <label for="xSelect">X Axis: 
-              <select id="xSelect">
-                <!-- Options will be populated by  D3 -->
-              </select>
-            </label>
+            <!-- Group dropdown for interactivebubble.js -->
+            <div class="country-box">
+              <label for="groupSelectBubble">Group:
+                <select id="groupSelectBubble">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
             </div>
-            <div class="country-box" >
-            <label for="ySelect">Y Axis: 
-              <select id="ySelect">
-                <!-- Options will be populated by D3 -->
-              </select>
-            </label>
+          
+            <div class="country-box">
+              <label for="xSelect">X Axis:
+                <select id="xSelect">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
             </div>
-            <div class="country-box" >
-            <label for="rSelect">Bubble Size: 
-              <select id="rSelect">
-                <!-- Options will be populated by D3 -->
-              </select>
-            </label>
+          
+            <div class="country-box">
+              <label for="ySelect">Y Axis:
+                <select id="ySelect">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
             </div>
-            <div class="country-box" >
-            <label for="yearSlider">
-              Year:
-              <!-- The slider attributes (min, max, value) will be updated by the script -->
-              <input type="range" id="yearSlider" value="0">
-              <span id="yearLabel"></span>
-            </label>
+          
+            <div class="country-box">
+              <label for="rSelect">Bubble Size:
+                <select id="rSelect">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
+            </div>
+          
+            <div class="country-box">
+              <label for="yearSlider">Year:
+                <input type="range" id="yearSlider" value="0">
+                <span id="yearLabel"></span>
+              </label>
             </div>
           </div>
+          
           <!-- Container for the bubble chart -->
           <div id="bubbleChart"></div>
           <!-- Tooltip -->

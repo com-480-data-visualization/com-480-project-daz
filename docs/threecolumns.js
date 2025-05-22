@@ -20,7 +20,7 @@
   const countries = ["Libya", "Syrian Arab Republic", "Yemen"];
 
   // Select the main container.
-  const container = d3.select("#chartContainer");
+  const container = d3.select("#chartContainerWar");
 
   // Load your CSV data. Adjust the filename/path as needed.
   d3.csv("HDIdataset.csv").then(data => {
@@ -60,7 +60,7 @@
       metrics.forEach(metric => {
         // Create a div for this small chart.
         const chartDiv = col.append("div")
-          .attr("class", "small-chart")
+          .attr("class", "small-chart item")
           .style("width", chartWidth + "px")
           .style("height", chartHeight + "px");
         
@@ -179,7 +179,7 @@
             .x(d => xScale(d.Year))
             .y(d => yScale(d[metric]))
             .curve(d3.curveMonotoneX))
-          .attr("stroke", "#1f77b4")
+          .attr("stroke", "#043700")
           .attr("stroke-width", 2)
           .attr("fill", "none");
         
@@ -195,7 +195,7 @@
               .x(d => xScale(d.Year))
               .y(d => yScale(d.hdi))
               .curve(d3.curveMonotoneX))
-            .attr("stroke", "red")
+            .attr("stroke", "#bc4b51")
             .attr("stroke-width", 2)
             .attr("fill", "none");
         }

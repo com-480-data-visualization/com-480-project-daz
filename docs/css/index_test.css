@@ -74,8 +74,8 @@ html, body{
                      font-family:sans-serif; }
 .panel .num{ font-size:6vw; line-height:1; }
 .panel .lbl{ margin-top:1rem; font-size:1.2vw; }
-.p1{ background:#f6d809; color:#000; }
-.p2{ background:#a4dad2; color:#505050; }
+.p1{ background:#ffe6a7; color:#000; }
+.p2{ background:#89c2d9; color:#505050; }
 .p3{ background:#93c572; color:#373737; }
 .p4{ background:#bce08a; color:#373737; }
 .p5{ background:#569099; color:#000; }
@@ -88,16 +88,16 @@ html, body{
 #mini-header.visible{ opacity:1; pointer-events:auto; }
 #mini-header > div{ display:flex; flex-direction:column; justify-content:center;
                     text-align:center; color:#FFF; font-size:.9rem; }
-#mini-header > div:nth-child(1){ background:#f6d809; color:#000; }
-#mini-header > div:nth-child(2){background:#a4dad2; color:#505050; }
+#mini-header > div:nth-child(1){ background:#ffe6a7; color:#000; }
+#mini-header > div:nth-child(2){background:#89c2d9; color:#505050; }
 #mini-header > div:nth-child(3){background:#93c572; color:#373737; }
 #mini-header > div:nth-child(4){background:#bce08a; color:#373737; }
 #mini-header > div:nth-child(5){ background:#569099; color:#000; }
 
 /* ——— CHAPTER PLACEHOLDERS ——— */
 .chap{ display:grid; place-items:start center; color:#FFF; padding-top:200px; }
-.c1{ background:#f6d809; color:#000; }
-.c2{ background:#a4dad2; color:#505050; }
+.c1{ background:#ffe6a7; color:#000; }
+.c2{ background:#89c2d9; color:#505050; }
 .c3{ background:#93c572; color:#373737; } 
 .c4{background:#bce08a; color:#373737; }
 .c5{ background:#569099; color:#000; }
@@ -287,10 +287,13 @@ h1 {
   }
 
   #map-container {
-    position: relative;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    /* two rows: first auto-height (the SVG), second auto-height (controls+legend) */
+    grid-template-rows: auto auto;
+    /* two equal columns for the bottom row */
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;          /* space between controls and legend */
+    width: max-content; /* shrink-wrap if you like, or width: 100% */
   }
   #map-tooltip {
     position: absolute;
@@ -309,11 +312,6 @@ h1 {
   }
   #map-tooltip svg {
     overflow: visible;
-  }
-  #zoom-controls {
-    position: relative;
-    top: 10px;
-    right: 10px;
   }
   #zoom-controls button {
     display: block;
@@ -411,7 +409,7 @@ h1 {
     display: flex;
     gap: 2rem;              /* space between the columns          */
     align-items: flex-start;
-    width: 90%;
+    width: 60%;
     margin-bottom:100px;
   }
 .label {
@@ -420,7 +418,7 @@ h1 {
 
 .chapter-left{
     flex: 1 1 40rem;        /* grow | shrink | preferred width    */
-    max-width: 40rem;
+    max-width: 100rem;
   }
   
 /* right column takes the remaining space */
@@ -474,16 +472,11 @@ height: auto;           /* keep aspect ratio                  */
 
 .chart{
   flex: 0 0 50%;
-  padding-top: 30px;
-  padding-left: 20px;
-  padding-bottom: 20px;
-  background-color: #fff;
-  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-right: 20px;
   border-radius: 20px;
-  width: 100%;
-  /* never be wider than the parent */
-  max-width: 100%;
-  margin: auto;
+
 }
 
 .text{
@@ -509,4 +502,63 @@ height: auto;           /* keep aspect ratio                  */
   align-items: stretch;
   gap: 40px;
   margin-bottom: 80px;
+}
+
+
+
+#map-container {
+  display: grid;
+  /* define two rows and two columns */
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "viz    viz"    /* svg spans both columns */
+    "zoom   legend";/* bottom row split in two */
+  gap: 1rem;
+  width: 95%;       /* or max-content if you prefer shrink-wrap */
+}
+
+/* place each item into its named area */
+#my_dataviz {
+  grid-area: viz;
+  width: 100%;      /* make svg fill its grid area */
+  height: 90%;
+  margin: 20px;  /* center the svg in its grid area */
+}
+
+#zoom-controls {
+  grid-area: zoom;
+  display: flex;
+  gap: 0.5rem;
+  margin-left:10px;
+  margin-bottom: 10px;
+}
+
+#legend {
+  grid-area: legend;
+}
+
+
+.chapter-left p {
+  font-size: 2em;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.chapter-left h2 {
+  font-size: 3.5em;
+  margin: 0;
+}
+
+
+#chartContainerWar {
+  display: flex;
+  gap: 1rem;      /* optional spacing between them */
+}
+
+#chartContainerWar .item {
+  flex: 1;        /* each item grows equally */
+  /* optional styling: */
+  /* padding: 1rem; */
+  /* border: 1px solid #ccc; */
 }
