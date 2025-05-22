@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .text("No data for that year & metric combo");
       return;
     }
-
+    const n = 10;
     const xScale  = d3.scaleLinear()
                        .domain(d3.extent(filtered, d => d[xM])).nice()
                        .range([0, width]),
@@ -222,7 +222,14 @@ document.addEventListener("DOMContentLoaded", () => {
                        .domain(d3.extent(filtered, d => d[rM]))
                        .range([5, 40]),
           regions = Array.from(new Set(filtered.map(d => d.region_hdi))),
-          color   = d3.scaleOrdinal().domain(regions).range(d3.schemeCategory10);
+          color = d3.scaleOrdinal()
+          .domain(regions)
+          .range(
+            d3.range(n).map(i =>
+              d3.interpolateYlGn(i / (n - 1))  // t runs from 0 to 1
+            )
+          );
+
 
     svg.selectAll("*").remove();
 
