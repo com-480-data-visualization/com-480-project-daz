@@ -405,6 +405,21 @@
           <h2>PCA and Clustering on HDI Data (2022)</h2>
         </div>
         <div class="chapter-right">
+          <div class="controls">
+            <div class="country-box">
+              <select id="groupSelectPCA">
+                <option value="group1">HDI Metrics</option>
+                <option value="group2">Quality of Life Metrics</option>
+                <option value="group3">Happiness Metrics</option>
+              </select>
+            </div>
+            <div class="country-box" id="year-box">
+                <label for="yearSelectPCA" class="country-label">Year</label>
+                <select id="yearSelectPCA">
+                  <!-- populated dynamically -->
+                </select>
+            </div>
+          </div>
           <div id="chartpca"></div>
         </div>
       </div>

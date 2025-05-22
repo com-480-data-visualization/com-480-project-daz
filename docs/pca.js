@@ -1,6 +1,6 @@
 import { PCA } from 'ml-pca';
 import { kmeans } from 'ml-kmeans';
-
+import { schemeYlGn } from "d3-scale-chromatic";
 (function() {
   // 1) Metric groups + human-friendly labels
   const groups = {
@@ -47,11 +47,9 @@ import { kmeans } from 'ml-kmeans';
       .attr("height", height)
     .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
-
   // 4) Scales & color
   const x     = d3.scaleLinear().range([0, plotW]);
   const y     = d3.scaleLinear().range([plotH, 0]);
-  const color = d3.scaleOrdinal(d3.schemeCategory10);
 
   // 5) Tooltip
   const tooltip = d3.select("body").append("div")
@@ -115,7 +113,13 @@ import { kmeans } from 'ml-kmeans';
     const k        = 3,
           km       = kmeans(proj, k),
           clusters = km.clusters;
+    const myCategories = [...new Set(clusters)];
+    
+    const colors3 = ["#52b788", "#eeef20", "#168aad"];
 
+    const color = d3.scaleOrdinal()
+      .domain(d3.range(3))   // your three clusters: 0,1,2
+      .range(colors3);
     // assemble final data with original metric values
     const finalData = proj.map((coords, i) => {
       const row = { country: countries[i], PC1: coords[0], PC2: coords[1], cluster: clusters[i] };
@@ -132,21 +136,47 @@ import { kmeans } from 'ml-kmeans';
     color.domain(d3.range(k));
 
     // axes
-    svg.append("g")
-      .attr("transform", `translate(0,${plotH})`)
-      .call(d3.axisBottom(x))
-      .append("text")
-        .attr("x", plotW).attr("y", -6)
+    const xAxisG = svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0,${plotH})`)
+    .call(d3.axisBottom(x));
+
+    // 2) now style the line, ticks, and tick-labels
+    xAxisG.selectAll("path.domain")
+        .attr("stroke-width", 2);
+    xAxisG.selectAll("line.tick")
+        .attr("stroke-width", 2);
+    xAxisG.selectAll("text")
+        .style("font-size",  "14px")
+        .style("font-weight","400");
+
+    // 3) finally, append your axis title
+    xAxisG.append("text")
+        .attr("x", plotW)
+        .attr("y", -6)
         .attr("text-anchor","end")
+        .style("font-size","12px")
         .text("PC1");
 
-    svg.append("g")
-      .call(d3.axisLeft(y))
-      .append("text")
+    const yAxisG = svg.append("g")
+        .attr("class", "y-axis")
+        .call(d3.axisLeft(y));
+    
+    yAxisG.selectAll("path.domain")
+        .attr("stroke-width", 2);
+    yAxisG.selectAll("line.tick")
+        .attr("stroke-width", 2);
+    yAxisG.selectAll("text")
+        .style("font-size",  "14px")
+        .style("font-weight","400");
+    
+    yAxisG.append("text")
         .attr("transform","rotate(-90)")
-        .attr("y",6).attr("dy","-4em")
+        .attr("y", 6).attr("dy","-4em")
         .attr("text-anchor","end")
+        .style("font-size","14px")
         .text("PC2");
+    
 
     // points + tooltip
     svg.selectAll("circle")

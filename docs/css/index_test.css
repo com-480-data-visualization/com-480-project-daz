@@ -77,7 +77,7 @@ html, body{
 .p1{ background:#ffe6a7; color:#000; }
 .p2{ background:#89c2d9; color:#505050; }
 .p3{ background:#93c572; color:#373737; }
-.p4{ background:#bce08a; color:#373737; }
+.p4{ background:#d8f3dc; color:#373737; }
 .p5{ background:#569099; color:#000; }
 
 /* ——— FIXED MINI-HEADER ——— */
@@ -91,7 +91,7 @@ html, body{
 #mini-header > div:nth-child(1){ background:#ffe6a7; color:#000; }
 #mini-header > div:nth-child(2){background:#89c2d9; color:#505050; }
 #mini-header > div:nth-child(3){background:#93c572; color:#373737; }
-#mini-header > div:nth-child(4){background:#bce08a; color:#373737; }
+#mini-header > div:nth-child(4){background:#d8f3dc; color:#373737; }
 #mini-header > div:nth-child(5){ background:#569099; color:#000; }
 
 /* ——— CHAPTER PLACEHOLDERS ——— */
@@ -99,7 +99,7 @@ html, body{
 .c1{ background:#ffe6a7; color:#000; }
 .c2{ background:#89c2d9; color:#505050; }
 .c3{ background:#93c572; color:#373737; } 
-.c4{background:#bce08a; color:#373737; }
+.c4{background:#d8f3dc; color:#373737; }
 .c5{ background:#569099; color:#000; }
 .c6{ background:#515C6B; color:white; }
 .c7{ background:#2e343d; color:white; }
@@ -390,7 +390,6 @@ h1 {
   margin: 0 auto;
   width: 800px;
   height: 600px;
-  border: 1px solid #ccc;
   position: relative;
 }
 
