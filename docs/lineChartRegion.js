@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // set label font‐size & weight
     xAxisG.selectAll("text")
-    .style("font-size", "12px")
+    .style("font-size", "14px")
     .style("font-weight", "400");
 
     // Y axis
@@ -221,19 +221,23 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // labels at weight 400
     yAxisG.selectAll("text")
-      .style("font-size", "12px")
+      .style("font-size", "14px")
       .style("font-weight", "400");
 
     // labels
     svg.append("text")
       .attr("x",width/2).attr("y",height+margin.bottom-10)
       .attr("text-anchor","middle").classed("axis-label",true)
-      .text("Year");
+      .text("Year")
+      .style("font-size", "18px")
+      .style("font-weight", "400");
     svg.append("text")
       .attr("transform","rotate(-90)")
       .attr("x",-height/2).attr("y",-margin.left+15)
       .attr("text-anchor","middle").classed("axis-label",true)
-      .text(FEATURE_LABELS[feature]||feature);
+      .text(FEATURE_LABELS[feature]||feature)
+      .style("font-size", "18px")
+      .style("font-weight", "400");
 
     // line & color
     const line  = d3.line().x(d=>x(d.Year)).y(d=>y(d.value));
