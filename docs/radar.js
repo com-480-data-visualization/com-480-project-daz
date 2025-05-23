@@ -27,6 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
       "perceptions_of_corruption"
     ]
   };
+
+  const groupLabels = {
+    group1: "HDI Metrics",
+    group2: "Quality of Life Metrics",
+    group3: "Happiness Metrics"
+  };
   const colours = ["#2196f3", "#7371fc"];
   const width  = 600,
         height = 600,
@@ -79,8 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sel.html("");
     Object.keys(groups).forEach(key => {
       sel.append("option")
-        .attr("value", key)
-        .text(key.replace(/^group/, "Group "));
+         .attr("value", key)
+         .text(groupLabels[key]);       // ← use your mapping here
     });
     sel.property("value", "group1");
   }

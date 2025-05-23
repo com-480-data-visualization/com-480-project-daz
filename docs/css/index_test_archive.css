@@ -181,76 +181,14 @@ h1 {
   }
   
   .country-box {
-    margin-right: 0;    /* kill any built-in right margin */
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;               /* space between label and dropdown */
-    padding: 0.4em 1em;        /* tighter vertical padding, wider horizontal */
-    border-radius: 25px;       /* full "pill" shape */
-    background-color: #fff;    /* clean white background */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    transition: box-shadow 0.2s, transform 0.1s;
-    cursor: pointer;           /* indicates interactivity */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #f9f9f9;
   }
-  
-  /* On hover/focus make the pill lift slightly */
-  .country-box:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    transform: translateY(-1px);
-  }
-  
-  /* If you wrap your <select> inside .country-box, style it to blend in */
-  .country-box select {
-    border: none;
-    background: transparent;
-    padding: 0;                /* remove extra padding inside the box */
-    font-size: 1em;
-    cursor: pointer;
-    appearance: none;          /* hide native arrow */
-  }
-  
-  /* Re-add a custom arrow on the right */
-  .country-box {
-    position: relative;
-  }
-  .country-box::after {
-    content: "";
-    position: absolute;
-    right: 1em;
-    width: 0; height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #555;
-    pointer-events: none;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  /* Focus state (when select is open or keyboard‐focused) */
-  .country-box select:focus + .country-box::after,
-  .country-box:focus-within {
-    box-shadow: 0 0 0 3px rgba(31,119,180,0.3);
-  }
-  
-  .country-box {
-    /* bump this up to allow the arrow to sit without overlapping text */
-    padding: 0.4em 2em 0.4em 1em;  /* top/right/bottom/left */
-    position: relative;
-  }
-  
-  /* arrow on the container, but now in its padding zone */
-  .country-box::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 1em;                   /* sits in that new padding */
-    transform: translateY(-50%);
-    border-left: 6px solid transparent;
-    border-right:6px solid transparent;
-    border-top: 6px solid #555;
-    pointer-events: none;
-  }
-
   
   .country-label {
     font-weight: bold;
@@ -466,17 +404,13 @@ h1 {
     flex-direction: column;
     width: 90%;
   }
-.inner-content {
-  display: flex;
-  justify-content: center;    
-  align-items: flex-start;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 100px;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
+.inner-content{
+    display: flex;
+    gap: 2rem;              /* space between the columns          */
+    align-items: flex-start;
+    width: 60%;
+    margin-bottom:100px;
+  }
 .label {
   pointer-events: none;
 }
@@ -485,118 +419,12 @@ h1 {
     flex: 1 1 40rem;        /* grow | shrink | preferred width    */
     max-width: 100rem;
   }
-
-  .chapter-left.narrative {
-    background: #fff;
-    border-left: 5px solid #4CAF50;
-    flex: 1 1 40rem;        /* grow | shrink | base width */
-    max-width: 60rem;       /* or whatever max you like */
-    
-    /* NEW */
-    margin: auto 0;   /* centers the card within .inner-content */
-    padding: 2rem;          /* space on all sides */
-    text-align: left;     /* if you want centered text */
-    
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    line-height: 1.5;
-  }
-
-.chapter-left.narrative p {
-  margin: 0.8rem 0;
-  font-size: 1.1em;
-  color: #333;
-}
-
-.chapter-left.narrative h2 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-size: 2em;
-  color: #1F77B4;
-}
-  
   
 /* right column takes the remaining space */
 .chapter-right{
 flex: 1 1 0;            /* take whatever is left              */
 min-width: 800px;       /* keep map usable on small laptops   */
 }
-
-.chapter-left-middle {
-  flex: 1;            /* one share of space */
-  min-width: 280px;
-}
-
-.chapter-right-middle {
-  flex: 2;            /* two shares of space (twice as wide as left) */
-  min-width: 300px;   /* adjust upward if needed */
-  max-width: 900px;   /* raise this so the map can grow larger */
-}
-
-/* Ensure the chart inside fully fills that column */
-.chapter-right-middle .chart {
-  width: 100%;
-  max-width: none;    /* allow it to grow up to the column width */
-}
-
-.chapter-right-middle.narrative {
-  background: #fff;
-  border-left: 5px solid #4CAF50;
-  padding: 1.5rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  line-height: 1.5;
-  margin: auto 0; 
-}
-
-.chapter-left-middle.narrative {
-  background: #ffffff;
-  border-left: 5px solid #4CAF50;  /* green accent */
-  padding: 1.5rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  line-height: 1.5;
-  margin: auto 0; 
-}
-
-/* 2) Heading style */
-.chapter-left-middle.narrative h2 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-size: 2em;
-  color: #1F77B4;
-}
-
-.chapter-right-middle.narrative h2 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-size: 2em;
-  color: #1F77B4;
-}
-
-/* 3) Paragraph style */
-.chapter-left-middle.narrative p {
-  margin: 0.8rem 0;
-  font-size: 1.1em;
-  color: #333;
-}
-
-/* 4) Strong tags in narrative */
-.chapter-left-middle.narrative strong {
-  color: #000;
-}
-
-/* 5) Emoji spacing fix */
-.chapter-left-middle.narrative h2::before {
-  content: '';
-  margin-right: 0.3em;
-}
-
-
-/* Flip them & swap widths when .layout-flip is on the container */
-.inner-content.layout-flip .chapter-left-middle  { flex: 2; }
-.inner-content.layout-flip .chapter-right-middle { flex: 1; }
-
 
 /* make the SVG always fill its box */
 #map-container svg{
@@ -615,6 +443,9 @@ height: auto;           /* keep aspect ratio                  */
     width: 100%;
 }
 }
+
+
+
 
 .section-divider {
   display: flex;
@@ -730,29 +561,4 @@ height: auto;           /* keep aspect ratio                  */
   /* padding: 1rem; */
   /* border: 1px solid #ccc; */
 }
-
-/* Turn the Reset button into a pill-style CTA */
-.reset-animation {
-  margin: 0;         /* kill any default margin */
-  background: #1F77B4;
-  color: #fff;
-  border: none;
-  font-size: 1em;
-  border-radius: 20px;
-    margin-right: 5px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  transition: background 0.2s, transform 0.1s;
-  gap: 0.5rem;               /* space between label and dropdown */
-    padding: 0.4em 1em;        /* tighter vertical padding, wider horizontal */
-    border-radius: 25px;       /* full "pill" shape */
-}
-.reset-animation:hover {
-  background: #155a8c;
-  transform: translateY(-1px);
-}
-.reset-animation:active {
-  transform: translateY(0);
-}
-
 

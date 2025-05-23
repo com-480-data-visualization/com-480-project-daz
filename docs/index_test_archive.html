@@ -101,34 +101,29 @@
 
         <div class="inner-content">
                 <!-- LEFT column --------------------------------------------------->
-                <div class="chapter-left-middle narrative">
-                  <h2>🌍 Spin the Globe</h2>
-                  <p>
-                    Pick a metric—<strong>Happiness Score</strong>, <strong>Quality of Life</strong>, or 
-                    <strong>Human Development Index</strong>—and set your time range. As the years roll by, 
-                    countries light up and shift colors, showing how life has changed across the planet.
-                  </p>
-                  <p>
-                    Curious about a specific nation? Hover over it to see its personal journey unfold in a smooth, 
-                    animated timeline. It’s like time-traveling through global progress—one colorful country at a time. ✨
-                  </p>
-                </div>
-            <div class="chapter-right-middle">
+            <div class="chapter-left">
+                <h2>Witness the transformation of our world over time …</h2>
+                <p>A global visualisation displaying <strong>HDI</strong> values …</p>
+                <p>We observe several regions .. </p>
+            </div>
+            <div class="chapter-right">
                 
-              <div class="controls">
-                <div class="country-box">
-                  <span class="country-label">Global Index:</span>
-                  <select id="index-select">…</select>
-                </div>
-                <div class="country-box">
-                  <label for="start-year">Start Year:</label>
-                  <select id="start-year">…</select>
-                </div>
-                <div class="country-box">
-                  <label for="end-year">End Year:</label>
-                  <select id="end-year">…</select>
-                </div>
-              </div>
+                <div class="controls">
+                    <div class="country-box">
+                        <span class="country-label">Global Index:</span>
+                        <select id="index-select">
+                        <option value="hdi" selected>HDI</option>
+                        <option value="x">X</option>
+                        </select>
+                    </div>
+                    </div>
+            
+                    <div class="controls">
+                    <label for="start-year">Start Year:</label>
+                    <select id="start-year"></select>
+                    <label for="end-year">End Year:</label>
+                    <select id="end-year"></select>
+                    </div>
                 <div class=chart>
                   <div id="map-container">   
                     <svg id="my_dataviz" ></svg>
@@ -144,155 +139,126 @@
         </div>
 
 
-        <div class="inner-content">
-          <!-- LEFT column: Narrative call-out -->
-          <div class="chapter-left-middle narrative">
-            <h2>🎢 Take the Global Index Rollercoaster!</h2>
-            <p>
-              Ready for a wild ride through the world’s numbers? Pick any index—HDI, GDP, Happiness, you name it—click “Reset,” and watch the story zoom from 2015 to 2022.
-            </p>
-          </div>
-        
-          <!-- RIGHT column: Controls + Chart -->
-          <div class="chapter-right-middle">
-            <div class="controls">
-              <div class="country-box">
-                <span class="country-label">Global Index:</span>
-                <select id="columnSelect">
-                  <option value="hdi" selected>HDI</option>
-                  <option value="le">Life Expectancy</option>
-                </select>
-              </div>
-              <button class="reset-animation" id="reset-animation">Reset Animation</button>
 
+        <div class="inner-content">
+            <div class="chapter-left">
+                <p> A dynamic animation representing <strong>HDI</strong> trends over time.</p>
             </div>
-            
-            <div class="chart">
-              <div id="chart-line"></div>
+            <div class="chapter-right">
+                <div class="controls">
+                    <div class="country-box">
+                        <span class="country-label">Global Index:</span>
+                        <select id="columnSelect">
+                            <option value="hdi" selected>HDI</option>
+                            <option value="le">Life Expectancy</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="button-4" id="reset-animation">Reset Animation</button>
+
+                <div class=chart>
+                    <div id="chart-line"></div>
+                </div>
+                <div id="tooltip2" style="opacity:0;"></div>
             </div>
-            <div id="tooltip2" style="opacity:0;"></div>
-          </div>
-        </div>  
+        </div>          
     </section>
     <section id="chapter2" class="snap-section chap c2">
       <div class="section-divider">
         <hr class="divider-line">
-        <h1>Chapter 2: Unveiling the Factors</h1>
+        <h1>>Chapter 2: Unveiling the Factors</h1>
         <hr class="divider-line">
       </div>
-      <div class="inner-content layout-flip">
-        <!-- Chart + Controls (2× width when flipped) -->
-        <div class="chapter-left-middle">
-          <div class="chart">
-            <div class="controls">
-              <div class="country-box" id="country1-box">
-                <span class="country-label">Country 1</span>
-                <span class="color-dot"></span>
-                <select id="countrySelect1">
-                  <option value="">-- Select Country --</option>
-                </select>
-              </div>
-              <div class="country-box" id="country2-box">
-                <span class="country-label">Country 2</span>
-                <span class="color-dot"></span>
-                <select id="countrySelect2">
-                  <option value="">-- Select Country --</option>
-                </select>
-              </div>
-              <div class="country-box" id="group-box">
-                <span class="country-label">Select Metrics Group</span>
-                <select id="groupSelectRadar">
-                  <option value="group1">HDI Metrics</option>
-                  <option value="group2">Quality of Life Metrics</option>
-                  <option value="group3">Happiness Metrics</option>
-                </select>
-              </div>
-              <div class="country-box" id="year-box">
-                <span class="country-label">Select Year</span>
-                <select id="yearSelectRadar"></select>
-              </div>
-            </div>
-            <div id="chart"></div>
-          </div>
-          <div class="tooltip" id="tooltip" style="opacity:0;"></div>
-        </div>
-      
-        <!-- Narrative (1× width when flipped) -->
-        <div class="chapter-right-middle narrative">
-            <h2>🔍 Your Personal Radar Showdown</h2>
-            <p>
-              Ready to pit two countries—and any year you like—against each other? 
-              Select Country 1, Country 2 and your year, then hit “Reset” to unleash three metric arenas:
-            </p>
-            <ul>
-              <li><strong>Quality of Life</strong></li>
-              <li><strong>Happiness</strong></li>
-              <li><strong>Human Development</strong></li>
-            </ul>
-            <p>
-              Study the radar chart to pinpoint each country’s strengths and weaknesses, and track how they change over time.
-            </p>
-        </div>
+    <div class="inner-content">
+            <!-- LEFT column --------------------------------------------------->
+      <div class="chapter-left">
+        <p>
+          Dive deeper into the intricate connections among socio-economic indicators. Explore the interplay between metrics that shape well-being.
+        </p>
+        <p>A comparative radar chart visualizing key indicators for two selected countries in 2022.</p>
       </div>
+      <div class="chapter-right">
 
-      <div class="inner-content layout-flip">
-        <!-- Controls + Scatter (2× width) -->
-        <div class="chapter-left-middle">
+      
+        <div class="chart">
           <div class="controls">
-            <div class="country-box">
-              <label for="xSelectScatter">X Axis:</label>
-              <select id="xSelectScatter">
-                <!-- populated by D3 -->
+            <!-- Container for Country 1 -->
+            <div class="country-box" id="country1-box">
+              <span class="country-label">Country 1</span>
+              <span class="color-dot"></span>
+              <select id="countrySelect1">
+                <option value="">-- Select Country --</option>
               </select>
             </div>
-            <div class="country-box">
-              <label for="ySelectScatter">Y Axis:</label>
-              <select id="ySelectScatter">
-                <!-- populated by D3 -->
+          
+            <!-- Container for Country 2 -->
+            <div class="country-box" id="country2-box">
+              <span class="country-label">Country 2</span>
+              <span class="color-dot"></span>
+              <select id="countrySelect2">
+                <option value="">-- Select Country --</option>
               </select>
             </div>
-            <div class="country-box">
-              <label for="yearSelectScatter">Year:</label>
-              <select id="yearSelectScatter">
-                <!-- populated by D3 -->
+          
+            <!-- Container for Metrics Group -->
+            <div class="country-box" id="group-box">
+              <span class="country-label">Select Metrics Group</span>
+              <select id="groupSelectRadar">
+                <option value="group1">Group 1</option>
+                <option value="group2">Group 2</option>
+                <option value="group3">Group 3</option>
               </select>
+            </div>
+          
+            <!-- Container for Year -->
+            <div class="country-box" id="year-box">
+              <span class="country-label">Select Year</span>
+              <select id="yearSelectRadar">
+                <!-- options will be populated by initYearSelect() -->
+              </select>
+            </div>
+          </div>
+          <div id="chart"></div>
+        </div>
+        <div class="tooltip" id="tooltip" style="opacity:0;"></div>  
+      </div>
+    </div>
+
+    <div class="inner-content">
+        <div class="chapter-left">
+          <p>Explore the relationship between two HDI metrics using a scatter plot.</p>
+        </div>
+        <div class="chapter-right">
+          <div class="controls">
+            <div class="country-box" >
+              <label for="xSelectScatter">X Axis: 
+                <select id="xSelectScatter">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
+            </div>
+            <div class="country-box" >
+              <label for="ySelectScatter">Y Axis: 
+                <select id="ySelectScatter">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
+            </div>
+            <div class="country-box" >
+              <label for="yearSelectScatter">Year: 
+                <select id="yearSelectScatter">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              </label>
             </div>
           </div>
           <div id="scatterplot"></div>
-          <div id="tooltipscatter" class="tooltipscatter" style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);"></div> 
-          
+          <div id="tooltipscatter" class="tooltipscatter"></div>
         </div>
-
-        <!-- Narrative on the left (1× width) -->
-        <div class="chapter-right-middle narrative">
-          <h2>🔍 Spot the Correlations</h2>
-          <p>
-            Explore how two HDI metrics move together across countries in any given year.  
-            Choose your X and Y axes, pick a year, and watch the bubbles settle into patterns.
-          </p>
-          <p>
-            Are higher life expectancies tied to greater CO₂ emissions? Does GDP per capita track with quality-of-life scores?  
-            Hover over any dot to reveal the country, then dig into the outliers that break the mold.
-          </p>
-        </div>
-    
-      </div>
+    </div>
     <div class="inner-content">
-      <div class="chapter-left narrative">
-        <h2>📊 HDI Components Over Time</h2>
-        <p>
-          The line chart shows how each country’s human development has evolved from 1990 through 2022. It breaks HDI down into five core metrics:
-        </p>
-        <ul>
-          <li><strong>HDI</strong></li>
-          <li><strong>LE (Life Expectancy)</strong></li>
-          <li><strong>EYS (Expected Years of Schooling)</strong></li>
-          <li><strong>MYS (Mean Years of Schooling)</strong></li>
-          <li><strong>GNIPC (GNI per Capita)</strong></li>
-        </ul>
-        <p>
-          Use this breakdown to see where each country has advanced most!
-        </p>
+      <div class="chapter-left">
+        
       </div>
       <div class="chapter-right">
         <div class="controls">
@@ -325,15 +291,13 @@
     <section id="chapter3" class="snap-section chap c3">
       <div class="section-divider">
         <hr class="divider-line">
-          <h1>Chapter 3: The Shifting Landscape</h1>
+          <h1>>Chapter 3: The Shifting Landscape</h1>
         <hr class="divider-line">
       </div>
       <div class="inner-content">
-        <div class="chapter-left narrative">
-          <h2>⌛ Track Trends Over Time</h2>
+        <div class="chapter-left">
           <p>
-            Watch the interactive line chart spring to life: compare trajectories, spot turning points,  
-            and see who’s surged ahead or slipped back. Ready to uncover decades-long stories at a glance?
+            As time marches on, explore trends, turning points, and regional dynamics. Delve into time series and compare changes between decades.
           </p>
         </div>
         <div class="chapter-right">
@@ -363,11 +327,8 @@
         </div>
       </div>
       <div class="inner-content">
-        <div class="chapter-left narrative">
-          <h2>💣 The Impact of Public War</h2>
-          <p>
-            In Libya, Syria and Yemen, you can see how war‐time shocks (shaded) send life expectancy, schooling and income plunging—and how long recovery takes.
-          </p>
+        <div class="chapter-left">
+          <h2>The Impact of Public War: the examples of Libya, Syria, and Yemen</h2>
         </div>
         <div class="chapter-right">
           <div id="chartContainerWar"></div>
@@ -377,25 +338,19 @@
     <section id="chapter4" class="snap-section chap c4">
       <div class="section-divider">
         <hr class="divider-line">
-          <h1>Chapter 4: Regional Patterns & Surprises</h1>
+          <h1>>Chapter 4</h1>
         <hr class="divider-line">
       </div>
+      <p>
+        Every region tells its own story—a blend of triumphs, challenges, and distinct trajectories. Zoom in to discover disparities and outlier narratives.
+      </p>
       <div class="inner-content">
-        <div class="chapter-left-middle narrative">
-          <h2>📊 Explore Global Well-Being</h2>
+        <div class="chapter-left">
           <p>
-            Pick any metrics group—<strong>HDI</strong>, <strong>Quality of Life</strong> or <strong>Happiness</strong>—then choose your X-axis, Y-axis and bubble-size variables. Slide through the years and watch regions dance:
-          </p>
-          <ul>
-            <li>🤔 Which European nations sit in the top-right corner—boasting the highest life expectancy and schooling?</li>
-            <li>🔎 Can you trace how emerging regions (LAC, EAP) inch closer to the advanced-economy cluster over the years?</li>
-            <li>🌱 Where do Sub-Saharan Africa and South Asia fall on the HDI scale, and how much have they improved recently?</li>
-          </ul>
-          <p>
-            Ready to hunt down the outliers and see which regions are closing the gap fastest?
+            Explore HDI metrics interactively by adjusting the axes, bubble size, and year.
           </p>
         </div>
-        <div class="chapter-right-middle">
+        <div class="chapter-right">
           <div class="controls">
             <!-- Group dropdown for interactivebubble.js -->
             <div class="country-box">
@@ -446,11 +401,8 @@
       </div>
 
       <div class="inner-content">
-        <div class="chapter-left narrative">
-          <h2>🔍 Discover Hidden Clusters with PCA</h2>
-          <p>
-            Curious how countries naturally group themselves when you compare HDI, Quality of Life, or Happiness metrics? Choose your metric group and year, then let the PCA projection unveil who clusters together—and who stands apart.
-          </p>
+        <div class="chapter-left">
+          <h2>PCA and Clustering on HDI Data (2022)</h2>
         </div>
         <div class="chapter-right">
           <div class="controls">
@@ -473,12 +425,10 @@
       </div>
 
       <div class="inner-content">
-        <div class="chapter-left narrative">
-          <h2>🌐 Regional Trends Over Time</h2>
-          <p>
-            Choose any metric, pick your start and end years, and hit “Reset” to watch each region’s line animate—can you spot which region climbed fastest or dipped most?
-          </p>
+        <div class="chapter-left">
+          <h2>Line Chart by Region</h2>
         </div>
+        <p>A visual representation of regional trends over selected time periods.</p>
         <div class="chapter-right">
           <div class="controls">
             <div class="country-box" id="feature-box">
@@ -495,8 +445,8 @@
             </div>
           </div>
           <div class="controls">
-            <button class="reset-animation" id="update-chart">Update Chart</button>
-            <button class="reset-animation" id="reset-animation2">Reset Animation</button>
+            <button class="button-4" id="update-chart">Update Chart</button>
+            <button class="button-4" id="reset-animation2">Reset Animation</button>
           </div>
           <div id="lineChartRegion"></div>
           <div class="lineChart-tooltip" id="lineChartRegionTooltip"
@@ -508,33 +458,32 @@
     <section id="chapter5" class="snap-section chap c5">
       <div class="section-divider">
         <hr class="divider-line">
-          <h1>Chapter 5</h1>
+          <h1>>Chapter 5</h1>
         <hr class="divider-line">
       </div>
-      <div class="inner-content layout-flip">
+      <p>
+        In our final chapter, diverse strands of data converge to reveal cause-and-effect relationships and outline potential futures. Explore the drivers of well-being and engage with interactive simulations.
+      </p>
+      <div class="inner-content">
+        <div class="chapter-left">
+          <h2>Factors Behind Happiness and QoL</h2>
+          <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate
+            factors to affect outcomes such as Happiness and Quality of Life.</p>
+        </div>
         <div class="chapter-right">
           <div id="sankeyChart"></div>
-          <div id="sankey-tooltip" 
+          <div id="sankey-tooltip" ,
             style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
           </div>
         </div>
-        <div class="chapter-left narrative">
-          <h2>What Fuels Happiness & Quality of Life?</h2>
-          <p>Curious how money, schooling, and health care translate into real-world happiness? We crunched the numbers with some trusty linear regressions! Ready to see the chain reaction?
-          </p>
-        </div>
-        
       </div>
 
       <div class="inner-content">
-        <div class="chapter-left-middle narrative">
-          <h2>📊 Who’s on Top?</h2>
-          <p>
-            Choose your favorite metric and year, then hit play to see the world’s top 10 countries sprint to the finish line. 
-            Who do you think will claim the crown for HDI, Happiness, or Quality of Life this time around?
-          </p>
+        <div class="chapter-left">
+          <h2>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h2>
+          <p>A dynamic bar chart ranking the top 10 countries based on the selected index and year.</p>
         </div>
-        <div class="chapter-right-middle">
+        <div class="chapter-right">
           <div class="controls">
             <div class="country-box" id="year-box">
               <label class="country-label" for="yearSelect">Year:</label>
