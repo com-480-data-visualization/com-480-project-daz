@@ -75,9 +75,9 @@ html, body{
 .panel .num{ font-size:6vw; line-height:1; }
 .panel .lbl{ margin-top:1rem; font-size:1.2vw; }
 .pan1{ background:#ffe6a7; color:#000; }
-.pan2{ background:#89c2d9; color:#505050; }
-.pan3{ background:#93c572; color:#373737; }
-.pan4{ background:#d8f3dc; color:#373737; }
+.pan2{ background:#89c2d9; color:#000; }
+.pan3{ background:#93c572; color:#000; }
+.pan4{ background:#d8f3dc; color:#000; }
 .pan5{ background:#bbdefb; color:#000; }
 
 /* ——— FIXED MINI-HEADER ——— */
@@ -89,17 +89,17 @@ html, body{
 #mini-header > div{ display:flex; flex-direction:column; justify-content:center;
                     text-align:center; color:#FFF; font-size:.9rem; }
 #mini-header > div:nth-child(1){ background:#ffe6a7; color:#000; }
-#mini-header > div:nth-child(2){background:#89c2d9; color:#505050; }
-#mini-header > div:nth-child(3){background:#93c572; color:#373737; }
-#mini-header > div:nth-child(4){background:#d8f3dc; color:#373737; }
+#mini-header > div:nth-child(2){background:#89c2d9; color:#000; }
+#mini-header > div:nth-child(3){background:#93c572; color:#000; }
+#mini-header > div:nth-child(4){background:#d8f3dc; color:#000; }
 #mini-header > div:nth-child(5){ background:#bbdefb; color:#000; }
 
 /* ——— CHAPTER PLACEHOLDERS ——— */
 .chap{ display:grid; place-items:start center; color:#FFF; padding-top:200px; }
 .c1{ background:#ffe6a7; color:#000; }
-.c2{ background:#89c2d9; color:#505050; }
-.c3{ background:#93c572; color:#373737; } 
-.c4{background:#d8f3dc; color:#373737; }
+.c2{ background:#89c2d9; color:#000; }
+.c3{ background:#93c572; color:#000; } 
+.c4{background:#d8f3dc; color:#000; }
 .c5{ background:#bbdefb; color:#000; }
 .c6{ background:#515C6B; color:white; }
 .c7{ background:#2e343d; color:white; }
