@@ -74,11 +74,11 @@ html, body{
                      font-family:sans-serif; }
 .panel .num{ font-size:6vw; line-height:1; }
 .panel .lbl{ margin-top:1rem; font-size:1.2vw; }
-.p1{ background:#ffe6a7; color:#000; }
-.p2{ background:#89c2d9; color:#505050; }
-.p3{ background:#93c572; color:#373737; }
-.p4{ background:#d8f3dc; color:#373737; }
-.p5{ background:#bbdefb; color:#000; }
+.pan1{ background:#ffe6a7; color:#000; }
+.pan2{ background:#89c2d9; color:#505050; }
+.pan3{ background:#93c572; color:#373737; }
+.pan4{ background:#d8f3dc; color:#373737; }
+.pan5{ background:#bbdefb; color:#000; }
 
 /* ——— FIXED MINI-HEADER ——— */
 #mini-header{ position:fixed; top:0; left:0; right:0; height:80px;
@@ -488,7 +488,6 @@ h1 {
 
   .chapter-left.narrative {
     background: #fff;
-    border-left: 5px solid #4CAF50;
     flex: 1 1 40rem;        /* grow | shrink | base width */
     max-width: 60rem;       /* or whatever max you like */
     
@@ -500,6 +499,22 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     line-height: 1.5;
+  }
+
+  .p1 {
+    border-left: 5px solid #f39c12;
+  }
+  .p2 {
+    border-left: 5px solid #2e86c1;
+  }
+  .p3 {
+    border-left: 5px solid #239b56;
+  }
+  .p4 {
+    border-left: 5px solid #52be80;
+  }
+  .p5 {
+    border-left: 5px solid #3498db;
   }
 
 .chapter-left.narrative p {
@@ -541,7 +556,7 @@ min-width: 800px;       /* keep map usable on small laptops   */
 
 .chapter-right-middle.narrative {
   background: #fff;
-  border-left: 5px solid #4CAF50;
+
   padding: 1.5rem 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -551,7 +566,7 @@ min-width: 800px;       /* keep map usable on small laptops   */
 
 .chapter-left-middle.narrative {
   background: #ffffff;
-  border-left: 5px solid #4CAF50;  /* green accent */
+
   padding: 1.5rem 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
