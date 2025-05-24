@@ -25,13 +25,17 @@ document.addEventListener("DOMContentLoaded", function () {
           yearSelect.append("option").text(year).attr("value", year);
       });
 
-      // Set initial year to the first available year
-      const initialYear = years[0];
-      yearSelect.property("value", initialYear);
+        // Set initial defaults
+        const initialYear = "2022";
+        const defaultX = "Happiness Score";
+        const defaultY = "GDP per capita";
 
-      // Populate X and Y dropdowns based on initial year
-      updateAxisOptions(initialYear);
+        // Use 2022 if available, otherwise fall back to first year
+        const fallbackYear = years.includes(initialYear) ? initialYear : years[0];
+        yearSelect.property("value", fallbackYear);
 
+        // Populate X and Y dropdowns for that year
+        updateAxisOptions(fallbackYear, defaultX, defaultY);
       // Event listeners
       yearSelect.on("change", function () {
           const newYear = this.value;
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return validKeys;
   }
 
-  function updateAxisOptions(selectedYear) {
+  function updateAxisOptions(selectedYear, defaultX = null, defaultY = null) {
     const yearData = data.filter(d => d.Year === selectedYear);
     const validKeys = getNumericKeysForYear(yearData);
 
@@ -67,15 +71,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const xSelect = d3.select("#xSelectScatter");
     xSelect.selectAll("option").remove();
     validKeys.forEach(key => xSelect.append("option").text(key).attr("value", key));
-    const xValue = validKeys.length > 0 ? validKeys[1] : "";
+    const xValue = validKeys.includes(defaultX) ? defaultX : (validKeys.length > 0 ? validKeys[1] : "");
     xSelect.property("value", xValue);
+
 
     // Update Y axis dropdown with second valid key (fallback to first if only one exists)
     const ySelect = d3.select("#ySelectScatter");
     ySelect.selectAll("option").remove();
     validKeys.forEach(key => ySelect.append("option").text(key).attr("value", key));
-    const yValue = validKeys.length >= 2 ? validKeys[2] : xValue;
+    const yValue = validKeys.includes(defaultY) ? defaultY : (validKeys.length >= 2 ? validKeys[2] : xValue);
     ySelect.property("value", yValue);
+
 }
 
   function updateChart() {

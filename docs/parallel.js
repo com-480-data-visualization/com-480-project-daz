@@ -79,11 +79,11 @@
       populateDropdown("#countrySelectLines3", countries);
   
       // Set default selections using the first two countries (if available).
-      if(countries.length >= 2) {
-        d3.select("#countrySelectLines1").property("value", countries[0]);
-        d3.select("#countrySelectLines2").property("value", countries[1]);
-      } else if(countries.length === 1) {
-        d3.select("#countrySelectLines1").property("value", countries[0]);
+      if (countries.includes("Switzerland")) {
+        d3.select("#countrySelectLines1").property("value", "Switzerland");
+      }
+      if (countries.includes("Afghanistan")) {
+        d3.select("#countrySelectLines2").property("value", "Afghanistan");
       }
       
       // Listen for dropdown changes.
