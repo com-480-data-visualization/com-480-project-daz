@@ -61,11 +61,25 @@ document.addEventListener("DOMContentLoaded", function () {
       updateChart();
     });
 
-    d3.select("#countriesSelectTimeSeries").on("change", () => {
+    d3.select("#countriesSelectTimeSeries").on("change", function () {
+      const sel = Array.from(this.selectedOptions).map(o => o.value);
+    
+      // if “Mean” and something else were picked, keep only “Mean”
+      if (sel.includes("Mean") && sel.length > 1) {
+        d3.select(this)
+          .selectAll("option")
+          // regular function so `this` is the <option>
+          .property("selected", function () {      // ← fixed
+            return this.value === "Mean";
+          });
+      }
+    
       updateFeatureOptions();
       updateYearSlider();
       updateChart();
     });
+    
+    
 
     d3.select("#timeRangePickerMin").on("input", () => {
       const min = +d3.select("#timeRangePickerMin").property("value");
@@ -90,27 +104,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateCountryOptions() {
     const feature = d3.select("#featureSelectTimeSeries").node().value;
-    const countries = feature ? 
-        [...new Set(data.filter(d => d[feature] !== "").map(d => d.country))].sort() : 
-        [...new Set(data.map(d => d.country))].sort();
-    
+    const countries = feature 
+        ? [...new Set(data.filter(d => d[feature] !== "").map(d => d.country))].sort()
+        : [...new Set(data.map(d => d.country))].sort();
+  
+    // 1) add a “Mean” entry at the top:
+    countries.unshift("Mean");
+  
     const select = d3.select("#countriesSelectTimeSeries");
     const current = Array.from(select.node().selectedOptions).map(o => o.value);
-    
+  
     select.selectAll("option").remove();
     countries.forEach(country => {
-        select.append("option")
+      select.append("option")
             .text(country)
             .attr("value", country)
             .property("selected", current.includes(country));
     });
-}
+  }
 
   function updateFeatureOptions() {
+    // 1 ⃣  Grab the current country selections and DROP "Mean"
     const chosen = Array.from(
-      d3.select("#countriesSelectTimeSeries").node().selectedOptions
-    ).map(o => o.value);
-
+        d3.select("#countriesSelectTimeSeries").node().selectedOptions
+      )
+      .map(o => o.value)
+      .filter(c => c !== "Mean");          // ← this one line fixes the problem
+  
+    // 2 ⃣  Build the list of features that actually have data
     const feats = chosen.length
       ? Object.keys(data[0]).filter(k =>
           k !== "Year" &&
@@ -120,20 +141,23 @@ document.addEventListener("DOMContentLoaded", function () {
       : Object.keys(data[0]).filter(k =>
           k !== "Year" && !isNaN(data[0][k])
         ).sort();
-
-    const sel = d3.select("#featureSelectTimeSeries");
+  
+    // 3 ⃣  Populate the <select>
+    const sel     = d3.select("#featureSelectTimeSeries");
     const current = sel.property("value");
     sel.selectAll("option").remove();
-
+  
     feats.forEach(f => {
       sel.append("option")
-        .attr("value", f)
-        .text(f)
-        .property("selected", f === current);
+         .attr("value", f)
+         .text(f)
+         .property("selected", f === current);
     });
-
+  
+    // 4 ⃣  If the previously-selected feature vanished, fall back to the first
     if (!feats.includes(current)) sel.property("value", feats[0] || "");
   }
+  
 
   function updateYearSlider() {
     const feat = d3.select("#featureSelectTimeSeries").property("value");
@@ -165,79 +189,96 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateChart() {
-    const countries = Array.from(d3.select("#countriesSelectTimeSeries").node().selectedOptions).map(o => o.value);
-    const feature = d3.select("#featureSelectTimeSeries").node().value;
-    const minYear = +d3.select("#timeRangePickerMin").node().value;
-    const maxYear = +d3.select("#timeRangePickerMax").node().value;
-
-    const filtered = data.filter(d => 
-        countries.includes(d.country) &&
-        d.Year >= minYear && 
-        d.Year <= maxYear && 
-        d[feature] !== ""
+    /* ─── 1. Selections ──────────────────────────────── */
+    const rawCountries = Array.from(
+      d3.select("#countriesSelectTimeSeries").node().selectedOptions
+    ).map(o => o.value);
+  
+    const meanSelected = rawCountries.includes("Mean");
+    const feature      = d3.select("#featureSelectTimeSeries").node().value;
+    const minYear      = +d3.select("#timeRangePickerMin").node().value;
+    const maxYear      = +d3.select("#timeRangePickerMax").node().value;
+  
+    /* ─── 2. Row-level filter: year & metric present ─── */
+    let rows = data.filter(d =>
+      d.Year >= minYear &&
+      d.Year <= maxYear &&
+      d[feature] !== ""                       // reject missing metric
     );
-
+  
+    /* ─── 3. Decide which datasets we need ───────────── */
+    let datasets = [];
+  
+    if (meanSelected) {
+      /* 3-A  only ONE dataset: the mean across *all* countries */
+      const roll = d3.rollup(
+        rows,
+        vs => d3.mean(vs, d => +d[feature]),
+        d => d.Year
+      );
+      const meanValues = Array.from(roll, ([Year, val]) => ({ Year, [feature]: val }))
+                              .sort((a, b) => a.Year - b.Year);
+  
+      datasets.push({ country: "Mean", values: meanValues });
+    } else {
+      /* 3-B  one dataset per selected real country */
+      const selected = rawCountries;                        // only real countries here
+      rows = rows.filter(d => selected.includes(d.country));
+  
+      datasets = selected.map(c => {
+        const vals = rows.filter(d => d.country === c)
+                         .sort((a, b) => a.Year - b.Year);
+        return { country: c, values: vals };
+      }).filter(ds => ds.values.length > 0);                // drop empty ones
+    }
+  
+    /* ─── 4. Bail if nothing to draw ─────────────────── */
     svg.selectAll("*").remove();
     legendContainer.selectAll("*").remove();
-
-    if (!filtered.length) return;
-
-    const x = d3.scaleLinear()
-        .domain([minYear, maxYear])
-        .range([0, width]);
-
+    if (!datasets.length) return;
+  
+    /* ─── 5. Scales ──────────────────────────────────── */
+    const x = d3.scaleLinear().domain([minYear, maxYear]).range([0, width]);
     const y = d3.scaleLinear()
-        .domain(d3.extent(filtered, d => +d[feature]))
-        .range([height, 0]);
-
-    // Axes
-    const xAxisG =svg.append("g")
+                .domain(d3.extent(datasets.flatMap(ds => ds.values.map(v => +v[feature]))))
+                .nice()
+                .range([height, 0]);
+  
+    /* ─── 6. Axes (same styling as before) ───────────── */
+    const xAxisG = svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format("d")));
-    // make axis‐line & ticks thicker
-    xAxisG.selectAll("path.domain")
-    .attr("stroke-width", 2);
-    xAxisG.selectAll("line.tick")
-    .attr("stroke-width", 2);
-
-    // set label font‐size & weight
-    xAxisG.selectAll("text")
-    .style("font-size", "14px")
-    .style("font-weight", "400");
-
-    const yAxisG = svg.append("g")
-        .call(d3.axisLeft(y));
-    // thicker line & ticks
-    yAxisG.selectAll("path.domain")
-    .attr("stroke-width", 2);
-    yAxisG.selectAll("line.tick")
-    .attr("stroke-width", 2);
-
-    // labels at weight 400
-    yAxisG.selectAll("text")
-    .style("font-size", "14px")
-    .style("font-weight", "400");    
-
-    // Lines
-    const line = d3.line()
+    xAxisG.selectAll("path, line").attr("stroke-width", 2);
+    xAxisG.selectAll("text").style("font-size", "14px").style("font-weight", "400");
+  
+    const yAxisG = svg.append("g").call(d3.axisLeft(y));
+    yAxisG.selectAll("path, line").attr("stroke-width", 2);
+    yAxisG.selectAll("text").style("font-size", "14px").style("font-weight", "400");
+  
+    /* ─── 7. Line generator ──────────────────────────── */
+    const lineGen = d3.line()
         .x(d => x(d.Year))
         .y(d => y(d[feature]));
-
-    const color = d3.scaleOrdinal(d3.schemeCategory10)
-        .domain([...new Set(filtered.map(d => d.country))]);
-    const lineColor = "#043700";
-    const grouped = d3.group(filtered, d => d.country);
-    grouped.forEach((values, country) => {
-        svg.append("path")
-            .datum(values)
-            .attr("fill", "none")
-            .attr("stroke", lineColor)
-            .attr("stroke-width", 3)
-            .attr("d", line);
-
-        legendContainer.append("div")
-            .style("color", lineColor)
-            .text(country);
+  
+    /* ─── 8. Draw lines + legend with % evolution ───── */
+    datasets.forEach(ds => {
+      svg.append("path")
+        .datum(ds.values)
+        .attr("fill", "none")
+        .attr("stroke", "#043700")
+        .attr("stroke-width", 3)
+        .attr("stroke-dasharray", ds.country === "Mean" ? "6 4" : null)
+        .attr("d", lineGen);
+  
+      const first = ds.values[0][feature];
+      const last  = ds.values[ds.values.length - 1][feature];
+      const pct   = ((last - first) / first) * 100;
+  
+      legendContainer.append("div")
+        .style("color", "#043700")
+        .text(`${ds.country}: ${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`);
     });
-}
+  }
+  
+  
 });
