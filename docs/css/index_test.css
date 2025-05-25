@@ -63,6 +63,9 @@ html, body{
 .snap-section { scroll-snap-align:start; 
      min-height:150vh;}
 
+.snap-section-quizz { scroll-snap-align:start; 
+      min-height:90vh;}
+
 /* ——— HERO ——— */
 .hero{ padding:6vw 4vw 20vh; background:#EEE; display:flex; flex-direction:column;
        justify-content:flex-start; font-family:sans-serif; }
@@ -101,9 +104,11 @@ html, body{
 .c3{ background:#93c572; color:#000; } 
 .c4{background:#d8f3dc; color:#000; }
 .c5{ background:#bbdefb; color:#000; }
-.c6{ background:#515C6B; color:white; }
+.c6{ background:#d7bde2; color:#000; }
 .c7{ background:#2e343d; color:white; }
+.c8{ background:#515C6B; color:white; }
 
+.chap-quizz{ display:grid; place-items:start center; color:black; padding-top:200px; }
 
 h1 {
     font-weight: 900;
@@ -486,7 +491,7 @@ h1 {
     max-width: 100rem;
   }
 
-  .chapter-left.narrative {
+  .chapter-left .narrative {
     background: #fff;
     flex: 1 1 40rem;        /* grow | shrink | base width */
     max-width: 60rem;       /* or whatever max you like */
@@ -501,20 +506,46 @@ h1 {
     line-height: 1.5;
   }
 
-  .p1 {
+  .chapter-left-middle .did-you-know {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    margin-top: 20px;
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
+
+  .p1 .narrative,
+  .p1 .did-you-know{
     border-left: 5px solid #f39c12;
   }
-  .p2 {
+  .p2 .narrative,
+  .p2 .did-you-know{
     border-left: 5px solid #2e86c1;
   }
-  .p3 {
+  .p3 .narrative,
+  .p3 .did-you-know{
     border-left: 5px solid #239b56;
   }
-  .p4 {
+  .p4 .narrative,
+  .p4 .did-you-know{
     border-left: 5px solid #52be80;
   }
-  .p5 {
+  .p5 .narrative,
+  .p5 .did-you-know{
     border-left: 5px solid #3498db;
+  }
+
+  .p6 .narrative,
+  .p6 .did-you-know{
+    border-left: 5px solid #8e44ad;
   }
 
 .p1 h2 {
@@ -533,13 +564,17 @@ h1 {
   color: #3498db;
 }
 
-.chapter-left.narrative p {
+.p6 h2 {
+  color: #8e44ad;
+}
+
+.chapter-left .narrative p {
   margin: 0.8rem 0;
   font-size: 1.1em;
   color: #333;
 }
 
-.chapter-left.narrative h2 {
+.chapter-left .narrative h2 {
   margin-top: 0;
   margin-bottom: 0.8rem;
   font-size: 2em;
@@ -569,8 +604,17 @@ min-width: 800px;       /* keep map usable on small laptops   */
   max-width: none;    /* allow it to grow up to the column width */
 }
 
-.chapter-right-middle.narrative {
+.chapter-right-middle .narrative {
   background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  line-height: 1.5;
+  margin: auto 0; 
+}
+
+.chapter-left-middle .narrative {
+  background: #ffffff;
 
   padding: 1.5rem 2rem;
   border-radius: 8px;
@@ -579,7 +623,7 @@ min-width: 800px;       /* keep map usable on small laptops   */
   margin: auto 0; 
 }
 
-.chapter-left-middle.narrative {
+.description {
   background: #ffffff;
 
   padding: 1.5rem 2rem;
@@ -590,32 +634,32 @@ min-width: 800px;       /* keep map usable on small laptops   */
 }
 
 /* 2) Heading style */
-.chapter-left-middle.narrative h2 {
+.chapter-left-middle .narrative h2 {
   margin-top: 0;
   margin-bottom: 0.8rem;
   font-size: 2em;
 }
 
-.chapter-right-middle.narrative h2 {
+.chapter-right-middle .narrative h2 {
   margin-top: 0;
   margin-bottom: 0.8rem;
   font-size: 2em;
 }
 
 /* 3) Paragraph style */
-.chapter-left-middle.narrative p {
+.chapter-left-middle .narrative p {
   margin: 0.8rem 0;
   font-size: 1.1em;
   color: #333;
 }
 
 /* 4) Strong tags in narrative */
-.chapter-left-middle.narrative strong {
+.chapter-left-middle .narrative strong {
   color: #000;
 }
 
 /* 5) Emoji spacing fix */
-.chapter-left-middle.narrative h2::before {
+.chapter-left-middle .narrative h2::before {
   content: '';
   margin-right: 0.3em;
 }
@@ -784,3 +828,20 @@ height: auto;           /* keep aspect ratio                  */
 }
 
 
+
+
+
+.quiz-container { background: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;  text-align: center; position: relative; }
+.question { margin-bottom: 20px; font-size: 1.5em; }
+.options button { display: block; width: 100%; margin: 5px 0; padding: 10px; border: none; border-radius: 4px; background: #e0e0e0; cursor: pointer; transition: background 0.3s; }
+.options button:hover { background: #d5d5d5; }
+.options button:disabled { opacity: 0.6; cursor: default; }
+@keyframes correctAnim { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 10px green; } 100% { transform: scale(1); } }
+@keyframes wrongAnim { 0%,100% { transform: translateX(0); } 25%,75% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }
+.quiz-container.correct { animation: correctAnim 0.6s ease; }
+.quiz-container.wrong { animation: wrongAnim 0.4s ease; }
+.feedback { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-weight: bold; opacity: 0; }
+.quiz-container.correct .feedback { color: green; opacity: 1; animation: fadeIn 0.6s ease; }
+.quiz-container.wrong .feedback { color: red; opacity: 1; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.next-btn { margin-top: 15px; padding: 8px 12px; border: none; border-radius: 4px; background: #4285f4; color: #fff; cursor: pointer; display: none; }
