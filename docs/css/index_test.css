@@ -526,6 +526,38 @@ h1 {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     line-height: 1.5;
   }
+  .chapter-left .did-you-know {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    margin-top: 20px;
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+    font-size: 1.1em;
+  }
+
+  .chapter-right-middle .did-you-know {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    margin-top: 20px;
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
 
   .p1 .narrative,
   .p1 .did-you-know{
@@ -785,13 +817,13 @@ height: auto;           /* keep aspect ratio                  */
 
 
 .chapter-left p {
-  font-size: 2em;
+  font-size: 1.1em;
   line-height: 1.5;
   margin-bottom: 20px;
 }
 
 .chapter-left h2 {
-  font-size: 3.5em;
+  font-size: 2em;
   margin: 0;
 }
 
