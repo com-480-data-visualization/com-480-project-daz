@@ -882,3 +882,12 @@ height: auto;           /* keep aspect ratio                  */
 .quiz-container.wrong .feedback { color: red; opacity: 1; animation: fadeIn 0.4s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .next-btn { margin-top: 15px; padding: 8px 12px; border: none; border-radius: 4px; background: #4285f4; color: #fff; cursor: pointer; display: none; }
+
+
+
+.controls{
+  display: flex;          /* line the <div class="country-box"> items up */
+  flex-wrap: wrap;        /* let them drop to the next line on small screens */
+  gap: .75rem 1.25rem;    /*   ↑ row-gap     ↑ column-gap  */
+}
+
