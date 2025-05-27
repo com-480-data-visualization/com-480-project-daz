@@ -128,11 +128,11 @@
                   <select id="index-select">…</select>
                 </div>
                 <div class="country-box">
-                  <label for="start-year">Start Year:</label>
+                  <label for="start-year" class="country-label">Start Year:</label>
                   <select id="start-year">…</select>
                 </div>
                 <div class="country-box">
-                  <label for="end-year">End Year:</label>
+                  <label for="end-year" class="country-label">End Year:</label>
                   <select id="end-year">…</select>
                 </div>
               </div>
@@ -251,19 +251,19 @@
         <div class="chapter-left-middle">
           <div class="controls">
             <div class="country-box">
-              <label for="xSelectScatter">X Axis:</label>
+              <label for="xSelectScatter" class="country-label">X Axis:</label>
               <select id="xSelectScatter">
                 <!-- populated by D3 -->
               </select>
             </div>
             <div class="country-box">
-              <label for="ySelectScatter">Y Axis:</label>
+              <label for="ySelectScatter" class="country-label">Y Axis:</label>
               <select id="ySelectScatter">
                 <!-- populated by D3 -->
               </select>
             </div>
             <div class="country-box">
-              <label for="yearSelectScatter">Year:</label>
+              <label for="yearSelectScatter" class="country-label">Year:</label>
               <select id="yearSelectScatter">
                 <!-- populated by D3 -->
               </select>
@@ -312,25 +312,25 @@
       <div class="chapter-right">
         <div class="controls">
           <div class="country-box" >
-            <label>Country 1: 
+            <label class="country-label">Country 1: </label>
               <select id="countrySelectLines1">
                 <option value="">--Select Country--</option>
               </select>
-            </label>
+            
           </div>
           <div class="country-box" >
-            <label>Country 2: 
+            <label class="country-label">Country 2: </label>
               <select id="countrySelectLines2">
                 <option value="">--Select Country--</option>
               </select>
-            </label>
+            
           </div>
           <div class="country-box" >
-            <label>Country 3: 
+            <label class="country-label">Country 3: </label>
               <select id="countrySelectLines3">
                 <option value="">--Select Country (optional)--</option>
               </select>
-            </label>
+            
           </div>  
         </div>
         <div id="lineChart"></div>
@@ -361,19 +361,19 @@
         <div class="chapter-right">
           <div class="controls">
             <div class="country-box">
-              <label for="featureSelectTimeSeries">Feature:</label>
+              <label for="featureSelectTimeSeries" class="country-label">Feature:</label>
               <select id="featureSelectTimeSeries">
                 <!-- Options will be populated dynamically -->
               </select>
             </div>
             <div class="country-box">
-              <label for="countriesSelectTimeSeries">Countries:</label>
+              <label for="countriesSelectTimeSeries" class="country-label">Countries:</label>
               <select id="countriesSelectTimeSeries" multiple size="2">
                 <!-- Options will be populated dynamically -->
               </select>
             </div>
               <div class="country-box">
-              <label for="timeRangePicker">Time Range:</label>
+              <label for="timeRangePicker" class="country-label">Time Range:</label>
               <input type="range" id="timeRangePickerMin" min="2000" max="2022" step="1" value="2000">
               <span id="timeRangeMinLabel">2000</span>
               <input type="range" id="timeRangePickerMax" min="2000" max="2022" step="1" value="2022">
@@ -425,42 +425,42 @@
           <div class="controls">
             <!-- Group dropdown for interactivebubble.js -->
             <div class="country-box">
-              <label for="groupSelectBubble">Group:
+              <label for="groupSelectBubble" class="country-label">Group:</label>
                 <select id="groupSelectBubble">
                   <!-- Options will be populated by D3 -->
                 </select>
-              </label>
+        
             </div>
           
             <div class="country-box">
-              <label for="xSelect">X Axis:
+              <label for="xSelect" class="country-label">X Axis:</label>
                 <select id="xSelect">
                   <!-- Options will be populated by D3 -->
                 </select>
-              </label>
+        
             </div>
           
             <div class="country-box">
-              <label for="ySelect">Y Axis:
+              <label for="ySelect" class="country-label">Y Axis:</label>
                 <select id="ySelect">
                   <!-- Options will be populated by D3 -->
                 </select>
-              </label>
+           
             </div>
           
             <div class="country-box">
-              <label for="rSelect">Bubble Size:
+              <label for="rSelect" class="country-label">Bubble Size:</label>
                 <select id="rSelect">
                   <!-- Options will be populated by D3 -->
                 </select>
-              </label>
+              
             </div>
           
             <div class="country-box">
-              <label for="yearSlider">Year:
+              <label for="yearSlider" class="country-label">Year:</label>
                 <input type="range" id="yearSlider" value="0">
                 <span id="yearLabel"></span>
-              </label>
+
             </div>
           </div>
           
@@ -483,6 +483,7 @@
         <div class="chapter-right">
           <div class="controls">
             <div class="country-box">
+              <label for="groupSelectPCA" class="country-label">Group:</label>
               <select id="groupSelectPCA">
                 <option value="group1">HDI Metrics</option>
                 <option value="group2">Quality of Life Metrics</option>
