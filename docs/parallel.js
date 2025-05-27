@@ -17,11 +17,11 @@
   
     // Fixed colors for each metric.
     const metricColors = {
-      hdi: "#1f77b4",   // blue
-      le:  "#2ca02c",   // green
-      eys: "#ff7f0e",   // orange
-      mys: "#9467bd",   // purple
-      gnipc: "#d62728"  // red
+      hdi: "#003d5b",   // blue
+      le:  "#8f2d56",   // green
+      eys: "#d1495b",   // orange
+      mys: "#0d47a1",   // purple
+      gnipc: "#001233"  // red
     };
   
     // Dash styles (to distinguish up to 3 countries).
@@ -132,6 +132,7 @@
               .attr("class", "line")
               .attr("d", lineGen)
               .style("stroke", metricColors[m])
+              .attr("stroke-width", 4)
               .style("stroke-dasharray", dashStyles[i])
               .style("fill", "none");
           });
@@ -198,7 +199,7 @@
         .attr("y1", 7)
         .attr("y2", 7)
         .attr("stroke", "#000")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 4)
         .attr("stroke-dasharray", dashStyles[i]);
         legendRow.append("text")
         .attr("x", 30)
