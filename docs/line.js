@@ -103,7 +103,51 @@
     x.domain([2015, 2022]);
     updateYDomain();
     colorScale.domain(dataByCountry.map(d => d.country));
-
+    function handleOver(event, d) {
+      svg.selectAll('.country-line')
+         .style('opacity', 0.3)
+         .style('stroke-width', 4);
+    
+      d3.select(this)
+         .style('opacity', 1)
+         .style('stroke-width', 8);
+    
+      d3.select(this.parentNode)
+         .select('text.country-label')
+         .style('opacity', 1);
+    }
+    
+    function handleMove(event, d) {
+      const [mx] = d3.pointer(event, svg.node());
+      const year = x.invert(mx);
+      const pts  = interpolateUpTo(d.values, year);
+      const last = pts[pts.length - 1];
+    
+      tooltip
+        .style('opacity', 1)
+        .html(`
+          <strong>${d.country}</strong><br/>
+          Year: ${Math.round(last.Year)}<br/>
+          ${metricsMap[currentMetric]}: ${formatValue(last[currentMetric])}
+        `)
+        .style('left',  (event.pageX + 10) + 'px')
+        .style('top',   (event.pageY - 28) + 'px');
+    }
+    
+    function handleOut() {
+      svg.selectAll('.country-line')
+         .style('opacity', 0.2)
+         .style('stroke-width', 4);
+      svg.selectAll('text.country-label')
+         .style('opacity', 0);
+      tooltip.style('opacity', 0);
+    }
+    function attachLineInteractivity() {
+      svg.selectAll('.country-line')
+         .on('mouseover', handleOver)
+         .on('mousemove', handleMove)
+         .on('mouseout',  handleOut);
+    }
     // 7) draw axes
     // X axis:
     const xAxisG = svg.append('g')
@@ -149,7 +193,7 @@
       .data(dataByCountry).enter()
       .append('g')
         .attr('class','country-group');
-
+    attachLineInteractivity();
     // 9) empty paths
     countryG.append('path')
       .attr('class','country-line')
@@ -343,7 +387,7 @@
           : 'images/flag-icons-main/default.svg')
         .attr('x', d => x(d.values[0].Year)-flagSize/2)
         .attr('y', d => y(d.values[0][currentMetric]) - flagSize/2);
-
+      attachLineInteractivity();
       startAnimation();
     });
 
