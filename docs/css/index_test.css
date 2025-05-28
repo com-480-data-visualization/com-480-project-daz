@@ -318,7 +318,7 @@ h1 {
     padding: 8px 35px 8px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 12px;
     color: #333;
     cursor: pointer;
     background-color: #fff;
@@ -415,7 +415,7 @@ h1 {
     border-radius: 5px;
     padding: 5px;
     color: black;
-    font-size: 14px;
+    font-size: 12px;
     z-index: 99999;
     opacity: 0;
   }
@@ -540,7 +540,6 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     line-height: 1.5;
-    font-size: 1.1em;
   }
 
   .chapter-right-middle .did-you-know {
@@ -605,19 +604,33 @@ h1 {
   color: #8e44ad;
 }
 
-.chapter-left .narrative p {
+.chapter-left  .narrative p,
+.chapter-left  .did-you-know p,
+.chapter-right .narrative p,
+.chapter-right .did-you-know p,
+.chapter-left-middle  .narrative p,
+.chapter-left-middle  .did-you-know p,
+.chapter-right-middle .narrative p,
+.chapter-right-middle .did-you-know p {
   margin: 0.8rem 0;
   font-size: 1.1em;
   color: #333;
 }
 
-.chapter-left .narrative h2 {
+.chapter-left  .narrative h2,
+.chapter-left  .did-you-know h2,
+.chapter-right .narrative h2,
+.chapter-right .did-you-know h2,
+.chapter-left-middle  .narrative h2,
+.chapter-left-middle  .did-you-know h2,
+.chapter-right-middle .narrative h2,
+.chapter-right-middle .did-you-know h2 {
   margin-top: 0;
   margin-bottom: 0.8rem;
   font-size: 2em;
 }
-  
-  
+
+
 /* right column takes the remaining space */
 .chapter-right{
 flex: 1 1 0;            /* take whatever is left              */
@@ -670,25 +683,8 @@ min-width: 800px;       /* keep map usable on small laptops   */
   margin: auto 0; 
 }
 
-/* 2) Heading style */
-.chapter-left-middle .narrative h2 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-size: 2em;
-}
 
-.chapter-right-middle .narrative h2 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-size: 2em;
-}
 
-/* 3) Paragraph style */
-.chapter-left-middle .narrative p {
-  margin: 0.8rem 0;
-  font-size: 1.1em;
-  color: #333;
-}
 
 /* 4) Strong tags in narrative */
 .chapter-left-middle .narrative strong {
