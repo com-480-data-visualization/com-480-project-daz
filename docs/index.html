@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>5-Panel Snap Demo</title>
+  <title>ProsperViz</title>
   <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <link rel="stylesheet" href="css/index_test.css">
@@ -17,13 +17,76 @@
   <section id="hero" class="snap-section hero">
     <section class="hero-section">
         
-    <h1 class="hero-title">Welcome to the DAZ Website!</h1>
-    <p class="hero-description">
+    <h1 class="hero-title">ProsperViz</h1>
+      <p class="hero-description">
         This project presents a comprehensive perspective on global well-being by integrating data on happiness,
         quality of life, and human development.
         Explore dynamic visualizations that reveal trends, disparities, and insights shaping the state of nations
         worldwide.
       </p>
+      <h2>Human Development Index (HDI)</h2>
+        <p>
+          Developed by the United Nations Development Programme, the HDI emphasizes that 
+          &ldquo;people and their capabilities should be the ultimate criteria for assessing 
+          the development of a country, not economic growth alone.&rdquo;
+        </p>
+        <p>It combines:</p>
+        <ul>
+          <li>
+            <img src="images/E-WEB-Goal-03.png" alt="SDG 3 icon" class="sdg-icon">
+            <strong>Life Expectancy Index (SDG 3: Good Health &amp; Well-Being)</strong> – a proxy for “long and healthy life.”
+          </li>
+          <li>
+            <img src="images/E-WEB-Goal-04.png" alt="SDG 4 icon" class="sdg-icon">
+            <strong>Education Index (SDG 4: Quality Education)</strong> – based on mean years of schooling and expected years of schooling, capturing how “knowledgeable” a population is.
+          </li>
+          <li>
+            <img src="images/E-WEB-Goal-08.png" alt="SDG 8 icon" class="sdg-icon">
+            <strong>Income Index (SDG 8: Decent Work &amp; Economic Growth)</strong> – based on gross national income per capita, as a stand-in for “decent standard of living.”
+          </li>
+        </ul>
+        <p>
+          Each dimension is normalized to a 0&ndash;1 scale; the HDI is their geometric mean. Values closer to 1 indicate higher human development.
+        </p>
+      <strong>Dataset overview</strong>
+      <ul>
+        <li><strong>IDs &amp; Groups</strong>: Country code/name, UNDP region, and development tiers (HDI &amp; GDI groups).</li>
+        <li><strong>Core HDI</strong>: HDI rank &amp; value (1990–2023) plus life expectancy, expected &amp; mean schooling, and GNI per capita.</li>
+        <li><strong>Gender Development (GDI)</strong>: Female-to-male HDI ratio with separate female/male breakdowns of all core components.</li>
+        <li><strong>Inequality-adjusted HDI (IHDI)</strong>: HDI net of inequality (2010–2023), overall loss (%) and decomposition by health, education, and income.</li>
+        <li><strong>Gender Inequality Index (GII)</strong>: Composite gender-disadvantage score &amp; rank, plus maternal mortality, adolescent births, education, political representation, and labor-force rates by sex.</li>
+        <li><strong>Planetary-adjusted HDI (PHDI)</strong>: HDI penalized for CO₂ emissions &amp; material footprint, plus rank differences.</li>
+        <li><strong>Population</strong>: Total population in millions (1990–2023).</li>
+      </ul>
+      <h2>Quality of Life Index</h2>
+      <p>
+        Originally scraped from Numbeo, this composite index assesses living standards through eight sub-indices (baseline = New York City at 100):
+        <ul>
+          <li><strong>Purchasing Power Index</strong> – average consumer buying power.</li>
+          <li><strong>Safety Index</strong> – overall personal safety.</li>
+          <li><strong>Health Care Index</strong> – quality &amp; accessibility of medical services.</li>
+          <li><strong>Cost of Living Index</strong> – everyday expenses.</li>
+          <li><strong>Property Price to Income Ratio</strong> – real-estate affordability.</li>
+          <li><strong>Traffic Commute Time Index</strong> – typical urban commute delays.</li>
+          <li><strong>Pollution Index</strong> – environmental quality.</li>
+          <li><strong>Climate Index</strong> – how favorable local weather is for daily life.</li>
+        </ul>
+          By aggregating these, the Quality of Life Index helps spotlight which countries offer the best balance
+          of affordability, comfort, and security.
+      </p>
+
+
+      <h2>World Happiness Score</h2>
+      <p>Taken from the annual World Happiness Report (2015–2023), this score reflects people’s self-reported life evaluations and decomposes into six “happiness factors”:
+        <ul>
+          <li><strong>GDP per Capita</strong> - economic wealth.</li>
+          <li><strong>Social Support</strong> – strength of community and family ties.</li>
+          <li><strong>Healthy Life Expectancy</strong> – years of healthy life (WHO data).</li>
+          <li><strong>Freedom to Make Life Choices</strong> – perceived personal autonomy.</li>
+          <li><strong>Generosity</strong> – charitable behavior as a share of GDP.</li>
+          <li><strong>Perceptions of Corruption</strong> – trust in government and business.</li>
+        </ul>
+        Together, these allow us to explore not just how happy people say they are, but why.</p>
     </section>
     <!--<img src="https://picsum.photos/1600/700?grayscale" alt=""> -->
     <div

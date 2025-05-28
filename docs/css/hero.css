@@ -1,7 +1,6 @@
 .hero-section {
 
     position: relative;
-    margin-top: 10vh;
   }
   
   /* Vanta background: covers entire hero section */
@@ -124,4 +123,12 @@
       }
       .fade-delay-4000 {
         animation-delay: 4s;
+      }
+
+
+      .sdg-icon {
+        width: 64px;
+        height: auto;
+        vertical-align: middle;
+        margin-right: 8px;
       }
