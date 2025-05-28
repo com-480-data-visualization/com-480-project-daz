@@ -1,0 +1,10 @@
+#timeSeriesLegend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  #timeSeriesLegend div {
+    white-space: nowrap;
+  }
+  

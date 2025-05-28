@@ -14,6 +14,66 @@ document.addEventListener("DOMContentLoaded", function () {
   const color = "#0d47a1"
   let data;
 
+  const FEATURE_LABELS = {
+    "Climate Index": "Climate Index",
+    "happiness_score": "Happiness Score",
+    "hdi": "Human Development Index (HDI)",
+    "le": "Life Expectancy",
+    "eys": "Expected Years of Schooling",
+    "mys": "Mean Years of Schooling",
+    "gnipc": "Gross National Income per Capita (GNIpc)",
+    "Cost of Living Index": "Cost of Living Index",
+    "Health Care Index": "Health Care Index",
+    "Pollution Index": "Pollution Index",
+    "Property Price to Income Ratio": "Property Price to Income Ratio",
+    "Purchasing Power Index": "Purchasing Power Index",
+    "Quality of Life Index": "Quality of Life Index",
+    "Rank": "Rank",
+    "Safety Index": "Safety Index",
+    "Traffic Commute Time Index": "Traffic Commute Time Index",
+    "co2_prod": "CO2 Production",
+    "coef_ineq": "Coefficient of Inequality",
+    "diff_hdi_phdi": "Difference HDI-PHDI",
+    "eys_f": "Expected Years of Schooling (Female)",
+    "eys_m": "Expected Years of Schooling (Male)",
+    "freedom_to_make_life_choices": "Freedom to Make Life Choices",
+    "gdi": "Gender Development Index (GDI)",
+    "gdi_group": "GDI Group",
+    "gdp_per_capita": "GDP per Capita",
+    "generosity": "Generosity",
+    "gii": "Gender Inequality Index (GII)",
+    "gii_rank": "GII Rank",
+    "gni_pc_f": "GNI per Capita (Female)",
+    "gni_pc_m": "GNI per Capita (Male)",
+    "hdi_f": "HDI (Female)",
+    "hdi_m": "HDI (Male)",
+    "hdi_rank": "HDI Rank",
+    "healthy_life_expectancy": "Healthy Life Expectancy",
+    "ihdi": "Inequality-adjusted HDI (IHDI)",
+    "ineq_edu": "Inequality in Education",
+    "ineq_inc": "Inequality in Income",
+    "ineq_le": "Inequality in Life Expectancy",
+    "le_f": "Life Expectancy (Female)",
+    "le_m": "Life Expectancy (Male)",
+    "lfpr_f": "Labor Force Participation Rate (Female)",
+    "lfpr_m": "Labor Force Participation Rate (Male)",
+    "loss": "Loss",
+    "mf": "Male-to-Female Ratio",
+    "mmr": "Maternal Mortality Ratio",
+    "mys_f": "Mean Years of Schooling (Female)",
+    "mys_m": "Mean Years of Schooling (Male)",
+    "perceptions_of_corruption": "Perceptions of Corruption",
+    "phdi": "Planetary HDI (PHDI)",
+    "pop_total": "Total Population",
+    "pr_f": "Participation Rate (Female)",
+    "pr_m": "Participation Rate (Male)",
+    "rankdiff_hdi_phdi": "Rank Difference HDI-PHDI",
+    "se_f": "Secondary Education (Female)",
+    "se_m": "Secondary Education (Male)",
+    "social_support": "Social Support",
+    "abr": "Average Birth Rate",
+  }
+
   d3.csv("merged_dataset.csv").then(rawData => {
       data = rawData;
 
@@ -63,25 +123,33 @@ document.addEventListener("DOMContentLoaded", function () {
       return validKeys;
   }
 
-  function updateAxisOptions(selectedYear, defaultX = null, defaultY = null) {
+function updateAxisOptions(selectedYear, defaultX = null, defaultY = null) {
     const yearData = data.filter(d => d.Year === selectedYear);
     const validKeys = getNumericKeysForYear(yearData);
 
     // Update X axis dropdown with first valid key
     const xSelect = d3.select("#xSelectScatter");
     xSelect.selectAll("option").remove();
-    validKeys.forEach(key => xSelect.append("option").text(key).attr("value", key));
+    validKeys.forEach(key => {
+        const label = FEATURE_LABELS[key] || key;
+        if (label) {
+            xSelect.append("option").text(label).attr("value", key);
+        }
+    });
     const xValue = validKeys.includes(defaultX) ? defaultX : (validKeys.length > 0 ? validKeys[1] : "");
     xSelect.property("value", xValue);
-
 
     // Update Y axis dropdown with second valid key (fallback to first if only one exists)
     const ySelect = d3.select("#ySelectScatter");
     ySelect.selectAll("option").remove();
-    validKeys.forEach(key => ySelect.append("option").text(key).attr("value", key));
+    validKeys.forEach(key => {
+        const label = FEATURE_LABELS[key] || key;
+        if (label) {
+            ySelect.append("option").text(label).attr("value", key);
+        }
+    });
     const yValue = validKeys.includes(defaultY) ? defaultY : (validKeys.length >= 2 ? validKeys[2] : xValue);
     ySelect.property("value", yValue);
-
 }
 
   function updateChart() {

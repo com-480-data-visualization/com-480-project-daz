@@ -13,11 +13,73 @@ document.addEventListener("DOMContentLoaded", function () {
   const legendContainer = d3.select("#timeSeriesLegend");
   let data;
 
+  const FEATURE_LABELS = {
+    "Climate Index": "Climate Index",
+    "happiness_score": "Happiness Score",
+    "hdi": "Human Development Index (HDI)",
+    "le": "Life Expectancy",
+    "eys": "Expected Years of Schooling",
+    "mys": "Mean Years of Schooling",
+    "gnipc": "Gross National Income per Capita (GNIpc)",
+    "Cost of Living Index": "Cost of Living Index",
+    "Health Care Index": "Health Care Index",
+    "Pollution Index": "Pollution Index",
+    "Property Price to Income Ratio": "Property Price to Income Ratio",
+    "Purchasing Power Index": "Purchasing Power Index",
+    "Quality of Life Index": "Quality of Life Index",
+    "Rank": "Rank",
+    "Safety Index": "Safety Index",
+    "Traffic Commute Time Index": "Traffic Commute Time Index",
+    "co2_prod": "CO2 Production",
+    "coef_ineq": "Coefficient of Inequality",
+    "diff_hdi_phdi": "Difference HDI-PHDI",
+    "eys_f": "Expected Years of Schooling (Female)",
+    "eys_m": "Expected Years of Schooling (Male)",
+    "freedom_to_make_life_choices": "Freedom to Make Life Choices",
+    "gdi": "Gender Development Index (GDI)",
+    "gdi_group": "GDI Group",
+    "gdp_per_capita": "GDP per Capita",
+    "generosity": "Generosity",
+    "gii": "Gender Inequality Index (GII)",
+    "gii_rank": "GII Rank",
+    "gni_pc_f": "GNI per Capita (Female)",
+    "gni_pc_m": "GNI per Capita (Male)",
+    "hdi_f": "HDI (Female)",
+    "hdi_m": "HDI (Male)",
+    "hdi_rank": "HDI Rank",
+    "healthy_life_expectancy": "Healthy Life Expectancy",
+    "ihdi": "Inequality-adjusted HDI (IHDI)",
+    "ineq_edu": "Inequality in Education",
+    "ineq_inc": "Inequality in Income",
+    "ineq_le": "Inequality in Life Expectancy",
+    "le_f": "Life Expectancy (Female)",
+    "le_m": "Life Expectancy (Male)",
+    "lfpr_f": "Labor Force Participation Rate (Female)",
+    "lfpr_m": "Labor Force Participation Rate (Male)",
+    "loss": "Loss",
+    "mf": "Male-to-Female Ratio",
+    "mmr": "Maternal Mortality Ratio",
+    "mys_f": "Mean Years of Schooling (Female)",
+    "mys_m": "Mean Years of Schooling (Male)",
+    "perceptions_of_corruption": "Perceptions of Corruption",
+    "phdi": "Planetary HDI (PHDI)",
+    "pop_total": "Total Population",
+    "pr_f": "Participation Rate (Female)",
+    "pr_m": "Participation Rate (Male)",
+    "rankdiff_hdi_phdi": "Rank Difference HDI-PHDI",
+    "se_f": "Secondary Education (Female)",
+    "se_m": "Secondary Education (Male)",
+    "social_support": "Social Support",
+    "abr": "Average Birth Rate",
+  }
+
   // defaults:
   const DEFAULT_FEATURE   = "happiness_score";
   const DEFAULT_COUNTRIES = ["Austria"];
   const DEFAULT_START     = 2017;
   const DEFAULT_END       = 2022;
+
+  
 
   d3.csv("merged_dataset.csv").then(rawData => {
     data = rawData.map(d => ({ ...d, Year: +d.Year }));
@@ -148,9 +210,13 @@ document.addEventListener("DOMContentLoaded", function () {
     sel.selectAll("option").remove();
   
     feats.forEach(f => {
+      if (!FEATURE_LABELS[f]) {
+        console.warn(`No label for feature "${f}"`);
+        return; // skip if no label defined
+      }
       sel.append("option")
          .attr("value", f)
-         .text(f)
+         .text(FEATURE_LABELS[f])  // ← display label
          .property("selected", f === current);
     });
   
@@ -193,7 +259,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const rawCountries = Array.from(
       d3.select("#countriesSelectTimeSeries").node().selectedOptions
     ).map(o => o.value);
-  
+    
+    
+
     const meanSelected = rawCountries.includes("Mean");
     const feature      = d3.select("#featureSelectTimeSeries").node().value;
     const minYear      = +d3.select("#timeRangePickerMin").node().value;
@@ -261,11 +329,26 @@ document.addEventListener("DOMContentLoaded", function () {
         .y(d => y(d[feature]));
   
     /* ─── 8. Draw lines + legend with % evolution ───── */
+    const Palette = [
+      "#568b9b", // darkened blue-cyan
+      "#569e93", // darkened teal
+      "#568f76", // darkened green-teal
+      "#568f5a", // darkened green
+      "#6f8f56", // darkened olive
+      "#8d8f56", // darkened lime
+      "#998956", // darkened mustard
+      "#996b56", // darkened coral
+      "#995a5d"  // darkened rose
+    ];
+    const colorScale = d3.scaleOrdinal()
+      .domain(datasets.map(d => d.country))
+      .range(Palette);
     datasets.forEach(ds => {
+      const color = colorScale(ds.country);
       svg.append("path")
         .datum(ds.values)
         .attr("fill", "none")
-        .attr("stroke", "#043700")
+        .attr("stroke", color)
         .attr("stroke-width", 3)
         .attr("stroke-dasharray", ds.country === "Mean" ? "6 4" : null)
         .attr("d", lineGen);
@@ -275,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const pct   = ((last - first) / first) * 100;
   
       legendContainer.append("div")
-        .style("color", "#043700")
+        .style("color", color)
         .text(`${ds.country}: ${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`);
     });
   }
