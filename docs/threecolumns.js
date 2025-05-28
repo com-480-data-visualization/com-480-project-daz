@@ -2,7 +2,7 @@
   // Define dimensions for each small chart panel.
   const chartWidth = 250,
         chartHeight = 150,
-        margin = { top: 20, right: 20, bottom: 30, left: 40 };
+        margin = { top: 20, right: 20, bottom: 30, left: 60 };
 
   // The metrics to display.
   const metrics = ["hdi", "le", "eys", "mys", "gnipc"];
@@ -43,7 +43,22 @@
     )
       .map(([year, avg]) => ({ Year: +year, hdi: avg }))
       .sort((a, b) => a.Year - b.Year);
-    
+    // —— insert overall legend here ——
+  const legendDiv = container.append("div")
+    .attr("class", "overall-legend")
+    .style("margin-bottom", "10px")
+    .style("font-family", "sans-serif")
+    .style("font-size", "20px")
+
+  legendDiv.append("span")
+    .style("display", "inline-block")
+    .style("width", "80px")
+    .style("height", "5px")
+    .style("background-color", "#bc4b51")
+    .style("margin-right", "8px");
+
+  legendDiv.append("span")
+    .text("Global HDI average");
     // For each country in our list, create a column.
     countries.forEach(country => {
       // Filter data for the country.
