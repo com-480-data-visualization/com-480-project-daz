@@ -1,503 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Data Visualizations in Snap Slides</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>5-Panel Snap Demo</title>
   <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
   <script src="https://d3js.org/d3.v6.min.js"></script>
-  <link rel="stylesheet" href="css/snap.css">
-  <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/buttons.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-p1J1GfU/jx5+uY44y8KrsG6ZzV3U7h/y6Y0SHkaZdPPnO6JQfC0Yb5rRW9Jzby6mENBuJ+8/2vMlfbKIr+U4kA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="css/smallmultiple.css"/>
-
-  <!-- Vanta.js (for animated background) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.21/vanta.net.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ml-regression-multivariate-linear@1.0.0/dist/ml-regression-multivariate-linear.min.js"></script>
-  
-
-  <!-- Typed.js (for typewriter effect) -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
-  <!-- Font Awesome Icons (optional) -->
+  <link rel="stylesheet" href="css/index_test.css">
+    <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
-
 <body>
-  <div class="snap-container">
-    <!-- Slide 0: Welcome -->
-    <section class="snap-section hero-section" id="welcome-slide">
-      <!-- Container for Vanta background -->
-      <div id="vanta-bg"></div>
 
-      <!-- Main Content -->
-      <div class="hero-content">
-        <h1 class="hero-title">Welcome to the DAZ Website!</h1>
-
-        <!-- Typed Text Subheading -->
-        <h2 class="hero-subtitle">
-          <span id="typed-subtitle"></span>
-        </h2>
-
-        <p class="hero-description">
-          This project presents a comprehensive perspective on global well-being by integrating data on happiness,
-          quality of life, and human development.
-          Explore dynamic visualizations that reveal trends, disparities, and insights shaping the state of nations
-          worldwide.
-        </p>
-
-        <!-- Icon Row (optional) -->
-        <div class="icon-row">
-          <div class="icon-item">
-            <i class="fas fa-smile"></i>
-            <p>Happiness</p>
-          </div>
-          <div class="icon-item">
-            <i class="fas fa-chart-line"></i>
-            <p>Development</p>
-          </div>
-          <div class="icon-item">
-            <i class="fas fa-home"></i>
-            <p>Quality of Life</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Shape Divider -->
-      <div class="custom-shape-divider-bottom-1683146972">
-        <svg class="waves" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-          preserveAspectRatio="none">
-          <path d="M321.39,56.85C244.6,74.26,...(truncated for brevity)..." class="shape-fill"></path>
-        </svg> 
-      </div>
-
-      <!-- Scroll Arrow -->
-
+  <!-- HERO (phase 1) -->
+  <section id="hero" class="snap-section hero">
+    <section class="hero-section">
+        
+    <h1 class="hero-title">Welcome to the DAZ Website!</h1>
+    <p class="hero-description">
+        This project presents a comprehensive perspective on global well-being by integrating data on happiness,
+        quality of life, and human development.
+        Explore dynamic visualizations that reveal trends, disparities, and insights shaping the state of nations
+        worldwide.
+      </p>
     </section>
-  </div>
-    <section class="snapsection" id="chapter1">
-      <div class="inner-content">
-        <div class="section-divider">
-          <hr class="divider-line">
-          <h1>Chapter 1: The World in Transition</h1>
-          <hr class="divider-line">
+    <!--<img src="https://picsum.photos/1600/700?grayscale" alt=""> -->
+    <div
+           id="shape-1"
+           class="
+                  rounded-circle
+                  position-absolute
+                  opacity-70
+                  scale-up-center
+                  d-none d-md-block
+                  "
+           ></div>
+      <div
+           id="shape-2"
+           class="
+                  rounded-circle
+                  position-absolute
+                  opacity-70
+                  scale-up-center
+                  fade-delay-2000
+                  d-none d-md-block
+                  "
+           ></div>
+      <div id="shape-3"
+           class="rounded-circle
+                  position-absolute
+                  opacity-70
+                  scale-up-center
+                  fade-delay-4000
+                  d-none d-md-block
+                  "></div>
+    <!-- Icon Row (optional) -->
+    <div class="icon-row">
+        <div class="icon-item">
+          <i class="fas fa-smile"></i>
+          <p>Happiness</p>
         </div>
-        <p>
-          Witness the transformation of our world over time as nations progress and face setbacks.
-        </p>
-        <p>A global visualization displaying <strong>HDI</strong> values by country. Hover over a country to see its line chart time series.
-        </p>
+        <div class="icon-item">
+          <i class="fas fa-chart-line"></i>
+          <p>Development</p>
+        </div>
+        <div class="icon-item">
+          <i class="fas fa-home"></i>
+          <p>Quality of Life</p>
+        </div>
+    </div>
+  </section>
 
-        <div class="chart">
+  <!-- FULL STATIC PANEL (phase 2) -->
+  <section id="panel-slide" class="snap-section panel-slide">
+    <div class="panel pan1"><span class="num">01</span><span class="lbl">The World in Transition</span></div>
+    <div class="panel pan2"><span class="num">02</span><span class="lbl">Unveiling the Factors</span></div>
+    <div class="panel pan3"><span class="num">03</span><span class="lbl">The Shifting Landscape</span></div>
+    <div class="panel pan4"><span class="num">04</span><span class="lbl">Regional Voices and Outliers</span></div>
+    <div class="panel pan5"><span class="num">05</span><span class="lbl">Insights and Future Paths</span></div>
+  </section>
+
+  <!-- FIXED HEADER (hidden until panel-slide scrolls away) -->
+  <header id="mini-header" class="panels">
+    <div>01<br><small>The World in Transition</small></div>
+    <div>02<br><small>Unveiling the Factors</small></div>
+    <div>03<br><small>The Shifting Landscape</small></div>
+    <div>04<br><small>Regional Voices and Outliers</small></div>
+    <div>05<br><small>Insights and Future Paths</small></div>
+  </header>
+
+  <!-- CHAPTERS (phase 3) -->
+  <main class="snap-container">
+    <section id="chapter1" class="snap-section chap c1">
+        <div class="section-divider">
+            <hr class="divider-line">
+            <h1>Chapter 1: The World in Transition</h1>
+            <hr class="divider-line">
+          </div>
+
+
+        <div class="inner-content">
+                <!-- LEFT column --------------------------------------------------->
+                <div class="chapter-left-middle p1">
+                  <div class="narrative">
+                    <h2>🌍 Spin the Globe</h2>
+                    <p>
+                      Pick a metric—<strong>Happiness Score</strong>, <strong>Quality of Life</strong>, or 
+                      <strong>Human Development Index</strong>—and set your time range. As the years roll by, 
+                      countries light up and shift colors, showing how life has changed across the planet.
+                    </p>
+                    <p>
+                      Curious about a specific nation? Hover over it to see its personal journey unfold in a smooth, 
+                      animated timeline. It’s like time-traveling through global progress—one colorful country at a time. ✨
+                    </p>
+                  </div>
+                  <div class="did-you-know">
+                    <h2>💡 Did you know?</h2>
+                    <p> 🇨🇭 Switzerland, 🇳🇴 Norway, and 🇮🇸 Iceland consistently rank among the top countries in the world for quality of life and happiness.  
+                    </p>
+                  </div>
+                </div>
+            <div class="chapter-right-middle">
+                
+              <div class="controls">
+                <div class="country-box">
+                  <span class="country-label">Global Index:</span>
+                  <select id="index-select">…</select>
+                </div>
+                <div class="country-box">
+                  <label for="start-year" class="country-label">Start Year:</label>
+                  <select id="start-year">…</select>
+                </div>
+                <div class="country-box">
+                  <label for="end-year" class="country-label">End Year:</label>
+                  <select id="end-year">…</select>
+                </div>
+              </div>
+                <div class=chart>
+                  <div id="map-container">   
+                    <svg id="my_dataviz" ></svg>
+                    <div id="zoom-controls">
+                        <button id="zoom-in">+</button>
+                        <button id="zoom-out">-</button>
+                    </div>
+                    <div id="legend"></div>
+                  </div>
+                </div>
+                <div id="map-tooltip"></div>
+            </div>    
+        </div>
+
+
+        <div class="inner-content">
+          <!-- LEFT column: Narrative call-out -->
+          <div class="chapter-left-middle p1">
+            <div class="narrative">
+              <h2>🎢 Take the Global Index Rollercoaster!</h2>
+              <p>
+                Ready for a wild ride through the world’s numbers? Pick any index—<strong>HDI</strong>, <strong>GDP</strong>, <strong>Happiness</strong>, you name it—click “Reset,” and watch the story zoom from 2015 to 2022.
+              </p>
+            </div>
+            
+          </div>
+        
+          <!-- RIGHT column: Controls + Chart -->
+          <div class="chapter-right-middle">
+            <div class="controls">
+              <div class="country-box">
+                <span class="country-label">Global Index:</span>
+                <select id="columnSelect">
+                  <option value="hdi" selected>HDI</option>
+                  <option value="le">Life Expectancy</option>
+                </select>
+              </div>
+              <button class="reset-animation" id="reset-animation">Reset Animation</button>
+
+            </div>
+            
+            <div class="chart">
+              <div id="chart-line"></div>
+            </div>
+            <div id="tooltip2" style="opacity:0;"></div>
+          </div>
+        </div>  
+    </section>
+    <section id="chapter2" class="snap-section chap c2">
+      <div class="section-divider">
+        <hr class="divider-line">
+        <h1>Chapter 2: Unveiling the Factors</h1>
+        <hr class="divider-line">
+      </div>
+      <div class="inner-content layout-flip">
+        <!-- Chart + Controls (2× width when flipped) -->
+        <div class="chapter-left-middle">
+          <div class="chart">
+            <div class="controls">
+              <div class="country-box" id="country1-box">
+                <span class="country-label">Country 1</span>
+                <span class="color-dot"></span>
+                <select id="countrySelect1">
+                  <option value="">-- Select Country --</option>
+                </select>
+              </div>
+              <div class="country-box" id="country2-box">
+                <span class="country-label">Country 2</span>
+                <span class="color-dot"></span>
+                <select id="countrySelect2">
+                  <option value="">-- Select Country --</option>
+                </select>
+              </div>
+              <div class="country-box" id="group-box">
+                <span class="country-label">Select Metrics Group</span>
+                <select id="groupSelectRadar">
+                  <option value="group1">HDI Metrics</option>
+                  <option value="group2">Quality of Life Metrics</option>
+                  <option value="group3">Happiness Metrics</option>
+                </select>
+              </div>
+              <div class="country-box" id="year-box">
+                <span class="country-label">Select Year</span>
+                <select id="yearSelectRadar"></select>
+              </div>
+            </div>
+            <div id="chart"></div>
+          </div>
+          <div class="tooltip" id="tooltip" style="opacity:0;"></div>
+        </div>
+      
+        <!-- Narrative (1× width when flipped) -->
+        <div class="chapter-right-middle p2">
+          <div class="narrative">
+            <h2>🔍 Your Personal Radar Showdown</h2>
+            <p>
+              Ready to pit two countries—and any year you like—against each other? 
+              Select Country 1, Country 2 and your year, then hit “Reset” to unleash three metric arenas:
+            </p>
+            <ul>
+              <li><strong>Quality of Life</strong></li>
+              <li><strong>Happiness</strong></li>
+              <li><strong>Human Development</strong></li>
+            </ul>
+            <p>
+              Study the radar chart to pinpoint each country’s strengths and weaknesses, and track how they change over time.
+            </p>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="inner-content layout-flip">
+        <!-- Controls + Scatter (2× width) -->
+        <div class="chapter-left-middle">
           <div class="controls">
             <div class="country-box">
-              <span class="country-label">Global Index:</span>
-              <select id="index-select">
-                <option value="hdi" selected>HDI</option>
-                <!-- Future indices will be added here -->
-                <option value="x">X</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="controls">
-            <label for="start-year">Start Year:</label>
-            <select id="start-year"></select>
-            <label for="end-year">End Year:</label>
-            <select id="end-year"></select>
-          </div>
-
-          <div id="map-container">
-            <svg id="my_dataviz" width="800" height="500"></svg>
-            <div id="zoom-controls">
-              <button id="zoom-in">+</button>
-              <button id="zoom-out">-</button>
-            </div>
-            <div id="legend"></div>
-          </div>
-          <div id="map-tooltip"></div>
-        </div>
-      <div>
-
-      
-      <p> A dynamic animation representing <strong>Global Metric</strong> trends over time.</p>
-      <div class="chart">
-        <div class="controls">
-          <div class="country-box">
-            <span class="country-label">Global Index:</span>
-            <!-- no hard-coded options here -->
-            <select id="columnSelect"></select>
-          </div>
-        </div>
-        <button class="button-4" id="reset-animation">Reset Animation</button>
-      
-        <div id="chart-line"></div>
-        <div id="tooltip2" style="opacity:0;"></div>
-      </div>
-    </div>
-  </div>
-    </section>
-
-    <section class="snapsection" id="chapter2">
-      <div class="inner-content">
-        <div class="section-divider">
-          <hr class="divider-line">
-          <h1>Chapter 2: Unveiling the Factors</h1>
-          <hr class="divider-line">
-      </div>
-      <p>
-        Dive deeper into the intricate connections among socio-economic indicators. Explore the interplay between metrics that shape well-being.
-      </p>
-      <p>A comparative radar chart visualizing key indicators for two selected countries in the selected year.</p>
-      <div class="chart">
-        <div class="controls">
-          <!-- Container for Country 1 -->
-          <div class="country-box" id="country1-box">
-            <span class="country-label">Country 1</span>
-            <span class="color-dot"></span>
-            <select id="countrySelect1">
-              <option value="">-- Select Country --</option>
-            </select>
-          </div>
-          <!-- Container for Country 2 -->
-          <div class="country-box" id="country2-box">
-            <span class="country-label">Country 2</span>
-            <span class="color-dot"></span>
-            <select id="countrySelect2">
-              <option value="">-- Select Country --</option>
-            </select>
-          </div>
-          <div class="country-box" id="group-box">
-            <span class="country-label">Select Metrics Group</span>
-            <select id="groupSelectRadar">
-              <!-- options will be injected by Radar.js -->
-            </select>
-          </div>
-          <!-- Year for the selected group -->
-          <div class="country-box" id="year-box">
-            <label for="yearSelectRadar" class="country-label">Year</label>
-            <select id="yearSelectRadar">
-              <!-- populated dynamically -->
-            </select>
-          </div>
-        </div>
-        <div id="chart"></div>
-    </div>
-      <div class="tooltip" id="tooltip" style="opacity:0;"></div>
-
-      <p>Explore the relationship between two HDI metrics using a scatter plot.</p>
-        <div class="controls">
-          <div class="country-box" >
-            <label for="xSelectScatter">X Axis: 
+              <label for="xSelectScatter" class="country-label">X Axis:</label>
               <select id="xSelectScatter">
-                <!-- Options will be populated by D3 -->
+                <!-- populated by D3 -->
               </select>
-            </label>
-          </div>
-          <div class="country-box" >
-            <label for="ySelectScatter">Y Axis: 
+            </div>
+            <div class="country-box">
+              <label for="ySelectScatter" class="country-label">Y Axis:</label>
               <select id="ySelectScatter">
-                <!-- Options will be populated by D3 -->
+                <!-- populated by D3 -->
               </select>
-            </label>
-          </div>
-          <div class="country-box" >
-            <label for="yearSelectScatter">Year: 
+            </div>
+            <div class="country-box">
+              <label for="yearSelectScatter" class="country-label">Year:</label>
               <select id="yearSelectScatter">
-                <!-- Options will be populated by D3 -->
+                <!-- populated by D3 -->
               </select>
-            </label>
+            </div>
           </div>
+          <div id="scatterplot"></div>
+          <div id="tooltipscatter" class="tooltipscatter" style="color:white;position: absolute;pointer-events: none;background: rgba(0, 0, 0, 0.7);border: 2px solid rgb(36, 36, 38); padding: 2px;"></div> 
+          
         </div>
-        <div id="scatterplot"></div>
-        <div id="tooltipscatter" class="tooltipscatter" style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);"></div>
 
+        <!-- Narrative on the left (1× width) -->
+        <div class="chapter-right-middle p2">
+          <div class="narrative">
+            <h2>🔍 Spot the Correlations</h2>
+            <p>
+              Explore how two HDI metrics move together across countries in any given year.  
+              Choose your X and Y axes, pick a year, and watch the bubbles settle into patterns.
+            </p>
+            <p>
+              Are higher life expectancies tied to greater CO₂ emissions? Does GDP per capita track with quality-of-life scores?  
+              Hover over any dot to reveal the country, then dig into the outliers that break the mold.
+            </p>
+          </div>
+          <div class="did-you-know">
+            <h2>💡 Did you know?</h2>
+            <p> Look at the correlations between hdi and gnipc.. interesting, right? And the straight correlation between hdi and expected year of schooling!
+              And what about the correlation between pollution index and happiness? and happiness and hdi?
+            </p>
+          </div> 
+        </div>
+    
+      </div>
+    <div class="inner-content">
+      <div class="chapter-left p2">
+        <div class="narrative">
+          <h2>📊 HDI Components Over Time</h2>
+          <p>
+            The line chart shows how each country’s human development has evolved from 1990 through 2022. It breaks HDI down into five core metrics:
+          </p>
+          <ul>
+            <li><strong>HDI</strong></li>
+            <li><strong>LE (Life Expectancy)</strong></li>
+            <li><strong>EYS (Expected Years of Schooling)</strong></li>
+            <li><strong>MYS (Mean Years of Schooling)</strong></li>
+            <li><strong>GNIPC (GNI per Capita)</strong></li>
+          </ul>
+          <p>
+            Use this breakdown to see where each country has advanced most!
+          </p>
+        </div> 
+      </div>
+      <div class="chapter-right">
         <div class="controls">
           <div class="country-box" >
-            <label>Country 1: 
+            <label class="country-label">Country 1: </label>
               <select id="countrySelectLines1">
                 <option value="">--Select Country--</option>
               </select>
-            </label>
+            
           </div>
           <div class="country-box" >
-            <label>Country 2: 
+            <label class="country-label">Country 2: </label>
               <select id="countrySelectLines2">
                 <option value="">--Select Country--</option>
               </select>
-            </label>
+            
           </div>
           <div class="country-box" >
-            <label>Country 3: 
+            <label class="country-label">Country 3: </label>
               <select id="countrySelectLines3">
                 <option value="">--Select Country (optional)--</option>
               </select>
-            </label>
+            
           </div>  
         </div>
         <div id="lineChart"></div>
-    </div>
-    </section>
-
-    <section class="snapsection" id="chapter3">
-      <div class="inner-content">
-        <div class="section-divider">
-          <hr class="divider-line">
-      <h1>Chapter 3: The Shifting Landscape</h1>
-      <hr class="divider-line">
       </div>
-      <p>
-        As time marches on, explore trends, turning points, and regional dynamics. Delve into time series and compare changes between decades.
-      </p>
-      <div class="controls">
-        <div class="country-box">
-          <label for="featureSelectTimeSeries">Feature:</label>
-          <select id="featureSelectTimeSeries">
-            <!-- Options will be populated dynamically -->
-          </select>
-        </div>
-        <div class="country-box">
-          <label for="countriesSelectTimeSeries">Countries:</label>
-          <select id="countriesSelectTimeSeries" multiple>
-            <!-- Options will be populated dynamically -->
-          </select>
-        </div>
-          <div class="country-box">
-          <label for="timeRangePicker">Time Range:</label>
-          <input type="range" id="timeRangePickerMin" min="2000" max="2022" step="1" value="2000">
-          <span id="timeRangeMinLabel">2000</span>
-          <input type="range" id="timeRangePickerMax" min="2000" max="2022" step="1" value="2022">
-          <span id="timeRangeMaxLabel">2022</span>
+      </div>
+    </section>
+    <section id="chapter3" class="snap-section chap c3">
+      <div class="section-divider">
+        <hr class="divider-line">
+          <h1>Chapter 3: The Shifting Landscape</h1>
+        <hr class="divider-line">
+      </div>
+      <div class="inner-content">
+        <div class="chapter-left p3">
+          <div class="narrative">
+            <h2>⌛ Track Trends Over Time</h2>
+            <p>
+              Watch the interactive line chart spring to life: compare trajectories, spot turning points,  
+              and see who’s surged ahead or slipped back. Ready to uncover decades-long stories at a glance?
+            </p>
+          </div> 
+          <div class="did-you-know">
+            <h2>💡 Did you know?</h2>
+            <p> The mean happiness score increased by 3.1% from 2015 to 2023. Whereas Traffic Commute Time Index decreased by 2% from 2021 to 2024.
+            </p>
           </div>
-      </div>
-      <div id="timeSeriesChart"></div>
-      <div id="timeSeriesLegend"></div>
-
-
-        <h2>The Impact of Public War: the examples of Libya, Syria, and Yemen</h2>
-        <div id="chartContainer"></div>
-    </div>
-    </section>
-
-    <section class="snapsection" id="chapter4">
-      <div class="inner-content">
-        <div class="section-divider">
-          <hr class="divider-line">
-      <h1>Chapter 4: Regional Voices and Outliers</h1>
-      <hr class="divider-line">
         </div>
-      <p>
-        Every region tells its own story—a blend of triumphs, challenges, and distinct trajectories. Zoom in to discover disparities and outlier narratives.
-      </p>
-
-
-
-      <p>
-        <span id="bubbleTitle">
-        </span>
-      </p>
-      <!-- Controls: Dropdowns for axes and bubble size plus a year slider -->
-      <div class="controls">
-        <!-- Group selector -->
-        <div class="country-box">
-          <select id="groupSelectBubble">
-            <option value="group1">HDI Metrics</option>
-            <option value="group2">Quality of Life Metrics</option>
-            <option value="group3">Happiness Metrics</option>
-          </select>
-        </div>
-      
-        <!-- X axis -->
-        <div class="country-box">
-          <label for="xSelect">X Axis:
-            <select id="xSelect"></select>
-          </label>
-        </div>
-      
-        <!-- Y axis -->
-        <div class="country-box">
-          <label for="ySelect">Y Axis:
-            <select id="ySelect"></select>
-          </label>
-        </div>
-      
-        <!-- Bubble size -->
-        <div class="country-box">
-          <label for="rSelect">Bubble Size:
-            <select id="rSelect"></select>
-          </label>
-        </div>
-      
-        <!-- Year slider -->
-        <div class="country-box">
-          <label for="yearSlider">Year:
-            <input type="range" id="yearSlider" value="0">
-            <span id="yearLabel"></span>
-          </label>
-        </div>
-      </div>
-      <!-- Container for the bubble chart -->
-      <div id="bubbleChart"></div>
-      <!-- Tooltip -->
-      <div id="tooltipbubble" class="tooltipbubble"></div>
-
-
-      <h2>PCA and Clustering on the Selected Group & Year</h2>
-      <div class="controls">
-        <div class="country-box">
-          <select id="groupSelectPCA">
-            <option value="group1">HDI Metrics</option>
-            <option value="group2">Quality of Life Metrics</option>
-            <option value="group3">Happiness Metrics</option>
-          </select>
-        </div>
-        <div class="country-box" id="year-box">
-            <label for="yearSelectPCA" class="country-label">Year</label>
-            <select id="yearSelectPCA">
-              <!-- populated dynamically -->
-            </select>
-        </div>
-      </div>
-      <div id="chartpca"></div>
-
-      <h2>Line Chart by Region</h2>
-      <p>A visual representation of regional trends over selected time periods.</p>
-      <div class="controls">
-        <div class="country-box" id="feature-box">
-          <label class="country-label" for="featureSelect">Feature:</label>
-          <select id="featureSelect"></select>
-        </div>
-        <div class="country-box" id="start-year-box">
-          <label class="country-label" for="startYearSelect">Start Year:</label>
-          <select id="startYearSelect"></select>
-        </div>
-        <div class="country-box" id="end-year-box">
-          <label class="country-label" for="endYearSelect">End Year:</label>
-          <select id="endYearSelect"></select>
-        </div>
-      </div>
-      <div class="controls">
-        <button class="button-4" id="update-chart">Update Chart</button>
-        <button class="button-4" id="reset-animation2">Reset Animation</button>
-      </div>
-      <div id="lineChartRegion"></div>
-      <div class="lineChart-tooltip" id="lineChartRegionTooltip"
-        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
-      </div>
-    </div>
-    </section>
-
-    <section class="snapsection" id="chapter5">
-      <div class="inner-content">
-        <div class="section-divider">
-          <hr class="divider-line">
-      <h1>Chapter 5: Weaving the Threads – Insights and Future Paths</h1>
-      <hr class="divider-line">
-        </div>
-      <p>
-        In our final chapter, diverse strands of data converge to reveal cause-and-effect relationships and outline potential futures. Explore the drivers of well-being and engage with interactive simulations.
-      </p>
-      <h2>Factors Behind Happiness and QoL</h2>
-      <p>This visualization shows how inputs like GDP, Education, and Healthcare Investment flow through intermediate
-        factors to affect outcomes such as Happiness and Quality of Life.</p>
-      <div id="sankeyChart"></div>
-      <div id="sankey-tooltip" ,
-        style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
-      </div>
-
-      <h2>Top 10 Countries by <span id="selectedIndexLabel">Index</span> in <span id="selectedYearLabel">Year</span></h2>
-      <p>A dynamic bar chart ranking the top 10 countries based on the selected index and year.</p>
-      <div class="controls">
-        <div class="country-box" id="year-box">
-          <label class="country-label" for="yearSelect">Year:</label>
-          <select id="yearSelect">
-          </select>
-        </div>
-        <div class="country-box" id="index-box">
-          <label class="country-label" for="indexSelect">Index:</label>
-          <select id="indexSelect">
-          </select>
-        </div>
-      </div>
-      <div id="top10chart"></div>
-
-    </div>
-    </section>
-
-    <section class="snapsection" id="epilogue">
-      <div class="section-divider">
-        <hr class="divider-line">
-      <h1>Epilogue: Reflection and Further Exploration</h1>
-      <hr class="divider-line">
-      </div>
-      <div class="inner-content">
-      <p>
-        Here we recap the insights uncovered on our journey. what we discover as key patterns, revisit surprising trends, and learn how these insights inform our view of global well-being.
-      </p>
-    </div>
-    </section>
-
-    <section class="snapsection" id="annexes">
-      <div class="section-divider">
-        <hr class="divider-line">
-      <h1>Annexes: A Comprehensive Data Playground</h1>
-      <hr class="divider-line">
-      </div>
-      <div class="inner-content">
-        <p>
-          For those eager to dig deeper, explore detailed visualizations and data tables.
-        </p>
-        <p>Link to <a href="distributions.html">a full distributions' page.</a></p>
-      </div>
-
-    </section>
-
-
-  
-
-  <!-- Scripts -->
-  <script src="vanta.js"></script>
-  <script src="radar.js"></script>
-  <script src="top10script.js"></script>
-  <script src="line.js"></script>
-  <script src="worldmap.js"></script>
-  <script src="distributions.js"></script>
-  <script type="module" src="sankey.js"></script>
-  <script src="lineChartRegion.js"></script>
-  <script src="interactivebubble.js"></script>
-  <script src="parallel.js"></script>
-  <script src="threecolumns.js"></script>
-  <script defer src="bundle.js"></script>
-  <script src="scatter.js"></script>
-  <script src="timeseries.js"></script>
-</body>
-
-</html>
-
-
-<!--
-
-<p> A dynamic animation representing <strong>HDI</strong> trends over time.</p>
-            <div class="controls">
+        <div class="chapter-right">
+          <div class="controls">
             <div class="country-box">
-                <span class="country-label">Global Index:</span>
-                <select id="columnSelect">
-                <option value="hdi" selected>HDI</option>
-                <option value="le">Life Expectancy</option>
+              <label for="featureSelectTimeSeries" class="country-label">Feature:</label>
+              <select id="featureSelectTimeSeries">
+                <!-- Options will be populated dynamically -->
               </select>
             </div>
+            <div class="country-box">
+              <label for="countriesSelectTimeSeries" class="country-label">Countries:</label>
+              <select id="countriesSelectTimeSeries" multiple size="2">
+                <!-- Options will be populated dynamically -->
+              </select>
             </div>
-            <button class="button-4" id="reset-animation">Reset Animation</button>
-
-            <div id="chart-line"></div>
-            <div id="tooltip2" style="opacity:0;"></div>
+              <div class="country-box">
+              <label for="timeRangePicker" class="country-label">Time Range:</label>
+              <input type="range" id="timeRangePickerMin" min="2000" max="2022" step="1" value="2000">
+              <span id="timeRangeMinLabel">2000</span>
+              <input type="range" id="timeRangePickerMax" min="2000" max="2022" step="1" value="2022">
+              <span id="timeRangeMaxLabel">2022</span>
+              </div>
+          </div>
+          <div id="timeSeriesChart"></div>
+          <div id="timeSeriesLegend"></div>
+        </div>
+      </div>
+      <div class="inner-content">
+        <div class="chapter-left p3">
+          <div class="narrative">
+            <h2>💣 The Impact of Public War</h2>
+            <p>
+              In Libya, Syria and Yemen, you can see how war‐time shocks (shaded) send life expectancy, schooling and income plunging—and how long recovery takes.
+            </p>
+          </div>
+          <div class="did-you-know">
+            <h2>💡 Did you know?</h2>
+            <p> All 3 conflicts resulted in a drastic reduction in GNI. If you compare the 3 countries highest and lowest annual GNI, during each conflict, you have a reducation of between 58 to 64%.</p>
+          </div>  
+        </div>
+        <div class="chapter-right">
+          <div id="chartContainerWar"></div>
+        </div>
+      </div>
+    </section>
+    <section id="chapter4" class="snap-section chap c4">
+      <div class="section-divider">
+        <hr class="divider-line">
+          <h1>Chapter 4: Regional Voices and Outliers</h1>
+        <hr class="divider-line">
+      </div>
+      <div class="inner-content">
+        <div class="chapter-left-middle p4">
+          <div class="narrative">
+            <h2>📊 Explore Global Well-Being</h2>
+            <p>
+              Pick any metrics group—<strong>HDI</strong>, <strong>Quality of Life</strong> or <strong>Happiness</strong>—then choose your X-axis, Y-axis and bubble-size variables. Slide through the years and watch regions dance:
+            </p>
+            <ul>
+              <li>🤔 Which European nations sit in the top-right corner—boasting the highest life expectancy and schooling?</li>
+              <li>🔎 Can you trace how emerging regions (LAC, EAP) inch closer to the advanced-economy cluster over the years?</li>
+              <li>🌱 Where do Sub-Saharan Africa and South Asia fall on the HDI scale, and how much have they improved recently?</li>
+            </ul>
+            <p>
+              Ready to hunt down the outliers and see which regions are closing the gap fastest?
+            </p>
+          </div>
+        </div>
+        <div class="chapter-right-middle">
+          <div class="controls">
+            <!-- Group dropdown for interactivebubble.js -->
+            <div class="country-box">
+              <label for="groupSelectBubble" class="country-label">Group:</label>
+                <select id="groupSelectBubble">
+                  <!-- Options will be populated by D3 -->
+                </select>
+        
+            </div>
           
+            <div class="country-box">
+              <label for="xSelect" class="country-label">X Axis:</label>
+                <select id="xSelect">
+                  <!-- Options will be populated by D3 -->
+                </select>
+        
+            </div>
+          
+            <div class="country-box">
+              <label for="ySelect" class="country-label">Y Axis:</label>
+                <select id="ySelect">
+                  <!-- Options will be populated by D3 -->
+                </select>
+           
+            </div>
+          
+            <div class="country-box">
+              <label for="rSelect" class="country-label">Bubble Size:</label>
+                <select id="rSelect">
+                  <!-- Options will be populated by D3 -->
+                </select>
+              
+            </div>
+          
+            <div class="country-box">
+              <label for="yearSlider" class="country-label">Year:</label>
+                <input type="range" id="yearSlider" value="0">
+                <span id="yearLabel"></span>
+
+            </div>
+          </div>
+          
+          <!-- Container for the bubble chart -->
+          <div id="bubbleChart"></div>
+          <!-- Tooltip -->
+          <div id="tooltipbubble" class="tooltipbubble"></div>
+        </div>
+      </div>
+
+      <div class="inner-content">
+        <div class="chapter-left p4">
+          <div class="narrative">
+            <h2>🔍 Discover Hidden Clusters with PCA</h2>
+            <p>
+              Curious how countries naturally group themselves when you compare HDI, Quality of Life, or Happiness metrics? Choose your metric group and year, then let the PCA projection unveil who clusters together—and who stands apart.
+            </p>
+          </div>
+        </div>
+        <div class="chapter-right">
+          <div class="controls">
+            <div class="country-box">
+              <label for="groupSelectPCA" class="country-label">Group:</label>
+              <select id="groupSelectPCA">
+                <option value="group1">HDI Metrics</option>
+                <option value="group2">Quality of Life Metrics</option>
+                <option value="group3">Happiness Metrics</option>
+              </select>
+            </div>
+            <div class="country-box" id="year-box">
+                <label for="yearSelectPCA" class="country-label">Year</label>
+                <select id="yearSelectPCA">
+                  <!-- populated dynamically -->
+                </select>
+            </div>
+          </div>
+          <div id="chartpca"></div>
+        </div>
+      </div>
+
+      <div class="inner-content">
+        <div class="chapter-left p4">
+          <div class="narrative">
+            <h2>🌐 Regional Trends Over Time</h2>
+            <p>
+              Choose any metric, pick your start and end years, and hit “Reset” to watch each region’s line animate—can you spot which region climbed fastest or dipped most?
+            </p>
+          </div>
+          <div class="did-you-know">
+            <h2>💡 Did you know?</h2>
+            <p>South Asia and Middle East/North Africa are regions that improved the most on the 2015-2023 period for Gender inequality index. The pollution index exploded for the Commonwealth of independent states during that time and is quite seady for Central and Eastern Europe. Happiness score decreased a lot in South Asia compared to other region in the 2015-2023 time period.</p>
+          </div> 
+        </div>
+        <div class="chapter-right">
+          <div class="controls">
+            <div class="country-box" id="feature-box">
+              <label class="country-label" for="featureSelect">Feature:</label>
+              <select id="featureSelect"></select>
+            </div>
+            <div class="country-box" id="start-year-box">
+              <label class="country-label" for="startYearSelect">Start Year:</label>
+              <select id="startYearSelect"></select>
+            </div>
+            <div class="country-box" id="end-year-box">
+              <label class="country-label" for="endYearSelect">End Year:</label>
+              <select id="endYearSelect"></select>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="reset-animation" id="update-chart">Update Chart</button>
+            <button class="reset-animation" id="reset-animation2">Reset Animation</button>
+          </div>
+          <div id="lineChartRegion"></div>
+          <div class="lineChart-tooltip" id="lineChartRegionTooltip"
+            style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="chapter5" class="snap-section chap c5">
+      <div class="section-divider">
+        <hr class="divider-line">
+          <h1>Chapter 5: Insights and Future Paths</h1>
+        <hr class="divider-line">
+      </div>
+      <div class="inner-content layout-flip">
+        <div class="chapter-right">
+          <div id="sankeyChart"></div>
+          <div id="sankey-tooltip" 
+            style="position: absolute;pointer-events: none;background: rgba(41, 41, 43, 0.2);border: 2px solid rgb(36, 36, 38);">
+          </div>
+        </div>
+        <div class="chapter-left p5">
+          <div class="narrative">
+            <h2>What Fuels Happiness & Quality of Life?</h2>
+            <p>Curious how money, schooling, and health care translate into real-world happiness? We crunched the numbers with some trusty linear regressions! Ready to see the chain reaction?
+            </p>
+          </div>
+          <div class="did-you-know">
+            <h2>💡 Did you know?</h2>
+            <p>Every additional year of education corresponds to a 1.40-point shift in the inequality index. One-point uptick in employment rates translates into a 1.41-point rise in the Quality of Life Index.</p>
+          </div> 
+        </div>
+        
+      </div>
+
+      <div class="inner-content">
+        <div class="chapter-left-middle p5">
+          <div class="narrative">
+            <h2>📊 Who’s on Top?</h2>
+            <p>
+              Choose your favorite metric and year, then hit play to see the world’s top 10 countries sprint to the finish line. 
+              Who do you think will claim the crown for HDI, Happiness, or Quality of Life this time around?
+            </p>
+          </div> 
+          <div class="did-you-know">
+            <h2>💡 Did you know?</h2>
+            <p>In 2023, the top 3 countries for generosity were Indonesia, Myanmar and Gambia. In 2022, Yemen is by far the first one in gender inequality index.</p>
+          </div> 
+        </div>
+        <div class="chapter-right-middle">
+          <div class="controls">
+            <div class="country-box" id="year-box">
+              <label class="country-label" for="yearSelect">Year:</label>
+              <select id="yearSelect">
+              </select>
+            </div>
+            <div class="country-box" id="index-box">
+              <label class="country-label" for="indexSelect">Index:</label>
+              <select id="indexSelect">
+              </select>
+            </div>
+          </div>
+          <div id="top10chart"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="chapter6" class="snap-section-quizz chap c6">
+      <div class="section-divider">
+        <hr class="divider-line">
+          <h1>Did you study well your lessons?</h1>
+        <hr class="divider-line">
+      </div>
+      <div class="inner-content">
+        <div class="chapter-left p6">
+          <div class="narrative">
+            <h2>🧠 Test Your Knowledge!</h2>
+            <p>
+              Think you’ve mastered the world of happiness, quality of life, and human development?
+              Put your knowledge to the test with our interactive quiz!
+            </p>
+          </div> 
+        </div>
+        <div class="chapter-right">
+          <div class="quiz-container" id="quiz">
+            <div class="feedback" id="feedback"></div>
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+            <button class="next-btn" id="nextBtn">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
--->
+    
+
+    <section id="chapter7" class="snap-section-quizz chap c7">
+      <div class="section-divider">
+        <hr class="divider-line">
+        <h1>Epilogue: Reflection and Further Exploration</h1>
+        <hr class="divider-line">
+      </div>
+      
+      <div class="epilogue-wrapper">
+        <div class="content">
+        <p>As we close the pages on our global journey, a few clear themes emerge. Over the past three decades, most nations have steadily climbed the ladders of human development—yet progress has been uneven. Investments in education and health care don’t just lift GDP; they ripple out through lower inequality, higher employment, stronger social support, and ultimately greater happiness and quality of life. At the same time, regional shocks—from armed conflict to economic crises—remind us how fragile gains can be, and how quickly outliers can buck global trends.</p>
+
+        <h3>Key Takeaways:</h3>
+        <ul>
+          <li><strong>Education and Opportunity:</strong> Every additional year of schooling drives measurable gains in employment and helps narrow inequality.</li>
+          <li><strong>Health and Equity:</strong> Public health spending is a potent equalizer—where it falls short, gaps widen and quality of life stalls.</li>
+          <li><strong>Social Fabric Matters:</strong> Strong community networks amplify the benefits of income and schooling, translating them into real well-being.</li>
+          <li><strong>Regional Divergence:</strong> While Western Europe and parts of Asia surge ahead, conflict-affected and low-income regions still lag, underscoring the need for targeted support.</li>
+          <li><strong>Policy Levers:</strong> Our regressions spotlight education, healthcare, and social support as the most scalable levers for boosting both happiness and quality of life.</li>
+        </ul>
+
+        <p>Looking forward, new questions beckon: How will climate change reshape these patterns? Can emerging technologies close the remaining gaps—or widen them? We’ve provided the data and the stories; now it’s up to policymakers, researchers, and curious citizens like you to keep exploring, testing, and challenging our assumptions.</p>
+
+        <p>Thank you for joining this exploration of what really fuels human flourishing. Dive into the Annexes to drill down into raw data, play with alternative scenarios, or test your own hypotheses—and when you’re ready, take the quiz to see how well the numbers stuck!</p>
+      </div>
+      </div>
+    </section>
+    <section id="chapter8" class="snap-section-quizz chap c8">
+      <div class="section-divider">
+        <hr class="divider-line">
+        <h1>Annexes: A Comprehensive Data Playground</h1>
+        <hr class="divider-line">
+      </div>
+      <div class="epilogue-wrapper">
+        <div class="content">
+          <p>
+            For those eager to dig deeper, explore detailed visualizations and data tables.
+          </p>
+          <p>Link to <a href="distributions.html">a full distributions' page.</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+    
+    <script src="scroll.js"></script>
+    <script src="radar.js"></script>
+    <script src="top10script.js"></script>
+    <script src="line.js"></script>
+    <script src="worldmap.js"></script>
+    <script src="distributions.js"></script>
+    <script type="module" src="sankey.js"></script>
+    <script type="module" src="lineChartRegion.js"></script>
+    <script src="interactivebubble.js"></script>
+    <script src="parallel.js"></script>
+    <script src="threecolumns.js"></script>
+    <script src="bundle.js"></script>
+    <script src="scatter.js"></script>
+    <script src="timeseries.js"></script>
+    <script src="quizz.js"></script>
+  </body>
+  
+</html>
