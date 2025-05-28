@@ -330,15 +330,15 @@ document.addEventListener("DOMContentLoaded", function () {
   
     /* ─── 8. Draw lines + legend with % evolution ───── */
     const Palette = [
-      "#568b9b", // darkened blue-cyan
-      "#569e93", // darkened teal
-      "#568f76", // darkened green-teal
-      "#568f5a", // darkened green
-      "#6f8f56", // darkened olive
-      "#8d8f56", // darkened lime
-      "#998956", // darkened mustard
-      "#996b56", // darkened coral
-      "#995a5d"  // darkened rose
+      "#394C51", // darkened blue-cyan
+      "#2D4F49", // darkened teal
+      "#2C503F", // darkened green-teal
+      "#2D512D", // darkened green
+      "#444B40", // darkened olive
+      "#4D4B0A", // darkened lime
+      "#604405", // darkened mustard
+      "#882605", // darkened coral
+      "#931016"  // darkened rose
     ];
     const colorScale = d3.scaleOrdinal()
       .domain(datasets.map(d => d.country))
