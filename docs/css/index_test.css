@@ -891,3 +891,14 @@ height: auto;           /* keep aspect ratio                  */
   gap: .75rem 1.25rem;    /*   ↑ row-gap     ↑ column-gap  */
 }
 
+.epilogue-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.content {
+  max-width: 800px;
+  font-size: 1.4em;
+}
