@@ -2,34 +2,54 @@
     // Quiz data from real datasets
     const quizData = [
       {
-        question: 'Which country had the highest Human Development Index (HDI) in 2022?',
-        options: ['Switzerland','Norway','Iceland','Denmark'],
+        question: 'Which core component is included in the UN’s Human Development Index?',
+        options: ['Literacy rate', 'Life expectancy at birth', 'Population density', 'Number of Nobel laureates'],
+        answer: 'Life expectancy at birth'
+      },
+      {
+        question: 'Which of these is NOT one of the six key variables used in the World Happiness Report?',
+        options: ['Freedom to make life choices', 'GDP per capita', 'Military strength', 'Healthy life expectancy'],
+        answer: 'Military strength'
+      },
+      {
+        question: 'Which country had the highest average HDI between 2010 and 2020?',
+        options: ['Canada', 'Russia', 'China', 'Japan'],
+        answer: 'Canada'
+      },
+      {
+        question: 'Which country had the highest Human Development Index in 2022?',
+        options: ['Switzerland', 'Denmark', 'Ireland', 'Sweden'],
         answer: 'Switzerland'
       },
       {
-        question: 'Which country had the lowest Human Development Index (HDI) in 2023?',
-        options: ['Somalia','South Sudan','Central African Republic','South Africa'],
-        answer: 'South Sudan'
+        question: 'Which region had the lowest happiness score from 2015 to 2020?',
+        options: ['Sub-Saharan Africa', 'Western Europe', 'Southeast Asia', 'Middle East'],
+        answer: 'Sub-Saharan Africa'
       },
       {
-        question: 'Which country ranks first in the Quality of Life Index 2025?',
-        options: ['Luxembourg','Netherlands','Denmark','Oman'],
-        answer: 'Luxembourg'
+        question: 'Which region showed a consistent increase in its Health Care Index from 2015 to 2019?',
+        options: ['East Asia', 'Western Europe', 'North America', 'South Asia'],
+        answer: 'East Asia'
       },
       {
-        question: 'Which country ranks fourth in the Quality of Life Index 2025?',
-        options: ['Denmark','Switzerland','Oman','Netherlands'],
-        answer: 'Oman'
+        question: 'From 2015 to 2022, which country consistently ranked in the top 3 of the Gender Inequality Index?',
+        options: ['Yemen', 'Nigeria', 'Haiti', 'Benin'],
+        answer: 'Yemen'
       },
       {
-        question: 'Which country topped the World Happiness Report rankings in 2025?',
-        options: ['Denmark','Iceland','Finland','Sweden'],
-        answer: 'Finland'
+        question: 'True or false: From 2015–20, Western Europe’s Happiness Score never dipped below 7.',
+        options: ['True', 'False'],
+        answer: 'False'
       },
       {
-        question: 'Which country was ranked 5th in the 2025 World Happiness Report?',
-        options: ['Sweden','Israel','Netherlands','Norway'],
-        answer: 'Israel'
+        question: 'Between 2015 and 2020, the region with the lowest life expectancy was ______.',
+        options: ['Sub-Saharan Africa', 'South Asia', 'East Asia', 'North America'],
+        answer: 'Sub-Saharan Africa'
+      },
+      {
+        question: 'The highest pollution index belongs to ___ in 2022.',
+        options: ['Lebanon', 'Egypt', 'Nigeria', 'Peru'],
+        answer: 'Lebanon'
       }
     ];
 
