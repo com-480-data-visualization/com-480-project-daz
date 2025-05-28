@@ -204,11 +204,15 @@
         svg.append("g")
           .attr("class", "axis x-axis")
           .attr("transform", `translate(0, ${chartHeight - margin.bottom})`)
-          .call(d3.axisBottom(xScale).ticks(4).tickFormat(d3.format("d")));
+          .call(d3.axisBottom(xScale).ticks(4).tickFormat(d3.format("d")))
+          .selectAll("text")
+  .style("font-size", "16px");
         svg.append("g")
           .attr("class", "axis y-axis")
           .attr("transform", `translate(${margin.left},0)`)
-          .call(d3.axisLeft(yScale).ticks(4));
+          .call(d3.axisLeft(yScale).ticks(4))
+          .selectAll("text")
+  .style("font-size", "16px");
         
         // Add a title with the metric name at the top of the SVG.
         svg.append("text")
