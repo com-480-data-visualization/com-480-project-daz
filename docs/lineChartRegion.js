@@ -302,20 +302,43 @@ document.addEventListener("DOMContentLoaded", function () {
         .transition().delay((d,i)=>i*100).duration(500)
           .attr("r",3);
 
-      // region label at end
-      if (regionData.values.length) {
-        const lp = regionData.values.slice(-1)[0];
-        svg.append("text")
-          .attr("x",x(lp.Year)+5)
-          .attr("y",y(lp.value))
-          .attr("class","region-label region-label-"+cls)
-          .style("fill",color(regionData.region))
-          .style("font-size","12px")
-          .style("opacity",0)
-          .text(regionData.region)
-          .transition().delay(2200).duration(500)
-          .style("opacity",1);
+      // ── De-overlap labels here ────────────────────────────────────────────
+      const minSpacing = 14; // px between label baselines
+      let labelPts = regionsData
+        .filter(r => r.values.length)
+        .map(r => {
+          const last = r.values[r.values.length - 1];
+          return {
+            region: r.region,
+            x: x(last.Year) + 5,
+            y: y(last.value)
+          };
+        });
+
+      // sort by y, bump overlaps
+      labelPts.sort((a,b) => a.y - b.y);
+      for (let i = 1; i < labelPts.length; i++) {
+        const overlap = (labelPts[i-1].y + minSpacing) - labelPts[i].y;
+        if (overlap > 0) labelPts[i].y += overlap;
       }
+      // clamp into chart area
+      labelPts = labelPts.map(d => ({
+        ...d,
+        y: Math.max(0, Math.min(height, d.y))
+      }));
+
+      // draw labels
+      svg.selectAll(".region-label")
+        .data(labelPts)
+        .enter().append("text")
+          .attr("class", d => `region-label region-label-${d.region.replace(/\s+/g,"")}`)
+          .attr("x",      d => d.x)
+          .attr("y",      d => d.y)
+          .style("fill",  d => color(d.region))
+          .style("font-size","12px")
+          .text(d => d.region);
+
+
     });
   }
 });
