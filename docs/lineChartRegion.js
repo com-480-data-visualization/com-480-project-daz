@@ -244,8 +244,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const regions = regionsData.map(r => r.region);
     const n       = regions.length;
     // pick a Greens scheme whose length matches the number of series:
-    const palette = d3.quantize(t => d3.interpolateYlGn(0.4 + 1 * t), n);
-
+    const maxSchemeSize = d3.schemeBrBG.length - 1; // e.g. 11
+    const k = Math.min(Math.max(n, 3), maxSchemeSize);
+    // build a palette of n colors from PRGn but exclude the mid-segment [0.3,0.6]:
+    const palette = d3.quantize(t => {
+      // first squash [0,1]→[0,0.7]
+      const v = t * 0.7;
+      // if v≤0.3, keep it in [0,0.3]; otherwise jump it to [0.6,1]
+      const s = v <= 0.3 ? v : v + 0.45;
+      return d3.interpolateRdBu(s);
+    }, n);
     const color = d3.scaleOrdinal()
       .domain(regions)
       .range(palette);
