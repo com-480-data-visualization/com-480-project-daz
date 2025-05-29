@@ -184,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const x = d3.scaleLinear()
       .domain([startYear, endYear])
       .range([0, width]);
-    // X axis
     const xAxisG = svg.append("g")
     .attr("transform", `translate(0,${height})`)
     .call(d3.axisBottom(x)

@@ -17,11 +17,11 @@
   
     // Fixed colors for each metric.
     const metricColors = {
-      hdi: "#003d5b",   // blue
-      le:  "#8f2d56",   // green
-      eys: "#d1495b",   // orange
-      mys: "#0d47a1",   // purple
-      gnipc: "#001233"  // red
+      hdi: "#003d5b",  
+      le:  "#8f2d56",   
+      eys: "#d1495b",   
+      mys: "#0d47a1",  
+      gnipc: "#001233"  
     };
   
     // Dash styles (to distinguish up to 3 countries).

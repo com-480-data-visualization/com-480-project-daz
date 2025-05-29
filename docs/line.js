@@ -156,7 +156,7 @@
 
     // make the axis line thicker:
     xAxisG.selectAll('path.domain')
-      .attr('stroke-width', 2);    // or whatever px you like
+      .attr('stroke-width', 2);   
 
     // make the tick-lines thicker/longer:
     xAxisG.selectAll('line.tick')

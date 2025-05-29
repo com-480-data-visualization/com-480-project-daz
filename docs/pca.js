@@ -118,7 +118,7 @@ import { schemeYlGn } from "d3-scale-chromatic";
     const colors3 = ["#52b788", "#eeef20", "#168aad"];
 
     const color = d3.scaleOrdinal()
-      .domain(d3.range(3))   // your three clusters: 0,1,2
+      .domain(d3.range(3))   
       .range(colors3);
     // assemble final data with original metric values
     const finalData = proj.map((coords, i) => {
@@ -150,7 +150,7 @@ import { schemeYlGn } from "d3-scale-chromatic";
         .style("font-size",  "14px")
         .style("font-weight","400");
 
-    // 3) finally, append your axis title
+
     xAxisG.append("text")
         .attr("x", plotW)
         .attr("y", -6)

@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ── D3 & SVG setup ─────────────────────────────────────────────────────────
   const svgContainer = d3.select("#my_dataviz");
 
-  // choose your “design” width & height (what you originally hard‐coded)
+
   const designW = 800,
         designH = 500;
   
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .attr("width", null)
     .attr("height", null);
   
-  const svg     = svgContainer,        // for clarity in the rest of your code
+  const svg     = svgContainer,        
         width   = designW,
         height  = designH,
         mapGroup = svg.append("g"),

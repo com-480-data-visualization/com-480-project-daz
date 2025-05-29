@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
     xAxisG.selectAll("path.domain")
     .attr("stroke-width", 2);
 
-    // Make all tick-marks thicker (and you can lengthen them too if you like)
+    // Make all tick-marks thicker 
     xAxisG.selectAll("line.tick")
     .attr("stroke-width", 2)
     .attr("y2", 6);
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .style("font-size", "14px")
     .style("font-weight", "400");
 
-    // Now append your axis-label
+
     xAxisG.append("text")
     .attr("class", "axis-label")
     .attr("x", width)

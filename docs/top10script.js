@@ -141,7 +141,7 @@ function updateBarChart() {
     n
   );
 
-  // 2) make your ordinal scale map index → a blue tint
+ 
   const colorScaleBar = d3.scaleOrdinal()
     .domain(d3.range(n))  // [0,1,2…n-1]
     .range(blues);

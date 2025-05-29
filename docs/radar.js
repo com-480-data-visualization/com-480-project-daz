@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.keys(groups).forEach(key => {
       sel.append("option")
          .attr("value", key)
-         .text(groupLabels[key]);       // ← use your mapping here
+         .text(groupLabels[key]);       
     });
     sel.property("value", "group1");
   }
