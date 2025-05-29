@@ -43,6 +43,10 @@ Explore our [Project Website](https://com-480-data-visualization.github.io/com-4
 
 Check out our [Screencast]() for a guided walkthrough and visual presentation of the project.
 
+
+The website can be accessed by opening docs/index.html
+To access our website locally, you can first clone our project git clone https://github.com/com-480-data-visualization/project-2024-Maths-Olympiviz.git . Then, change directory into the folder docs/. Run the following command python -m http.server 8000 You can now access our website locally by typing http://0.0.0.0:8000/ into the browser.
+
 ## Late policy
 
 - < 24h: 80% of the grade for the milestone
