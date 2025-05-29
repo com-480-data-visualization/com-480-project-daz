@@ -45,7 +45,7 @@ Check out our [Screencast]() for a guided walkthrough and visual presentation of
 
 
 The website can be accessed by opening docs/index.html
-To access our website locally, you can first clone our project git clone https://github.com/com-480-data-visualization/project-2024-Maths-Olympiviz.git . Then, change directory into the folder docs/. Run the following command python -m http.server 8000 You can now access our website locally by typing http://0.0.0.0:8000/ into the browser.
+To access our website locally, you can first clone our project git clone https://github.com/com-480-data-visualization/com-480-project-daz.git . Then, change directory into the folder docs/. Run the following command python -m http.server 8000 You can now access our website locally by typing http://0.0.0.0:8000/ into the browser.
 
 ## Late policy
 
