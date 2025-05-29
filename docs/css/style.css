@@ -1,0 +1,852 @@
+/* ——— SNAP BEHAVIOUR ——— */
+/*.snap-container{ height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; } */
+
+@font-face {
+    font-family: 'Geist Sans Variable';
+    src: url('../fonts/Geist[wght].ttf') format('truetype-variations');
+    font-weight: 100 900; 
+    font-style: normal;
+    font-display: swap;
+  }
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Light.woff") format("woff");
+font-weight: 300;
+font-style: normal;
+font-display: swap;
+}
+
+/* EyesforSerifs Regular */
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Regular.woff") format("woff");
+font-weight: 400;
+font-style: normal;
+font-display: swap;
+}
+
+/* EyesforSerifs Book */
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Book.woff") format("woff");
+font-weight: 500; /* Adjust as desired */
+font-style: normal;
+font-display: swap;
+}
+
+/* EyesforSerifs Bold */
+@font-face {
+font-family: "EyesforSerifs";
+src: url("fonts/EyesforSerifs/EyesforSerifs-Bold.woff") format("woff");
+font-weight: 700;
+font-style: normal;
+font-display: swap;
+}  
+body {
+font-family: 'Geist Sans Variable', sans-serif;
+font-weight: 400;
+margin:0;
+color: #565656
+}
+
+html{
+  overflow-x: hidden;
+}
+html, body{
+    height: 100%;               /* good practice */
+    scroll-behavior: smooth;    /* optional */
+    scroll-snap-type: y mandatory;   /* page-level snapping */
+    margin: 0;     /* reset any default page margins */
+    padding: 0;
+  }
+
+.snap-section { scroll-snap-align:start; 
+     min-height:150vh;}
+
+.snap-section-quizz { scroll-snap-align:start; 
+      min-height:90vh;}
+.snap-section-annexes { scroll-snap-align:start; 
+        min-height:90vh;
+      max-height:90vh}
+
+/* ——— HERO ——— */
+.hero{ padding:6vw 4vw 20vh; background:#EEE; display:flex; flex-direction:column;
+       justify-content:flex-start; font-family:sans-serif; }
+
+/* ——— FULL FIVE-COLUMN PANEL ——— */
+.panel-slide{ display:flex; }
+.panel-slide .panel{ flex:1; display:flex; flex-direction:column;
+                     justify-content:center; align-items:center;
+                     font-family:sans-serif; }
+.panel .num{ font-size:6vw; line-height:1; }
+.panel .lbl{ margin-top:1rem; font-size:1.2vw; }
+.pan1{ background:#ffe6a7; color:#000; }
+.pan2{ background:#89c2d9; color:#000; }
+.pan3{ background:#93c572; color:#000; }
+.pan4{ background:#d8f3dc; color:#000; }
+.pan5{ background:#bbdefb; color:#000; }
+
+/* ——— FIXED MINI-HEADER ——— */
+#mini-header{ position:fixed; top:0; left:0; right:0; height:80px;
+              display:grid; grid-template-columns:repeat(5,1fr);
+              font-family:sans-serif; opacity:1; pointer-events:none;
+              transition:opacity .35s; z-index:100; }
+#mini-header > div{ display:flex; flex-direction:column; justify-content:center;
+                    text-align:center; color:#FFF; font-size:.9rem; }
+#mini-header > div:nth-child(1){ background:#ffe6a7; color:#000; }
+#mini-header > div:nth-child(2){background:#89c2d9; color:#000; }
+#mini-header > div:nth-child(3){background:#93c572; color:#000; }
+#mini-header > div:nth-child(4){background:#d8f3dc; color:#000; }
+#mini-header > div:nth-child(5){ background:#bbdefb; color:#000; }
+
+/* ——— CHAPTER PLACEHOLDERS ——— */
+.chap{ display:grid; place-items:start center; color:#FFF; padding-top:200px; }
+.c1{ background:#ffe6a7; color:#000; }
+.c2{ background:#89c2d9; color:#000; }
+.c3{ background:#93c572; color:#000; } 
+.c4{background:#d8f3dc; color:#000; }
+.c5{ background:#bbdefb; color:#000; }
+.c6{ background:#d7bde2; color:#000; }
+.c7{ background:#2e343d; color:white; }
+.c8{ background:#515C6B; color:white; }
+
+h1 {
+    font-weight: 900;
+    margin-bottom: 10px;
+    margin-top:1em;
+    font-size: 4em;
+  }
+
+
+
+/* DATA SECTION */
+
+.controls {
+    margin-bottom: 20px;
+  }
+  
+  #chart,
+  #top10chart {
+    display: block;
+    margin: auto;
+    max-width: 600px;
+    text-align: center;
+  }
+
+  #top10chart{
+    max-width: 800px;
+  }
+  
+  svg {
+    background: #fafafa;
+    border: 1px solid #ccc;
+  }
+  
+  .tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 6px;
+    font: 12px sans-serif;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  #tooltip2 {
+    position: absolute;
+    text-align: center;
+    padding: 6px;
+    font: 12px sans-serif;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  
+  .country-box {
+    margin-right: 0;    /* kill any built-in right margin */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;               /* space between label and dropdown */
+    padding: 0.4em 1em;        /* tighter vertical padding, wider horizontal */
+    border-radius: 25px;       /* full "pill" shape */
+    background-color: #fff;    /* clean white background */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s, transform 0.1s;
+    cursor: pointer;           /* indicates interactivity */
+  }
+  
+  /* On hover/focus make the pill lift slightly */
+  .country-box:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+  }
+  
+  /* If you wrap your <select> inside .country-box, style it to blend in */
+  .country-box select {
+    border: none;
+    background: transparent;
+    padding: 0;                /* remove extra padding inside the box */
+    font-size: 1em;
+    cursor: pointer;
+    appearance: none;          /* hide native arrow */
+  }
+  
+  /* Re-add a custom arrow on the right */
+  .country-box {
+    position: relative;
+  }
+  .country-box::after {
+    content: "";
+    position: absolute;
+    right: 1em;
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #555;
+    pointer-events: none;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Focus state (when select is open or keyboard‐focused) */
+  .country-box select:focus + .country-box::after,
+  .country-box:focus-within {
+    box-shadow: 0 0 0 3px rgba(31,119,180,0.3);
+  }
+  
+  .country-box {
+    /* bump this up to allow the arrow to sit without overlapping text */
+    padding: 0.4em 2em 0.4em 1em;  /* top/right/bottom/left */
+    position: relative;
+  }
+  
+  /* arrow on the container, but now in its padding zone */
+  .country-box::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 1em;                   /* sits in that new padding */
+    transform: translateY(-50%);
+    border-left: 6px solid transparent;
+    border-right:6px solid transparent;
+    border-top: 6px solid #555;
+    pointer-events: none;
+  }
+
+  
+  .country-label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .color-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    border-radius: 50%;
+  }
+  
+  #country1-box .color-dot {
+    background-color: #1F77B4;
+  }
+  
+  #country2-box .color-dot {
+    background-color: #FF7F0E;
+  }
+  
+  /* Simple bounce animation */
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translate(-50%, 0);
+    }
+    40% {
+      transform: translate(-50%, -10px);
+    }
+    60% {
+      transform: translate(-50%, -5px);
+    }
+  }
+  svg {
+    background: transparent;
+    border: none;
+  }
+
+  #map-container {
+    display: grid;
+    /* two rows: first auto-height (the SVG), second auto-height (controls+legend) */
+    grid-template-rows: auto auto;
+    /* two equal columns for the bottom row */
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;          /* space between controls and legend */
+    width: max-content; /* shrink-wrap if you like, or width: 100% */
+  }
+  #map-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(255,255,255,0.9);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+    display: none;
+    z-index: 10;
+    /* space for the mini chart */
+    min-width: 220px; 
+    min-height: 150px;
+    overflow: visible;
+  }
+  #map-tooltip svg {
+    overflow: visible;
+  }
+  #zoom-controls {
+    position: relative;
+    top: 10px;
+    right: 10px;
+  }
+  #zoom-controls button {
+    display: block;
+    margin: 2px;
+    padding: 5px 10px;
+  }
+  #legend {
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.8);
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  #sankey-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0, 0, 255, 0.2);
+    border: 2px solid blue;
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    font-size: 12px;
+    z-index: 99999;
+    opacity: 0;
+  }
+  
+  #lineChartRegion {
+    margin-top: 20px;
+  }
+  #lineChart-tooltip {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 12px;
+    pointer-events: none;
+    border-radius: 4px;
+  }
+  
+  
+.tooltipbubble{ 
+  position: absolute;    
+  z-index: 1000;         
+  pointer-events: none;   
+  padding: 8px;
+  font: 12px sans-serif;
+  background: rgba(6, 12, 17, 0.9); 
+  color: #fff;  
+  border-radius: 4px;
+  visibility: visible;
+  transition: opacity 0.2s ease;
+  opacity: 0;   
+}
+
+/* Legend styling */
+
+#chartpca {
+  margin: 0 auto;
+  width: 800px;
+  height: 600px;
+  position: relative;
+}
+
+/* Style for the plotted points */
+.inner-content {
+  display: flex;
+  justify-content: center;    
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 100px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.label {
+  pointer-events: none;
+}
+
+.chapter-left{
+    flex: 1 1 40rem;        /* grow | shrink | preferred width    */
+    max-width: 100rem;
+  }
+
+  .chapter-left .narrative {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
+
+  .chapter-left-middle .did-you-know {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    margin-top: 20px;
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
+  .chapter-left .did-you-know {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    margin-top: 20px;
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
+
+  .chapter-right-middle .did-you-know {
+    background: #fff;
+    flex: 1 1 40rem;        /* grow | shrink | base width */
+    max-width: 60rem;       /* or whatever max you like */
+    
+    /* NEW */
+    margin: auto 0;   /* centers the card within .inner-content */
+    margin-top: 20px;
+    padding: 2rem;          /* space on all sides */
+    text-align: left;     /* if you want centered text */
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
+
+  .p1 .narrative,
+  .p1 .did-you-know{
+    border-left: 5px solid #f39c12;
+  }
+  .p2 .narrative,
+  .p2 .did-you-know{
+    border-left: 5px solid #2e86c1;
+  }
+  .p3 .narrative,
+  .p3 .did-you-know{
+    border-left: 5px solid #239b56;
+  }
+  .p4 .narrative,
+  .p4 .did-you-know{
+    border-left: 5px solid #52be80;
+  }
+  .p5 .narrative,
+  .p5 .did-you-know{
+    border-left: 5px solid #3498db;
+  }
+
+  .p6 .narrative,
+  .p6 .did-you-know{
+    border-left: 5px solid #8e44ad;
+  }
+
+.p1 h2 {
+  color: #f39c12;
+}
+.p2 h2 {
+  color: #2e86c1;
+}
+.p3 h2 {
+  color: #239b56;
+}
+.p4 h2 {
+  color: #52be80;
+}
+.p5 h2 {
+  color: #3498db;
+}
+
+.p6 h2 {
+  color: #8e44ad;
+}
+
+.chapter-left  .narrative p,
+.chapter-left  .did-you-know p,
+.chapter-right .narrative p,
+.chapter-right .did-you-know p,
+.chapter-left-middle  .narrative p,
+.chapter-left-middle  .did-you-know p,
+.chapter-right-middle .narrative p,
+.chapter-right-middle .did-you-know p {
+  margin: 0.8rem 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.chapter-left  .narrative h2,
+.chapter-left  .did-you-know h2,
+.chapter-right .narrative h2,
+.chapter-right .did-you-know h2,
+.chapter-left-middle  .narrative h2,
+.chapter-left-middle  .did-you-know h2,
+.chapter-right-middle .narrative h2,
+.chapter-right-middle .did-you-know h2 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 2em;
+}
+
+
+/* right column takes the remaining space */
+.chapter-right{
+flex: 1 1 0;            /* take whatever is left              */
+min-width: 800px;       /* keep map usable on small laptops   */
+}
+
+.chapter-left-middle {
+  flex: 1;            /* one share of space */
+  min-width: 280px;
+}
+
+.chapter-right-middle {
+  flex: 2;            /* two shares of space (twice as wide as left) */
+  min-width: 300px;   /* adjust upward if needed */
+  max-width: 900px;   /* raise this so the map can grow larger */
+}
+
+/* Ensure the chart inside fully fills that column */
+.chapter-right-middle .chart {
+  width: 100%;
+  max-width: none;    /* allow it to grow up to the column width */
+}
+
+.chapter-right-middle .narrative {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  line-height: 1.5;
+  margin: auto 0; 
+}
+
+.chapter-left-middle .narrative {
+  background: #ffffff;
+
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  line-height: 1.5;
+  margin: auto 0; 
+}
+
+
+
+
+/* 4) Strong tags in narrative */
+.chapter-left-middle .narrative strong {
+  color: #000;
+}
+
+/* 5) Emoji spacing fix */
+.chapter-left-middle .narrative h2::before {
+  content: '';
+  margin-right: 0.3em;
+}
+
+
+/* Flip them & swap widths when .layout-flip is on the container */
+.inner-content.layout-flip .chapter-left-middle  { flex: 2; }
+.inner-content.layout-flip .chapter-right-middle { flex: 1; }
+
+
+/* make the SVG always fill its box */
+#map-container svg{
+width: 100%;
+height: auto;           /* keep aspect ratio                  */
+}
+
+/* -------- responsive break-point: stack on narrow screens ------- */
+@media (max-width: 1200px){
+.inner-content{
+    flex-direction: column;
+}
+.chapter-left,
+.chapter-right{
+    max-width: none;
+    width: 100%;
+}
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;      /* vertically center H1 + lines */
+  justify-content: center;  /* centre the whole group */
+  margin: 40px 0;           /* whatever spacing you need */
+}
+
+.divider-line {
+  flex: 1;                  /* stretch each line to fill */
+  height: 0;                /* remove default hr height */
+  border: none;
+  border-top: 5px solid #333; /* your thin horizontal rule */
+  margin: 0 1em;            /* gap between line and text */
+}
+
+.section-divider h1 {
+  margin: 0;
+  font-size: 3em;           /* or your desired size */
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.chart{
+  flex: 0 0 50%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  border-radius: 20px;
+
+}
+
+
+
+#map-container {
+  display: grid;
+  /* define two rows and two columns */
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "viz    viz"    /* svg spans both columns */
+    "zoom   legend";/* bottom row split in two */
+  gap: 1rem;
+  width: 95%;       /* or max-content if you prefer shrink-wrap */
+}
+
+/* place each item into its named area */
+#my_dataviz {
+  grid-area: viz;
+  width: 100%;      /* make svg fill its grid area */
+  height: 90%;
+  margin: 20px;  /* center the svg in its grid area */
+}
+
+#zoom-controls {
+  grid-area: zoom;
+  display: flex;
+  gap: 0.5rem;
+  margin-left:10px;
+  margin-bottom: 10px;
+}
+
+#legend {
+  grid-area: legend;
+}
+
+
+.chapter-left p {
+  font-size: 1.1em;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.chapter-left h2 {
+  font-size: 2em;
+  margin: 0;
+}
+
+
+#chartContainerWar {
+  display: flex;
+  gap: 1rem;      /* optional spacing between them */
+}
+
+/* Turn the Reset button into a pill-style CTA */
+.reset-animation {
+  margin: 0;         /* kill any default margin */
+  background: #1F77B4;
+  color: #fff;
+  border: none;
+  font-size: 1em;
+  border-radius: 20px;
+    margin-right: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: background 0.2s, transform 0.1s;
+  gap: 0.5rem;               /* space between label and dropdown */
+    padding: 0.4em 1em;        /* tighter vertical padding, wider horizontal */
+    border-radius: 25px;       /* full "pill" shape */
+}
+.reset-animation:hover {
+  background: #155a8c;
+  transform: translateY(-1px);
+}
+.reset-animation:active {
+  transform: translateY(0);
+}
+
+
+
+
+
+.quiz-container { background: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;  text-align: center; position: relative; }
+.question { margin-bottom: 20px; font-size: 1.5em; }
+.options button { display: block; width: 100%; margin: 5px 0; padding: 10px; border: none; border-radius: 4px; background: #e0e0e0; cursor: pointer; transition: background 0.3s; }
+.options button:hover { background: #d5d5d5; }
+.options button:disabled { opacity: 0.6; cursor: default; }
+@keyframes correctAnim { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 10px green; } 100% { transform: scale(1); } }
+@keyframes wrongAnim { 0%,100% { transform: translateX(0); } 25%,75% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }
+.feedback { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-weight: bold; opacity: 0; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.next-btn { margin-top: 15px; padding: 8px 12px; border: none; border-radius: 4px; background: #4285f4; color: #fff; cursor: pointer; display: none; }
+
+
+
+.controls{
+  display: flex;          /* line the <div class="country-box"> items up */
+  flex-wrap: wrap;        /* let them drop to the next line on small screens */
+  gap: .75rem 1.25rem;    /*   ↑ row-gap     ↑ column-gap  */
+}
+
+.epilogue-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.content {
+  max-width: 800px;
+  font-size: 1.4em;
+}
+
+
+/* --------------------------------------------------
+   Global link reset
+   -------------------------------------------------- */
+   a {
+    color: var(--link-color, #0099ff);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  /* --------------------------------------------------
+     Underline hover effect
+     -------------------------------------------------- */
+  a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 100%; height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  
+  a:hover,
+  a:focus {
+    color: var(--link-hover, #0099ff);
+    outline: none;
+  }
+  
+  a:hover::after,
+  a:focus::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  /* --------------------------------------------------
+     Visited / Active states
+     -------------------------------------------------- */
+  a:visited {
+    color: var(--link-visited, #000000);
+  }
+  
+  a:active {
+    color: var(--link-active, #000000);
+    transform: translateY(1px);
+  }
+  
+  /* --------------------------------------------------
+     Optional “button” style for links
+     -------------------------------------------------- */
+  a.button-like {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background: var(--button-bg, #000000);
+    color: #fff !important;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  a.button-like:hover {
+    background: var(--button-hover, #000000);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+
+  /* ----------------------------
+   Data‐Sources Cards
+   ---------------------------- */
+
+.source-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.source-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  color: var(--text-color, #444);
+  font-weight: 500;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.source-card i {
+  font-size: 1.25rem;
+  color: var(--primary-color, #3498db);
+}
+
+.source-card:hover {
+  border-color: #bbb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
