@@ -29,6 +29,19 @@ You can find our Milestone 2 report [here](milestone2/DAZ_milestone2.pdf).
 
 **80% of the final grade**
 
+Here are some essential resources for Milestone 3:
+
+**Process Book**
+
+Dive into our [Process Book]() for in-depth analysis and behind-the-scenes details of our project.
+
+**Project Website**  
+
+Explore our [Project Website](https://com-480-data-visualization.github.io/com-480-project-daz/index.html) to interact with visualizations and gain meaningful insights into the factors influencing human well-being around the world.
+
+**Screencast** 
+
+Check out our [Screencast]() for a guided walkthrough and visual presentation of the project.
 
 ## Late policy
 
