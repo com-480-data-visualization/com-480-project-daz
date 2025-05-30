@@ -33,7 +33,7 @@ Here are some essential resources for Milestone 3:
 
 **Process Book**
 
-Dive into our [Process Book]() for in-depth analysis and behind-the-scenes details of our project.
+Dive into our [Process Book](ProcessBook.pdf) for in-depth analysis and behind-the-scenes details of our project.
 
 **Project Website**  
 
