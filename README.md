@@ -41,7 +41,7 @@ Explore our [Project Website](https://com-480-data-visualization.github.io/com-4
 
 **Screencast** 
 
-Check out our [Screencast]() for a guided walkthrough and visual presentation of the project.
+Check out our [Screencast](https://drive.google.com/file/d/1_qrtudIcPOwwGzgFPjniklHSYJKd1bSl/view) for a guided walkthrough and visual presentation of the project.
 
 
 The website can be accessed by opening docs/index.html
